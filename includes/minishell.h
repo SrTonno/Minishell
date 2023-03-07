@@ -22,6 +22,6 @@
 # include <readline/history.h>
 # include <signal.h>
 
-# define PROMPT "minish>> "
+# define PROMPT "\033[0;33mminish>> \033[0m"
 
 #endif

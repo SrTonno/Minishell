@@ -44,13 +44,13 @@ test:		${NAME}
 
 ${NAME}:	${OBJS}
 		@make -s ${LIB}
-		${CC} $^ ${LIBRARIES} -o ${NAME}
+		@${CC} $^ ${LIBRARIES} -o ${NAME}
 
 ${LIB}:
 		@make -s -C ${LIBDIR}
 
 %.o:		%.c
-		${CC} -c ${CFLAGS} $^ -o $@ ${INC}
+		@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
 
 re:			fclean all
 
