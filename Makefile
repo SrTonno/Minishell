@@ -1,22 +1,27 @@
+include colors.mk
+
 NAME = minishell
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
+#-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
+
 
 SRCSDIR = ./srcs/
-SRCSCFILES = minishell.c
+SRCSCFILES = minishell.c signal.c
 
 BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES = 
+BINCFILES =
 
 SCANDIR = ${addprefix ${SRCSDIR}, scanner/}
-SCANCFILES = 
+SCANCFILES =
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES = 
+PARSECFILES =
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES = 
+EXECCFILES =
 
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \
@@ -26,39 +31,47 @@ SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 
 OBJS = ${SRCS:.c=.o}
 
-LIB = libft.a
-LIBDIR = ./libft/
+LFT_NAME = libft.a
+LIB_DIR = ./libft/
 
-INC = -I ./includes/ -I ${LIBDIR}includes/
+INC = -I ./includes/ -I ${LIB_DIR}includes/
+LDLIBS =  -L /goinfre/$$USER/.brew/opt/readline/lib  -lreadline
 
-LIBRARIES = -L${LIBDIR} -lft -lreadline
+LDLIBS += -L${LIB_DIR} -lft ${READLINE}
 
 RM = rm -rf
 ################################################################################
 .PHONY: all re fclean clean
 ################################################################################
-all:		${NAME}
+all: ${NAME}
 
-test:		${NAME}
-		./${NAME}
+test: ${NAME}
+	./${NAME}
 
-${NAME}:	${OBJS}
-		@make -s ${LIB}
-		@${CC} $^ ${LIBRARIES} -o ${NAME}
+${NAME}: ${LFT_NAME} ${OBJS}
+	${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 
-${LIB}:
-		@make -s -C ${LIBDIR}
+${LFT_NAME}:
+	@make -s -C ${LIB_DIR}
 
-%.o:		%.c
-		@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
-
-re:			fclean all
-
-fclean:		clean
-		@make -s -C ${LIBDIR} fclean
-		@${RM} ${NAME}
+%.o: %.c
+	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
 
 clean:
-		@make -s -C ${LIBDIR} clean
-		@${RM} ${OBJS}
+	@make -s -C ${LIB_DIR} clean
+	@${RM} ${OBJS}
+
+fclean: clean
+	@make -s -C ${LIB_DIR} fclean
+	@${RM} ${NAME}
+
+re: fclean all
+
+staup:
+	rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew
+	#echo 'export PATH=$$HOME/goinfre/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc
+	brew update
+	brew install readline
+	@echo "Install brew and library in MAC."
+
 ################################################################################

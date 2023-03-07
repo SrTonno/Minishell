@@ -15,10 +15,19 @@
 int	main(void)
 {
 	char	*input;
+	struct	sigaction sa;
 
+	sa.sa_handler = handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	if (sigaction(SIGINT, &sa, NULL) == -1) //(Ctrl-C)
+			printf("Error\n");
+	if (sigaction(SIGQUIT, &sa, NULL) == -1) //(Ctrl-/)
+		printf("Error2\n");
 	while (1)
 	{
 		input = readline(PROMPT);
+		add_history(input);
 		printf("%s\n", input);
 		free(input);
 	}
