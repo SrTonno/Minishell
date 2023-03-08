@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-static void ctr_d(char *input)
-{
-	if (input == NULL) //ctr+D
-	{
-		rl_replace_line("exit", 0);
-		//rl_redisplay();
-		exit (0);
-	}
-}
 int	main(void)
 {
 	char	*input;
