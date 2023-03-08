@@ -3,29 +3,29 @@ include colors.mk
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
 
 SRCSDIR = ./srcs/
-SRCSCFILES = minishell.c signal.c
+SRCSCFILES = minishell.c signal.c utils.c
 
 BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES =
+BINCFILES = 
 
-SCANDIR = ${addprefix ${SRCSDIR}, scanner/}
-SCANCFILES =
+LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
+LEXCFILES = lexer.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES =
+PARSECFILES = 
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES =
+EXECCFILES = 
 
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \
-		${addprefix ${SCANDIR}, ${SCANCFILES}} \
+		${addprefix ${LEXDIR}, ${LEXCFILES}} \
 		${addprefix ${PARSEDIR}, ${PARSECFILES}} \
 		${addprefix ${EXECDIR}, ${EXECCFILES}}
 
@@ -49,13 +49,15 @@ test: ${NAME}
 	./${NAME}
 
 ${NAME}: ${LFT_NAME} ${OBJS}
-	${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 
 ${LFT_NAME}:
 	@make -s -C ${LIB_DIR}
 
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
+
+re: fclean all
 
 clean:
 	@make -s -C ${LIB_DIR} clean
@@ -64,8 +66,6 @@ clean:
 fclean: clean
 	@make -s -C ${LIB_DIR} fclean
 	@${RM} ${NAME}
-
-re: fclean all
 
 staup:
 	rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew

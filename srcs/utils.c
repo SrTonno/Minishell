@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 15:33:29 by javmarti          #+#    #+#             */
-/*   Updated: 2023/03/07 15:33:29 by javmarti         ###   ########.fr       */
+/*   Created: 2023/03/08 09:39:11 by javmarti          #+#    #+#             */
+/*   Updated: 2023/03/08 09:39:11 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# define _GNU_SOURC
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
+int	is_special_char(unsigned char c)
+{
+	if (ft_strchr("<>|", c))
+		return (1);
+	return (0);
+}
 
-# include "libft.h"
-
-# define PROMPT "\033[0;33mminish>> \033[0m"
-
-void	handler(int signum);
-
-t_list	*tokenize(char *input);
-
-#endif
+int	is_space(unsigned char c)
+{
+	if (ft_strchr(" \n\t", c))
+		return (1);
+	return (0);
+}
