@@ -33,11 +33,9 @@ typedef struct s_lexer
 
 t_lexer	init_lexer(char *_lexer);
 int		add_new_token_lst(t_lexer *lexer);
-int		handle_quotation_marks(t_lexer *lexer);
-int		handle_env_var(t_lexer *lexer);
-int		handle_special(t_lexer *lexer);
-
 int		any_env_var_str(char *str);
+
+int		handle_char(t_lexer *lexer);
 
 int		is_special(unsigned char c);
 int		is_space(unsigned char c);

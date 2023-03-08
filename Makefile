@@ -15,7 +15,7 @@ BINDIR = ${addprefix ${SRCSDIR}, bin/}
 BINCFILES = 
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
-LEXCFILES = lexer.c lexer_utils.c
+LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
 PARSECFILES = 

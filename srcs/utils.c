@@ -24,6 +24,8 @@ int	is_env_var_char(unsigned char c)
 
 int	is_special(unsigned char c)
 {
+	if (c == '\0')
+		return (0);
 	if (ft_strchr("<>|", c))
 		return (1);
 	return (0);
