@@ -35,7 +35,7 @@ LFT_NAME = libft.a
 LIB_DIR = ./libft/
 
 INC = -I ./includes/ -I ${LIB_DIR}includes/
-LDLIBS =  -L /goinfre/$$USER/.brew/opt/readline/lib  -lreadline
+LDLIBS = -L /goinfre/$$USER/.brew/opt/readline/lib  -lreadline
 
 LDLIBS += -L${LIB_DIR} -lft ${READLINE}
 
@@ -49,7 +49,7 @@ test: ${NAME}
 	./${NAME}
 
 ${NAME}: ${LFT_NAME} ${OBJS}
-	${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 
 ${LFT_NAME}:
 	@make -s -C ${LIB_DIR}

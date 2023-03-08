@@ -12,6 +12,15 @@
 
 #include "minishell.h"
 
+static void ctr_d(char *input)
+{
+	if (input == NULL) //ctr+D
+	{
+		rl_replace_line("exit", 0);
+		//rl_redisplay();
+		exit (0);
+	}
+}
 int	main(void)
 {
 	char	*input;
@@ -21,12 +30,13 @@ int	main(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa, NULL) == -1) //(Ctrl-C)
-			printf("Error\n");
+		printf("Error\n");
 	if (sigaction(SIGQUIT, &sa, NULL) == -1) //(Ctrl-/)
-		printf("Error2\n");
+		printf("Error\n");
 	while (1)
 	{
 		input = readline(PROMPT);
+		ctr_d(input);
 		add_history(input);
 		printf("%s\n", input);
 		free(input);
