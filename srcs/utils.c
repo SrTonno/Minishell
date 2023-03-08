@@ -12,6 +12,16 @@
 
 #include "libft.h"
 
+// env var tienen alpha, num, ?, _
+int	is_env_var_char(unsigned char c)
+{
+	if (c == '\0')
+		return (0);
+	if (ft_strchr("?_", c) != NULL || ft_isalnum(c))
+		return (1);
+	return (0);
+}
+
 int	is_special(unsigned char c)
 {
 	if (ft_strchr("<>|", c))

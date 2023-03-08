@@ -40,12 +40,16 @@ int	main(void)
 		input = readline(PROMPT);
 		if (ft_strncmp(input, "exit", 5) == 0)
 			break ;
+		if (ft_strncmp(input, "\0", 1) == 0)
+			continue ;
 		add_history(input);
 		token_lst = tokenize(input);
 		if (token_lst == NULL)
 			break ;
 		print_lst(token_lst);
 		ft_lstclear(&token_lst, free);
+		free(input);
 	}
+	free(input);
 	return (0);
 }
