@@ -10,29 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCANNER_H
-# define SCANNER_H
+#ifndef LEXER_H
+# define LEXER_H
 
 # include <stdio.h>
 # include <stdlib.h>
 
 # include "libft.h"
 
-typedef struct s_input
+# define DOUBLE_QUOTE 34
+# define SINGLE_QUOTE 39
+
+typedef struct s_lexer
 {
 	char	*str;
 	size_t	len;
 	size_t	index;
 	char	*token_start;
 	size_t	token_len;
-	int		between_marks;
 	t_list	*token_lst;
-}	t_input;
+}	t_lexer;
 
-static t_input	init_input(char *_input);
-static int		add_new_token_lst(t_input *input);
+t_lexer	init_lexer(char *_lexer);
+int		add_new_token_lst(t_lexer *lexer);
+int		handle_quotation_marks(t_lexer *lexer);
+int		handle_env_var(t_lexer *lexer);
 
-int	is_special_char(unsigned char c);
-int	is_space(unsigned char c);
+t_lexer	init_lexer(char *_lexer);
+int		any_env_var_str(char *str);
+
+int		is_special(unsigned char c);
+int		is_space(unsigned char c);
 
 #endif

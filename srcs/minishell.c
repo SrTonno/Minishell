@@ -24,16 +24,16 @@ void	print_lst(t_list *lst)
 
 int	main(void)
 {
-	char	*input;
-	struct	sigaction sa;
-	t_list	*token_lst;
+	char				*input;
+	struct sigaction	sa;
+	t_list				*token_lst;
 
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1) //(Ctrl-C)
+	if (sigaction(SIGINT, &sa, NULL) == -1)
 		printf("Error\n");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1) //(Ctrl-/)
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("Error2\n");
 	while (1)
 	{

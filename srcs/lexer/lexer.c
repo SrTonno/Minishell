@@ -12,57 +12,83 @@
 
 #include "lexer.h"
 
-t_list	*tokenize(char *_input)
+int	handle_env_var(t_lexer *lexer)
 {
-	t_input	input;
-	
-	input = init_input(_input);
-	while (input.str[input.index] != '\0')
+	char	*curr_pos;
+	char	*quotes_end;
+	char	*env_var_start;
+
+	curr_pos = lexer->str + lexer->index;
+	env_var_start = ft_strchr(curr_pos, '$');
+	quotes_end = ft_strchr(curr_pos + 1, *curr_pos);
+	while (env_var_start != NULL && env_var_start < quotes_end)
 	{
-		while (is_space(input.str[input.index]))
-			input.index++;
-		input.token_start = &input.str[input.index];
-		while (is_space(input.str[input.index]) == 0)
+		if (is_space(*(env_var_start + 1)) == 0)
 		{
-			if (input.str[input.index++] == '"')
-			{
-				if (input.between_marks == 1)
-					input.between_marks = 0;
-				else
-					input.between_marks = 1;
-			}
+			lexer->index = (size_t)(env_var_start - lexer->str);
+			if (add_new_token_lst(lexer) == -1)
+				return (-1);
+			lexer->token_start = env_var_start;
+			while (is_space(lexer->str[lexer->index++]) == 0);
+			if (add_new_token_lst(lexer) == -1)
+				return (-1);
+			lexer->token_start = lexer->str + lexer->index;
 		}
-		input.token_len = (size_t)(&input.str[input.index] - input.token_start);
-		if (input.token_len > 0 && add_new_token_lst(&input) == -1)
+		env_var_start = ft_strchr(env_var_start + 1, '$');
+	}
+	lexer->index = quotes_end - lexer->str + 1;
+	if (add_new_token_lst(lexer) == -1)
+		return (-1);
+	lexer->token_start = quotes_end + 1;
+	return (0);
+}
+
+t_list	*tokenize(char *_lexer)
+{
+	t_lexer	lexer;
+
+	lexer = init_lexer(_lexer);
+	while (lexer.str[lexer.index] != '\0')
+	{
+		while (is_space(lexer.str[lexer.index]))
+			lexer.index++;
+		lexer.token_start = lexer.str + lexer.index;
+		while (is_space(lexer.str[lexer.index]) == 0)
+		{
+			if (lexer.str[lexer.index] == SINGLE_QUOTE
+				|| lexer.str[lexer.index] == DOUBLE_QUOTE)
+			{
+				if (handle_quotation_marks(&lexer) == -1)
+					return (NULL);
+			}
+			else
+				lexer.index++;
+		}
+		if (add_new_token_lst(&lexer) == -1)
 			return (NULL);
 	}
-	free(input.str);
-	return (input.token_lst);
+	free(lexer.str);
+	return (lexer.token_lst);
 }
 
-static t_input	init_input(char *_input)
+int	handle_quotation_marks(t_lexer *lexer)
 {
-	t_input	input;
+	char	*end_quote;
+	char	quote;
 
-	input.str = _input;
-	input.len = ft_strlen(input.str);
-	input.index = 0;
-	input.token_lst = NULL;
-	input.between_marks = 0;
-	return (input);
-}
-
-static int	add_new_token_lst(t_input *input)
-{
-	char	*token;
-
-	token = (char *)ft_calloc(input->token_len + 1, sizeof(char));
-	if (token == NULL)
+	quote = lexer->str[lexer->index];
+	end_quote = ft_strchr(lexer->str + lexer->index + 1, quote);
+	if (end_quote == NULL)
+		lexer->index++;
+	else
 	{
-		ft_lstclear(&input->token_lst, free);
-		return (-1);
+		if (quote == DOUBLE_QUOTE && any_env_var_str(lexer->str + lexer->index))
+		{
+			if (handle_env_var(lexer) == -1)
+				return (-1);
+		}
+		else
+			lexer->index += end_quote - (lexer->str + lexer->index) + 1;
 	}
-	ft_strlcpy(token, input->token_start, input->token_len + 1);
-	ft_lstadd_back(&input->token_lst, ft_lstnew((void *)token));
 	return (0);
 }

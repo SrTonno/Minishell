@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	is_special_char(unsigned char c)
+int	is_special(unsigned char c)
 {
 	if (ft_strchr("<>|", c))
 		return (1);
