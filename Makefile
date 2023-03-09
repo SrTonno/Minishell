@@ -35,7 +35,7 @@ LFT_NAME = libft.a
 LIB_DIR = ./libft/
 
 INC = -I ./includes/ -I ${LIB_DIR}includes/
-LDLIBS =  -L /goinfre/$$USER/.brew/opt/readline/lib  -lreadline
+LDLIBS = -L /goinfre/$$USER/.brew/opt/readline/lib  -lreadline
 
 LDLIBS += -L${LIB_DIR} -lft ${READLINE}
 

@@ -42,6 +42,7 @@ int	main(void)
 			break ;
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
+		ctr_d(input);
 		add_history(input);
 		token_lst = tokenize(input);
 		if (token_lst == NULL)

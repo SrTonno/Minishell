@@ -27,6 +27,7 @@
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
 void	handler(int signum);
+void	ctr_d(char *input);
 
 t_list	*tokenize(char *input);
 
