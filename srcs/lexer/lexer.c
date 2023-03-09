@@ -20,8 +20,13 @@ t_list	*tokenize(char *_lexer)
 	while (lexer.str[lexer.index] != '\0')
 	{
 		while (is_space(lexer.str[lexer.index]))
+		{
+			if (lexer.str[lexer.index] == '\0')
+				return (lexer.token_lst);
 			lexer.index++;
+		}
 		lexer.token_start = lexer.str + lexer.index;
+		printf(">>%s\n", lexer.token_start);
 		while (is_space(lexer.str[lexer.index]) == 0)
 			handle_char(&lexer);
 		if (add_new_token_lst(&lexer) == -1)
