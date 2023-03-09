@@ -19,18 +19,20 @@ static int	handle_quotation_marks(t_lexer *lexer);
 
 int	handle_char(t_lexer *lexer)
 {
-	if (lexer->str[lexer->index] == SINGLE_QUOTE
-		|| lexer->str[lexer->index] == DOUBLE_QUOTE)
+	char	*curr_char;
+
+	curr_char = lexer->str + lexer->index;
+	if (*curr_char == SINGLE_QUOTE || *curr_char == DOUBLE_QUOTE)
 	{
 		if (handle_quotation_marks(lexer) == -1)
 			return (-1);
 	}
-	else if (is_special(lexer->str[lexer->index]))
+	else if (is_special(*curr_char))
 	{
 		if (handle_special(lexer) == -1)
 			return (-1);
 	}
-	else if (lexer->str[lexer->index] == '$')
+	else if (*curr_char == '$' && is_env_var_char(*(curr_char + 1)))
 	{
 		if (handle_dollar(lexer) == -1)
 			return (-1);
