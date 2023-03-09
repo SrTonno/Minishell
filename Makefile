@@ -12,16 +12,16 @@ SRCSDIR = ./srcs/
 SRCSCFILES = minishell.c signal.c utils.c
 
 BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES = 
+BINCFILES =
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES = 
+PARSECFILES =
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES = 
+EXECCFILES =
 
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \
@@ -48,7 +48,8 @@ all: ${NAME}
 test: ${NAME}
 	./${NAME}
 
-${NAME}: ${LFT_NAME} ${OBJS}
+${NAME}: ${OBJS}
+	@make -s -C ${LIB_DIR}
 	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 
 ${LFT_NAME}:
