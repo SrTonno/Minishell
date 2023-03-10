@@ -6,7 +6,7 @@ El lexer se encarga de dividir la cadena de entrada en "tokens", que son cadenas
 >>"ls -al | grep a<input.txt >>hola.txt" se transformaría en
 [ "ls", "-al", "|", "grep", "a", "<", "input.txt", ">>", "hola.txt" ]
 
->>"hola$sque' tal'" se transformaría en
+>>"hola$sque' tal'" se transformaría encd
 [ "hola", "$sque", "' tal'" ]
 
 >>"hola $s que tal'" se transformaría en

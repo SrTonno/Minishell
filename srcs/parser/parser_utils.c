@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:45:55 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/10 16:36:00 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/10 17:46:42 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	free_ast(t_ast_node *ast)
 		free(ast);
 		ast = aux;
 	}
+	free(ast->command);
 	free(ast);
-
 }
