@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/10 15:37:19 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:25:11 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,21 @@ static void	new_block_ast(t_ast_node *ast, t_list *list, int max)
 	ast->next = list_to_char(list, max);
 }
 
-int	find_heredocs(t_ast_node *ast, int num)
+static int	find_heredocs(t_ast_node *ast, int num)
 {
 	int	len;
+	int	i;
 
+	i = -1;
 	ast = find_end_ast(ast);
 	len = ft_strlen(ast->command[num - 1]);
-	if (len == 2
-		&& ast->command[num - 1][0] == '<' && ast->command[num - 1][1] == '<')
-		return (1);
+	while (ast->command[num - 1][++i] != '\0' && len >= 2)
+	{
+		if (len > i + 1
+			&& (ast->command[num - 1][i] == '<'
+			&& ast->command[num - 1][i +1] == '<'))
+			return (1);
+	}
 	return (0);
 }
 

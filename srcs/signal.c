@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/09 12:13:22 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:02:19 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ctr_d(char *input)
 	if (input == NULL) //ctr+D
 	{
 		rl_replace_line("exit", 0);
+		write(1, "exit", 5);
 		//rl_redisplay();
 		exit (0);
 	}

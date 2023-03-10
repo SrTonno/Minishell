@@ -66,6 +66,7 @@ int	main(void)
 		//print_lst(token_lst);
 		print_ast(ast);
 		ft_lstclear(&token_lst, free);
+		free_ast(ast);
 		free(input);
 	}
 	free(input);

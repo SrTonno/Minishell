@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:45:55 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/10 15:29:10 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:36:00 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,19 @@ t_list	*mov_to_next_list(t_list *list, int num)
 	while (num > i++)
 		list = list->next;
 	return (list);
+}
+
+void	free_ast(t_ast_node *ast)
+{
+	t_ast_node	*aux;
+
+	while (ast->next != NULL)
+	{
+		aux = ast->next;
+		free(ast->command);
+		free(ast);
+		ast = aux;
+	}
+	free(ast);
+
 }

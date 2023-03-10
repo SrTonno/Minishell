@@ -39,5 +39,6 @@ void	ctr_d(char *input);
 t_list	*tokenize(char *input);
 
 t_ast_node	*parser(t_list *list);
+void	free_ast(t_ast_node *ast);
 
 #endif
