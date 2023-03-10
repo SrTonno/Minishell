@@ -22,18 +22,33 @@ void	print_lst(t_list *lst)
 	return ;
 }
 
+static	void print_ast(t_ast_node *ast)
+{
+	int	i;
+
+	while(ast != NULL)
+	{
+		i = -1;
+		while (ast->command[++i] != NULL)
+			printf("%s", ast->command[i]);
+		ast = ast->next;
+		printf("\n");
+	}
+}
+
 int	main(void)
 {
 	char				*input;
 	struct sigaction	sa;
 	t_list				*token_lst;
+	t_ast_node			*ast;
 
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
+	if (sigaction(SIGINT, &sa, NULL) == -1) //ctl+C
 		printf("Error\n");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	if (sigaction(SIGQUIT, &sa, NULL) == -1) //ctl+/
 		printf("Error2\n");
 	while (1)
 	{
@@ -47,7 +62,9 @@ int	main(void)
 		token_lst = tokenize(input);
 		if (token_lst == NULL)
 			break ;
-		print_lst(token_lst);
+		ast = parser(token_lst);
+		//print_lst(token_lst);
+		print_ast(ast);
 		ft_lstclear(&token_lst, free);
 		free(input);
 	}

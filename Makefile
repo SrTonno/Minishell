@@ -3,7 +3,7 @@ include colors.mk
 NAME = minishell
 
 CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
+ CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
@@ -18,7 +18,7 @@ LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES =
+PARSECFILES = parser.c parser_utils.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
 EXECCFILES =

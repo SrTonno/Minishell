@@ -24,11 +24,20 @@
 
 # include "libft.h"
 
+
 # define PROMPT "\033[0;33mminish>> \033[0m"
+
+typedef struct s_ast_node
+{
+	char				**command;
+	struct s_ast_node	*next;
+}	t_ast_node;
 
 void	handler(int signum);
 void	ctr_d(char *input);
 
 t_list	*tokenize(char *input);
+
+t_ast_node	*parser(t_list *list);
 
 #endif

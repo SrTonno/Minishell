@@ -26,7 +26,7 @@ t_list	*tokenize(char *_lexer)
 			lexer.index++;
 		}
 		lexer.token_start = lexer.str + lexer.index;
-		printf(">>%s\n", lexer.token_start);
+		//printf(">>%s\n", lexer.token_start);
 		while (is_space(lexer.str[lexer.index]) == 0)
 			handle_char(&lexer);
 		if (add_new_token_lst(&lexer) == -1)
