@@ -63,17 +63,14 @@ static void	new_block_ast(t_ast_node *ast, t_list *list, int max)
 
 static int	find_heredocs(t_ast_node *ast, int num)
 {
-	int	len;
 	int	i;
 
 	i = -1;
 	ast = find_end_ast(ast);
-	len = ft_strlen(ast->command[num - 1]);
-	while (ast->command[num - 1][++i] != '\0' && len >= 2)
+	while (ast->command[num - 1][++i] != '\0')
 	{
-		if (len > i + 1
-			&& (ast->command[num - 1][i] == '<'
-			&& ast->command[num - 1][i +1] == '<'))
+		if ((ast->command[num - 1][i] == '<'
+			|| ast->command[num - 1][i] == '>'))
 			return (1);
 	}
 	return (0);

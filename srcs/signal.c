@@ -28,7 +28,7 @@ void	ctr_d(char *input)
 	if (input == NULL) //ctr+D
 	{
 		rl_replace_line("exit", 0);
-		write(1, "exit", 5);
+		write(1, "exit\n", 6);
 		//rl_redisplay();
 		exit (0);
 	}

@@ -29,7 +29,7 @@ static	void print_ast(t_ast_node *ast)
 	while(ast != NULL)
 	{
 		i = -1;
-		while (ast->command[++i] != '\0')
+		while (ast->command[++i] != (void *)0)
 			printf("%s", ast->command[i]);
 		ast = ast->next;
 		printf("\n");
