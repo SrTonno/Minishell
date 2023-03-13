@@ -18,7 +18,7 @@ LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES = parser.c parser_utils.c
+PARSECFILES = parser.c parser_utils.c parser_checker.c parser_errors.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
 EXECCFILES =

@@ -24,7 +24,6 @@
 
 # include "libft.h"
 
-
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
 typedef struct s_ast_node

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/10 17:41:42 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/13 23:22:18 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,23 @@ static int	find_heredocs(t_ast_node *ast, int num)
 	return (0);
 }
 
-t_ast_node	*parser(t_list *list)
+t_ast_node	*parser(t_list *token_lst)
 {
 	t_ast_node	*ast;
 	int			num;
 
-	num = count_blocks(list, 0);
-	ast = list_to_char(list, num);
-	list = mov_to_next_list(list, num);
-	while (list != NULL)
+	if (check_metachars(token_lst) != 0
+		|| check_text_after_metachars(token_lst) != 0
+		|| check_files(token_lst) != 0)
+		return (NULL);
+	num = count_blocks(token_lst, 0);
+	ast = list_to_char(token_lst, num);
+	token_lst = mov_to_next_list(token_lst, num);
+	while (token_lst != NULL)
 	{
-		num = count_blocks(list, find_heredocs(ast, num));
-		new_block_ast(ast, list, num);
-		list = mov_to_next_list(list, num);
+		num = count_blocks(token_lst, find_heredocs(ast, num));
+		new_block_ast(ast, token_lst, num);
+		token_lst = mov_to_next_list(token_lst, num);
 	}
 	return (ast);
 }

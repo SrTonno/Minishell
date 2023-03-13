@@ -1,6 +1,9 @@
 # Executable
 minishell
 
+# Text files
+*.txt
+
 # Prerequisites
 *.d
 

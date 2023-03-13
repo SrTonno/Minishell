@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:45:55 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/10 17:46:42 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/13 23:26:26 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ void	free_ast(t_ast_node *ast)
 {
 	t_ast_node	*aux;
 
-	while (ast->next != NULL)
+	while (ast)
 	{
 		aux = ast->next;
-		free(ast->command);
 		free(ast);
 		ast = aux;
 	}
-	free(ast->command);
-	free(ast);
+	return ;
 }

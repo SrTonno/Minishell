@@ -30,7 +30,7 @@ static	void print_ast(t_ast_node *ast)
 	{
 		i = -1;
 		while (ast->command[++i] != (void *)0)
-			printf("%s", ast->command[i]);
+			printf("%s ", ast->command[i]);
 		ast = ast->next;
 		printf("\n");
 	}
@@ -46,9 +46,9 @@ int	main(void)
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1) //ctl+C
+	if (sigaction(SIGINT, &sa, NULL) == -1)
 		printf("Error\n");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1) //ctl+/
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("Error2\n");
 	while (1)
 	{
@@ -62,8 +62,10 @@ int	main(void)
 		token_lst = tokenize(input);
 		if (token_lst == NULL)
 			break ;
-		ast = parser(token_lst);
 		//print_lst(token_lst);
+		ast = parser(token_lst);
+		if (ast == NULL)
+			continue ;
 		print_ast(ast);
 		ft_lstclear(&token_lst, free);
 		free_ast(ast);
