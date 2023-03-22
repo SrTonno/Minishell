@@ -36,6 +36,14 @@ static	void print_ast(t_ast_node *ast)
 	}
 }
 
+static void	all_free(t_list *token_lst, t_ast_node *ast,char *input)
+{
+	ft_lstclear(&token_lst, free);
+	if (ast != NULL)
+		free_ast(ast);
+	free(input);
+}
+
 int	main(void)
 {
 	char				*input;
@@ -46,10 +54,8 @@ int	main(void)
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
+	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("Error\n");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		printf("Error2\n");
 	while (1)
 	{
 		input = readline(PROMPT);
@@ -64,12 +70,8 @@ int	main(void)
 			break ;
 		//print_lst(token_lst);
 		ast = parser(token_lst);
-		if (ast == NULL)
-			continue ;
 		print_ast(ast);
-		ft_lstclear(&token_lst, free);
-		free_ast(ast);
-		free(input);
+		all_free(token_lst, ast, input);
 	}
 	free(input);
 	return (0);
