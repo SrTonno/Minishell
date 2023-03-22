@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/13 23:22:18 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:27:01 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ static int	count_blocks(t_list *list, int mode)
 	return (command);
 }
 
+static void	check_redirect(t_ast_node *ast, int index, t_list *list)
+{
+	if (ast->command[index][0] == '<' && ft_strlen(ast->command[index]) == 1)
+	{
+		printf("/</\n");
+		if (ast->output_fd != 0)
+			close(ast->output_fd);
+		ast->output_fd = open(list->next->content, O_RDONLY, 0);
+	}
+	if (ast->command[index][0] == '>')
+	{
+		printf("/>/\n");
+		if (ast->input_fd != 0)
+			close(ast->input_fd);
+		ast->input_fd = open(list->next->content, O_RDWR|O_CREAT, 0644);
+	}
+}
+
 static t_ast_node	*list_to_char(t_list *list, int max)
 {
 	int			i;
@@ -45,9 +63,12 @@ static t_ast_node	*list_to_char(t_list *list, int max)
 	i = 0;
 	new_ast = ft_calloc(1, sizeof(t_ast_node));
 	new_ast->command = ft_calloc(max + 1, sizeof(char *));
+	new_ast->input_fd = 0;
+	new_ast->output_fd = 0;
 	while (max > i)
 	{
 		new_ast->command[i] = (char *)list->content;
+		check_redirect(new_ast, i, list);
 		i++;
 		list = list->next;
 	}

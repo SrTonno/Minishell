@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:45:55 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/22 12:54:12 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:29:30 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	free_ast(t_ast_node *ast)
 	while (ast != NULL)
 	{
 		aux = ast->next;
+		if (ast->input_fd != 0)
+			close(ast->input_fd);
+		if (ast->output_fd != 0)
+			close(ast->output_fd);
 		free(ast->command);
 		free(ast);
 		ast = aux;

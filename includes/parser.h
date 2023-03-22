@@ -14,6 +14,14 @@
 # define PARSER_H
 
 # include "libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <fcntl.h>
 
 # define PERM_ERR 1
 # define SYNTAX_ERROR 2
@@ -22,6 +30,9 @@
 typedef struct s_ast_node
 {
 	char				**command;
+	int					input_fd;
+	int					output_fd;
+	char				**heredocs;
 	struct s_ast_node	*next;
 }	t_ast_node;
 

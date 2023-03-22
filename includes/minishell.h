@@ -29,6 +29,9 @@
 typedef struct s_ast_node
 {
 	char				**command;
+	int					input_fd;
+	int					output_fd;
+	char				**heredocs;
 	struct s_ast_node	*next;
 }	t_ast_node;
 
