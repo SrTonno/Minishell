@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:45:55 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/22 17:29:30 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:50:37 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	free_ast(t_ast_node *ast)
 			close(ast->input_fd);
 		if (ast->output_fd != 0)
 			close(ast->output_fd);
+		if (ast->heredocs != NULL)
+			free(ast->heredocs);
 		free(ast->command);
 		free(ast);
 		ast = aux;

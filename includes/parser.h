@@ -31,13 +31,22 @@ typedef struct s_ast_node
 {
 	char				**command;
 	int					input_fd;
+	int					mode_write;
 	int					output_fd;
 	char				**heredocs;
 	struct s_ast_node	*next;
 }	t_ast_node;
 
+typedef struct s_len_ast
+{
+	int	len;
+	int	meta;
+	int	heredocs;
+}	t_len_ast;
+
 t_ast_node	*find_end_ast(t_ast_node *ast);
 t_list		*mov_to_next_list(t_list *list, int num);
+t_ast_node	*list_to_char(t_list *list, t_len_ast max);
 
 int			handle_error(int error, char *str);
 

@@ -6,101 +6,73 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/22 17:27:01 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:57:07 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static int	count_blocks(t_list *list, int mode)
+static t_len_ast	count_blocks(t_list *list, int mode)
 {
-	int	command;
+	t_len_ast	command;
 
-	command = 1;
+	command.len = 1;
+	command.meta = 0;
+	command.heredocs = 0;
 	while (list->next != NULL)
 	{
-		if (*((unsigned char *)list->content) == '|'
-			|| *((unsigned char *)list->content) == '<'
+		if (*((unsigned char *)list->content) == '|')
+		{
+			if (command.len != 1)
+				command.len--;
+			return (command);
+		}
+		if (*((unsigned char *)list->content) == '<'
 			|| (*((unsigned char *)list->content) == '>') || mode == 1)
 		{
-			if (command == 1)
-				return (command);
-			return (command - 1);
+			if (*((unsigned char *)list->content) == '<'
+				&& ft_strlen(list->content) == 2)
+				command.heredocs++;
+			command.meta++;
 		}
-		command++;
+		command.len++;
 		list = list->next;
 	}
-	if ((*((unsigned char *)list->content) == '|'
-			|| *((unsigned char *)list->content) == '<'
-			|| (*((unsigned char *)list->content) == '>')) && command != 1)
-		return (command - 1);
 	return (command);
 }
+	/*if ((*((unsigned char *)list->content) == '|'
+			|| *((unsigned char *)list->content) == '<'
+			|| (*((unsigned char *)list->content) == '>')) && command.len != 1)
+			{
+				command.meta++;
+				command.len--;
+			}*/
 
-static void	check_redirect(t_ast_node *ast, int index, t_list *list)
-{
-	if (ast->command[index][0] == '<' && ft_strlen(ast->command[index]) == 1)
-	{
-		printf("/</\n");
-		if (ast->output_fd != 0)
-			close(ast->output_fd);
-		ast->output_fd = open(list->next->content, O_RDONLY, 0);
-	}
-	if (ast->command[index][0] == '>')
-	{
-		printf("/>/\n");
-		if (ast->input_fd != 0)
-			close(ast->input_fd);
-		ast->input_fd = open(list->next->content, O_RDWR|O_CREAT, 0644);
-	}
-}
-
-static t_ast_node	*list_to_char(t_list *list, int max)
-{
-	int			i;
-	t_ast_node	*new_ast;
-
-	i = 0;
-	new_ast = ft_calloc(1, sizeof(t_ast_node));
-	new_ast->command = ft_calloc(max + 1, sizeof(char *));
-	new_ast->input_fd = 0;
-	new_ast->output_fd = 0;
-	while (max > i)
-	{
-		new_ast->command[i] = (char *)list->content;
-		check_redirect(new_ast, i, list);
-		i++;
-		list = list->next;
-	}
-	new_ast->next = NULL;
-	return (new_ast);
-}
-
-static void	new_block_ast(t_ast_node *ast, t_list *list, int max)
+static void	new_block_ast(t_ast_node *ast, t_list *list, t_len_ast max)
 {
 	ast = find_end_ast(ast);
 	ast->next = list_to_char(list, max);
 }
-
-static int	find_heredocs(t_ast_node *ast, int num)
+/*
+static int	find_heredocs(t_ast_node *ast, t_len_ast num)
 {
 	int	i;
 
 	i = -1;
 	ast = find_end_ast(ast);
-	while (ast->command[num - 1][++i] != '\0')
+	while (ast->command[num.len - 1][++i] != '\0')
 	{
-		if ((ast->command[num - 1][i] == '<'
-			|| ast->command[num - 1][i] == '>'))
+		if ((ast->command[num.len - 1][i] == '<'
+			|| ast->command[num.len - 1][i] == '>'))
 			return (1);
 	}
 	return (0);
-}
+}*/
 
 t_ast_node	*parser(t_list *token_lst)
 {
 	t_ast_node	*ast;
-	int			num;
+	t_len_ast	num;
 
 	if (check_metachars(token_lst) != 0
 		|| check_text_after_metachars(token_lst) != 0
@@ -108,12 +80,12 @@ t_ast_node	*parser(t_list *token_lst)
 		return (NULL);
 	num = count_blocks(token_lst, 0);
 	ast = list_to_char(token_lst, num);
-	token_lst = mov_to_next_list(token_lst, num);
+	token_lst = mov_to_next_list(token_lst, num.len);
 	while (token_lst != NULL)
 	{
-		num = count_blocks(token_lst, find_heredocs(ast, num));
+		num = count_blocks(token_lst, 0);
 		new_block_ast(ast, token_lst, num);
-		token_lst = mov_to_next_list(token_lst, num);
+		token_lst = mov_to_next_list(token_lst, num.len);
 	}
 	return (ast);
 }
