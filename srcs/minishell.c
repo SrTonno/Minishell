@@ -29,12 +29,12 @@ static	void print_ast(t_ast_node *ast)
 	while(ast != NULL)
 	{
 		i = -1;
-		while (ast->command[++i] != '\0')
+		while (ast->command[++i] != NULL)
 			printf("%s ", ast->command[i]);
-		i = -1;
+		/*i = -1;
 		printf("(heredocs)->");
 		while (ast->heredocs[++i] != '\0')
-			printf("%s ", ast->heredocs[i]);
+			printf("%s ", ast->heredocs[i]);*/
 		ast = ast->next;
 		printf("\n");
 	}

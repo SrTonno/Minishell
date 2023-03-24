@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/23 18:11:24 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:00:15 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	find_null(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i] != NULL)
 		i++;
 	return (i);
 }
