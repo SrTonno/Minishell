@@ -31,16 +31,16 @@ static	void print_ast(t_ast_node *ast)
 		i = -1;
 		while (ast->command[++i] != NULL)
 			printf("%s ", ast->command[i]);
-		/*i = -1;
+		i = -1;
 		printf("(heredocs)->");
 		while (ast->heredocs[++i] != '\0')
-			printf("%s ", ast->heredocs[i]);*/
+			printf("%s ", ast->heredocs[i]);
 		ast = ast->next;
 		printf("\n");
 	}
 }
 
-static void	all_free(t_list *token_lst, t_ast_node *ast,char *input)
+static void	all_free(t_list *token_lst, t_ast_node *ast, char *input)
 {
 	ft_lstclear(&token_lst, free);
 	if (ast != NULL)
@@ -56,9 +56,8 @@ int	main(void)
 	t_ast_node			*ast;
 
 	sa.sa_handler = handler;
-	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
+	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
 		printf("Error\n");
 	while (1)
 	{
