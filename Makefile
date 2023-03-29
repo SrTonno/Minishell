@@ -12,7 +12,7 @@ SRCSDIR = ./srcs/
 SRCSCFILES = minishell.c signal.c utils.c
 
 BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES =
+BINCFILES = env.c env_utils.c
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c

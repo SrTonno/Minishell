@@ -30,5 +30,6 @@ void	handler(int signum);
 void	ctr_d(char *input);
 
 t_list	*tokenize(char *input);
+char	**ft_export(char **env, char **comand);
 
 #endif
