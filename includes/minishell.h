@@ -30,6 +30,10 @@ void	handler(int signum);
 void	ctr_d(char *input);
 
 t_list	*tokenize(char *input);
+
+//env
 char	**ft_export(char **env, char **comand);
+char	**malloc_env(char **env);
+void	ft_env(char **env);
 
 #endif

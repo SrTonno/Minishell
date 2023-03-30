@@ -30,6 +30,7 @@ int	main(int argc, char *argv[], char **env)
 
 	(void)argc;
 	(void)argv;
+	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
@@ -51,7 +52,7 @@ int	main(int argc, char *argv[], char **env)
 			break ;
 		print_lst(token_lst);
 		ft_lstclear(&token_lst, free);
-		env = ft_export(env, ft_split("a as=p  sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4 tractor=red", ' '));
+		env = ft_export(env, ft_split("a as=p  LESS=aaaaaaaaaaaasasasaasjfgkfg sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4 tractor=red", ' '));
 		int u;
 		u = 0;
 		while (env[u] != '\0')

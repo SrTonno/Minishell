@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/29 19:55:27 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:51:26 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	find_mod_env(char **env, char **comand)
 		find = find_env(env, comand[i]);
 		if (find >= 0)
 		{
-			//free (env[find]);
+			free (env[find]);
 			env[find] = ft_strdup(comand[i]);
 			mod++;
 		}
