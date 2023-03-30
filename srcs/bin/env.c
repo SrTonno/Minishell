@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/30 12:59:28 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:25:38 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	**ft_export(char **env, char **comand)
 
 	i = 0;
 	mod = find_mod_env(env, comand);
-
 	len_env = len_doble_base(env);
 	len_com = len_doble(comand);
 	printf("mod->%d; env->%d; comand->%d\n", mod, len_env, len_com);
@@ -42,7 +41,6 @@ char	**ft_export(char **env, char **comand)
 	while (len_env > j)
 		str[i++] = env[j++];
 	j = 0;
-	//while (len_com > ++j)
 	while (comand[++j] != '\0')
 	{
 		if (ft_strchr(comand[j], '=') != NULL && find_env(env, comand[j]) <= 0  && to_future(comand, j) == -1)
@@ -73,12 +71,38 @@ char	**malloc_env(char **env)
 	return (new_env);
 
 }
-/*
-char	**unset(char **env, char **comand)
+
+char	**ft_unset(char **env, char **comand)
 {
 	int		len_env;
 	int		len_com;
 	char	**str;
+	int		i;
+	int		j;
 
+	len_com = len_doble_uniq_one(comand, env);
+	if (len_com < 0)
+	{
+		printf("unset: %s: invalid parameter name\n", comand[(len_com * -1)]);
+		return(env);
+	}
+	len_env = len_doble_base(env);
+	str = ft_calloc((len_env - len_com) + 1, sizeof(char *));
+	i = -1;
+	j = 0;
+	while (len_env > ++i)
+	{
+		if (find_env(comand, env[i]) == -2)
+			str[j++] = env[i];
+		else
+			free(env[i]);
+	}
+	free(env);
+	//tmp
+	int tmp;
+	tmp = 0;
+	while (comand[tmp] != '\0')
+		free(comand[tmp++]);
+	free(comand);
+	return (str);
 }
-*/

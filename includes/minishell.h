@@ -35,5 +35,6 @@ t_list	*tokenize(char *input);
 char	**ft_export(char **env, char **comand);
 char	**malloc_env(char **env);
 void	ft_env(char **env);
+char	**ft_unset(char **env, char **comand);
 
 #endif

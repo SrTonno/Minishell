@@ -52,11 +52,11 @@ int	main(int argc, char *argv[], char **env)
 			break ;
 		print_lst(token_lst);
 		ft_lstclear(&token_lst, free);
-		env = ft_export(env, ft_split("a as=p  LESS=aaaaaaaaaaaasasasaasjfgkfg sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4 tractor=red", ' '));
-		int u;
-		u = 0;
-		while (env[u] != '\0')
-			printf("%s\n", env[u++]);
+		env = ft_export(env, ft_split("export as=p  LESS=aaaaaaaaaaaasasasaasjfgkfg sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4 tractor=red", ' '));
+		ft_env(env);
+		printf("-------------\n");
+		env = ft_unset(env, ft_split("unset tr USER tr iuppppp", ' '));
+		ft_env(env);
 		free(input);
 	}
 	free(input);
