@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/23 17:57:07 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:56:52 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	find_heredocs(t_ast_node *ast, t_len_ast num)
 	return (0);
 }*/
 
-t_ast_node	*parser(t_list *token_lst)
+t_ast_node	*parse(t_list *token_lst)
 {
 	t_ast_node	*ast;
 	t_len_ast	num;
@@ -84,7 +84,8 @@ t_ast_node	*parser(t_list *token_lst)
 	while (token_lst != NULL)
 	{
 		num = count_blocks(token_lst, 0);
-		new_block_ast(ast, token_lst, num);
+		if (*((unsigned char *)token_lst->content) != '|')
+			new_block_ast(ast, token_lst, num);
 		token_lst = mov_to_next_list(token_lst, num.len);
 	}
 	return (ast);

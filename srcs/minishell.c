@@ -25,18 +25,22 @@ void	print_lst(t_list *lst)
 static	void print_ast(t_ast_node *ast)
 {
 	int	i;
+	int	index = 1;
 
 	while(ast != NULL)
 	{
+		printf("NODO AST Nº%i\n", index++);
+		printf("---------------------------------------------\ncommandos: ");
 		i = -1;
 		while (ast->command[++i] != NULL)
 			printf("%s ", ast->command[i]);
 		i = -1;
-		printf("(heredocs)->");
+		printf("\nheredocs: ");
 		while (ast->heredocs[++i] != '\0')
 			printf("%s ", ast->heredocs[i]);
+		printf("\ninfile: %i/ outfile: %i mode %i", ast->input_fd, ast->output_fd, ast->mode_write);
+		printf("\n---------------------------------------------\n");
 		ast = ast->next;
-		printf("\n");
 	}
 }
 
@@ -72,7 +76,7 @@ int	main(void)
 		if (token_lst == NULL)
 			break ;
 		//print_lst(token_lst);
-		ast = parser(token_lst);
+		ast = parse(token_lst);
 		print_ast(ast);
 		all_free(token_lst, ast, input);
 	}

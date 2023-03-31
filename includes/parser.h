@@ -27,7 +27,7 @@
 # define SYNTAX_ERROR 2
 # define NO_FILE_ERROR 3
 
-typedef struct s_ast_node
+typedef struct	s_ast_node
 {
 	char				**command;
 	int					input_fd;

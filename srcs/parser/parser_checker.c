@@ -94,6 +94,7 @@ int	check_files(t_list *token_lst)
 				count = handle_error(PERM_ERR, token_lst->next->content);
 				token_lst = jump_next_pipe(token_lst);
 			}
+			close(open(token_lst->next->content, O_CREAT, 0644));
 		}
 		token_lst = token_lst->next;
 	}

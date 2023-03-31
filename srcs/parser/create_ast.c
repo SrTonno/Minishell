@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/24 15:00:15 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:12:50 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static void	check_redirect(t_ast_node *ast, t_list *list)
 	{
 		if (ft_strlen((char *)list->content) == 2)
 			ast->heredocs[find_null(ast->heredocs)] = list->next->content;
-		if (ast->output_fd != 0)
-			close(ast->output_fd);
-		ast->output_fd = open(list->next->content, O_RDONLY, 0);
+		if (ast->input_fd != 0)
+			close(ast->input_fd);
+		ast->input_fd = open(list->next->content, O_RDONLY, 0);
 	}
 	if (*((unsigned char *)list->content) == '>')
 	{
@@ -38,9 +38,9 @@ static void	check_redirect(t_ast_node *ast, t_list *list)
 			ast->mode_write = 2;
 		else
 			ast->mode_write = 1;
-		if (ast->input_fd != 0)
-			close(ast->input_fd);
-		ast->input_fd = open(list->next->content, O_RDWR | O_CREAT, 0644);
+		if (ast->output_fd != 1)
+			close(ast->output_fd);
+		ast->output_fd = open(list->next->content, O_RDWR);
 	}
 }
 
@@ -53,7 +53,7 @@ static t_ast_node	*create_ast(t_len_ast max)
 	sizeof(char *));
 	new_ast->heredocs = ft_calloc(max.heredocs + 1, sizeof(char *));
 	new_ast->input_fd = 0;
-	new_ast->output_fd = 0;
+	new_ast->output_fd = 1;
 	new_ast->mode_write = 0;
 	return (new_ast);
 }
