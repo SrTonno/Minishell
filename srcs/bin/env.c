@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/30 15:25:38 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:24:38 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,36 @@ void	ft_env(char **env)
 	while (env[i] != '\0')
 		printf("%s\n", env[i++]);
 }
+
+void	env_expand(char **env, char *input)
+{
+	int		len;
+	int		top;
+	int		max;
+	char	*var;
+	char	*str;
+	int		i;
+
+	len = find_char(input, '$');
+	len++;
+	top = find_char(input + 1, ' ');
+	var = ft_calloc((top) + 1, sizeof(char));
+	ft_strlcpy(var, input + len, (top - len));
+	printf("/%s/\n", var);
+	i = find_env_basic(env, var);
+	if (i >= 0)
+	{
+		printf("%s//%lu/\n", env[i], (ft_strlen(input) + ft_strlen(env[i])) - ((ft_strlen(var) + 1) * 2));
+		str = replace_env((ft_strlen(input) + ft_strlen(env[i])) - ((ft_strlen(var) + 1) * 2), input, env[i], len - 1);
+	}
+	else
+	{
+		str = replace_env((ft_strlen(input) - (ft_strlen(var) + 1)), input, NULL, len - 1);
+	}
+	printf("%s\n", str);
+
+}
+
 char	**ft_export(char **env, char **comand)
 {
 	int		i;
@@ -84,7 +114,7 @@ char	**ft_unset(char **env, char **comand)
 	if (len_com < 0)
 	{
 		printf("unset: %s: invalid parameter name\n", comand[(len_com * -1)]);
-		return(env);
+		//return(env);
 	}
 	len_env = len_doble_base(env);
 	str = ft_calloc((len_env - len_com) + 1, sizeof(char *));

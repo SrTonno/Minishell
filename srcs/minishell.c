@@ -42,6 +42,7 @@ int	main(int argc, char *argv[], char **env)
 	{
 		input = readline(PROMPT);
 		ctr_d(input);
+		env_expand(env, input);
 		if (ft_strncmp(input, "exit", 5) == 0)
 			break ;
 		if (ft_strncmp(input, "\0", 1) == 0)
@@ -52,11 +53,11 @@ int	main(int argc, char *argv[], char **env)
 			break ;
 		print_lst(token_lst);
 		ft_lstclear(&token_lst, free);
-		env = ft_export(env, ft_split("export as=p  LESS=aaaaaaaaaaaasasasaasjfgkfg sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4 tractor=red", ' '));
-		ft_env(env);
-		printf("-------------\n");
-		env = ft_unset(env, ft_split("unset tr USER tr iuppppp", ' '));
-		ft_env(env);
+		//env = ft_export(env, ft_split("export as=p  LESS=aaaaaaaaaaaasasasaasjfgkfg sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4 tractor=red", ' '));
+		//ft_env(env);
+		//printf("-------------\n");
+		//env = ft_unset(env, ft_split("unset tr= USER tr iuppppp", ' '));
+		//ft_env(env);
 		free(input);
 	}
 	free(input);

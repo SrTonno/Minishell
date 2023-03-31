@@ -69,10 +69,10 @@ fclean: clean
 	@${RM} ${NAME}
 
 setup:
-	rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew
+	@rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew
 	#echo 'export PATH=$$HOME/goinfre/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc
-	brew update
-	brew install readline
+	@brew update
+	@brew install readline
 	@echo "Install brew and library in MAC."
 
 ################################################################################

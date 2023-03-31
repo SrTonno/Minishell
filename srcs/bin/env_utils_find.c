@@ -6,11 +6,12 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:36:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/30 14:38:57 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:04:17 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
+
 
 int	find_char(char *str, char c)
 {
@@ -31,12 +32,27 @@ int	find_env_basic(char **env, char *str)
 	len =  ft_strlen(str);
 	i = -1;
 	while (env[++i] != '\0')
-		if (ft_strncmp(env[i], str, len) == 0)
+		if (len == find_char(env[i], '=') && ft_strncmp(env[i], str, len) == 0)
 			return (i);
 	return (-2);
 }
 
 int	find_env(char **env, char *str)
+{
+	int		i;
+	int		len;
+
+	len =  find_char(str, '=');
+	if (len == -1 || len == 0)
+		return (-1);
+	i = -1;
+	while (env[++i] != '\0')
+		if (ft_strncmp(env[i], str, len) == 0)
+			return (i);
+	return (-2);
+}
+
+int	find_env_not_c(char **env, char *str, char c)
 {
 	int		i;
 	int		len;
