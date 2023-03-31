@@ -33,15 +33,18 @@ typedef struct s_ast_node
 	int					mode_write;
 	int					output_fd;
 	char				**heredocs;
+	int					*pipe_fd;
 	struct s_ast_node	*next;
 }	t_ast_node;
 
-void	handler(int signum);
-void	ctr_d(char *input);
+int			handle_input(char *input);
 
-t_list	*tokenize(char *input);
+void		handler(int signum);
+void		ctr_d(char *input);
+
+t_list		*tokenize(char *input);
 
 t_ast_node	*parse(t_list *list);
-void	free_ast(t_ast_node *ast);
+void		free_ast(t_ast_node *ast);
 
 #endif

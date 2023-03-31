@@ -34,3 +34,9 @@ El Parser se encarga de unir los tokens que forman un comando mediante un (char*
 
 >> "<< fin cat -benstuv > file.txt" se transformaría en
 ["<<", "fin", "cat-benstuv", ">", "file.txt]
+
+
+FUNCIONAMIENTO
+
+>> cat < srcs/signal.c > a | cat -> escribe en a dejando el pipe vacío
+>> cat < srcs/signal.c | cat < Makefile -> cat toma como entrada el contenido de Makefile, no el que recibe del pipe

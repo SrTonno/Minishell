@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/31 17:12:50 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:14:07 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@ static void	check_redirect(t_ast_node *ast, t_list *list)
 	{
 		if (ft_strlen((char *)list->content) == 2)
 			ast->heredocs[find_null(ast->heredocs)] = list->next->content;
-		if (ast->input_fd != 0)
+		if (ast->input_fd != STDIN_FILENO)
 			close(ast->input_fd);
-		ast->input_fd = open(list->next->content, O_RDONLY, 0);
+		ast->input_fd = open(list->next->content, O_RDONLY);
 	}
 	if (*((unsigned char *)list->content) == '>')
 	{
 		if (ft_strlen((char *)list->content) == 2)
-			ast->mode_write = 2;
+			ast->mode_write = APPEND;
 		else
-			ast->mode_write = 1;
-		if (ast->output_fd != 1)
+			ast->mode_write = OVERWRITE;
+		if (ast->output_fd != STDOUT_FILENO)
 			close(ast->output_fd);
-		ast->output_fd = open(list->next->content, O_RDWR);
+		ast->output_fd = open(list->next->content, O_WRONLY);
 	}
 }
 
@@ -52,9 +52,10 @@ static t_ast_node	*create_ast(t_len_ast max)
 	new_ast->command = ft_calloc((max.len - (max.meta * 2)) + 1, \
 	sizeof(char *));
 	new_ast->heredocs = ft_calloc(max.heredocs + 1, sizeof(char *));
-	new_ast->input_fd = 0;
-	new_ast->output_fd = 1;
-	new_ast->mode_write = 0;
+	new_ast->input_fd = STDIN_FILENO;
+	new_ast->output_fd = STDOUT_FILENO;
+	new_ast->mode_write = NOFILE;
+	new_ast->pipe_fd = NULL;
 	return (new_ast);
 }
 

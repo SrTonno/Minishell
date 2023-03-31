@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/31 16:56:52 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:32:23 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,31 @@ static t_len_ast	count_blocks(t_list *list, int mode)
 	}
 	return (command);
 }
-	/*if ((*((unsigned char *)list->content) == '|'
-			|| *((unsigned char *)list->content) == '<'
-			|| (*((unsigned char *)list->content) == '>')) && command.len != 1)
-			{
-				command.meta++;
-				command.len--;
-			}*/
 
 static void	new_block_ast(t_ast_node *ast, t_list *list, t_len_ast max)
 {
 	ast = find_end_ast(ast);
 	ast->next = list_to_char(list, max);
 }
-/*
-static int	find_heredocs(t_ast_node *ast, t_len_ast num)
-{
-	int	i;
 
-	i = -1;
-	ast = find_end_ast(ast);
-	while (ast->command[num.len - 1][++i] != '\0')
+int	create_pipes(t_ast_node *ast)
+{
+	if (ast == NULL && ast->next == NULL)
+		return (1);
+	while (ast->next != NULL)
 	{
-		if ((ast->command[num.len - 1][i] == '<'
-			|| ast->command[num.len - 1][i] == '>'))
-			return (1);
+		if (ast->output_fd == 1 && ast->next->input_fd == 0)
+		{
+			ast->pipe_fd = (int *)ft_calloc(2, sizeof(int));
+			if (ast->pipe_fd == NULL || pipe(ast->pipe_fd))
+				return (0);
+			ast->output_fd = ast->pipe_fd[WRITE_END];
+			ast->next->input_fd = ast->pipe_fd[READ_END];
+		}
+		ast = ast->next;
 	}
-	return (0);
-}*/
+	return (1);
+}
 
 t_ast_node	*parse(t_list *token_lst)
 {
@@ -77,7 +74,7 @@ t_ast_node	*parse(t_list *token_lst)
 	if (check_metachars(token_lst) != 0
 		|| check_text_after_metachars(token_lst) != 0
 		|| check_files(token_lst) != 0)
-		return (NULL);
+		return (NULL); // NULL está asociado con error, devolver otra cosa porque no es un error que suponga exit del programa
 	num = count_blocks(token_lst, 0);
 	ast = list_to_char(token_lst, num);
 	token_lst = mov_to_next_list(token_lst, num.len);
@@ -87,6 +84,12 @@ t_ast_node	*parse(t_list *token_lst)
 		if (*((unsigned char *)token_lst->content) != '|')
 			new_block_ast(ast, token_lst, num);
 		token_lst = mov_to_next_list(token_lst, num.len);
+	}
+	create_pipes(ast);
+	if (create_pipes(ast) == 0)
+	{
+		free_ast(ast);
+		return (NULL);
 	}
 	return (ast);
 }

@@ -27,13 +27,21 @@
 # define SYNTAX_ERROR 2
 # define NO_FILE_ERROR 3
 
-typedef struct	s_ast_node
+# define NOFILE 0
+# define OVERWRITE 1
+# define APPEND 2
+
+# define READ_END 0
+# define WRITE_END 1
+
+typedef struct s_ast_node
 {
 	char				**command;
 	int					input_fd;
 	int					mode_write;
 	int					output_fd;
 	char				**heredocs;
+	int					*pipe_fd;
 	struct s_ast_node	*next;
 }	t_ast_node;
 
@@ -55,5 +63,7 @@ int			check_text_after_metachars(t_list *token_lst);
 int			check_files(t_list *token_lst);
 
 int			is_special(unsigned char c);
+
+void		free_ast(t_ast_node *ast);
 
 #endif

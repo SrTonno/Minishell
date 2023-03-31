@@ -56,8 +56,6 @@ int	main(void)
 {
 	char				*input;
 	struct sigaction	sa;
-	t_list				*token_lst;
-	t_ast_node			*ast;
 
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
@@ -72,14 +70,29 @@ int	main(void)
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
 		add_history(input);
-		token_lst = tokenize(input);
-		if (token_lst == NULL)
-			break ;
-		//print_lst(token_lst);
-		ast = parse(token_lst);
-		print_ast(ast);
-		all_free(token_lst, ast, input);
+		if (handle_input(input) == 1)
+			return (0);
 	}
 	free(input);
+	return (0);
+}
+
+int	handle_input(char *input)
+{
+	t_list		*token_lst;
+	t_ast_node	*ast;
+
+	token_lst = tokenize(input);
+	if (token_lst == NULL)
+		return (1);
+	//print_lst(token_lst);
+	ast = parse(token_lst);
+	if (ast == NULL)
+	{
+		all_free(token_lst, ast, input);
+		return (1);
+	}
+	print_ast(ast);
+	all_free(token_lst, ast, input);
 	return (0);
 }
