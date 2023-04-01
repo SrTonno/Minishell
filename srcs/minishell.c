@@ -42,12 +42,15 @@ int	main(int argc, char *argv[], char **env)
 	{
 		input = readline(PROMPT);
 		ctr_d(input);
-		env_expand(env, input);
+		add_history(input);
+		while (find_var(input) >= 0)
+			input = env_expand(env, input);
+		printf("\nFIN -> %s\n", input);
 		if (ft_strncmp(input, "exit", 5) == 0)
 			break ;
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
-		add_history(input);
+
 		token_lst = tokenize(input);
 		if (token_lst == NULL)
 			break ;

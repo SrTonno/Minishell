@@ -6,19 +6,18 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:36:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/31 17:04:17 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:47:02 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
-
 
 int	find_char(char *str, char c)
 {
 	int	i;
 
 	i = -1;
-	while(str[++i] != '\0')
+	while (str[++i] != '\0')
 		if (str[i] == c)
 			return (i);
 	return (-1);
@@ -29,7 +28,7 @@ int	find_env_basic(char **env, char *str)
 	int		i;
 	int		len;
 
-	len =  ft_strlen(str);
+	len = ft_strlen(str);
 	i = -1;
 	while (env[++i] != '\0')
 		if (len == find_char(env[i], '=') && ft_strncmp(env[i], str, len) == 0)
@@ -42,22 +41,7 @@ int	find_env(char **env, char *str)
 	int		i;
 	int		len;
 
-	len =  find_char(str, '=');
-	if (len == -1 || len == 0)
-		return (-1);
-	i = -1;
-	while (env[++i] != '\0')
-		if (ft_strncmp(env[i], str, len) == 0)
-			return (i);
-	return (-2);
-}
-
-int	find_env_not_c(char **env, char *str, char c)
-{
-	int		i;
-	int		len;
-
-	len =  find_char(str, '=');
+	len = find_char(str, '=');
 	if (len == -1 || len == 0)
 		return (-1);
 	i = -1;
@@ -86,4 +70,29 @@ int	find_mod_env(char **env, char **comand)
 		}
 	}
 	return (mod);
+}
+
+int	find_var(char *str)
+{
+	int	i;
+	int	len;
+	int	quotes;
+
+	i = -1;
+	quotes = 0;
+	len = ft_strlen(str);
+	while (str[++i] != '\0')
+	{
+		if (str[i] == SINGLE_QUOTE)
+		{
+			if (quotes == 0)
+				quotes = 1;
+			else
+				quotes = 0;
+		}
+		if ((len > i && str[i] == '$' && quotes == 0)
+			&& (str[(i + 1)] != ' ' || str[i + 1] == '?'))
+			return (i);
+	}
+	return (-1);
 }

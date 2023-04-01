@@ -36,6 +36,7 @@ char	**ft_export(char **env, char **comand);
 char	**malloc_env(char **env);
 void	ft_env(char **env);
 char	**ft_unset(char **env, char **comand);
-void	env_expand(char **env, char *input);
+char	*env_expand(char **env, char *input);
+int		find_var(char *str);
 
 #endif

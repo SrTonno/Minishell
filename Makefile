@@ -51,6 +51,7 @@ test: ${NAME}
 ${NAME}: ${OBJS}
 	@make -s -C ${LIB_DIR}
 	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
+	@printf "${God} ${BIBlue}Mini${NoColor}🐚 de ${BIPurple}LaLora${NoColor}${God}\n"
 
 ${LFT_NAME}:
 	@make -s -C ${LIB_DIR}
@@ -63,16 +64,18 @@ re: fclean all
 clean:
 	@make -s -C ${LIB_DIR} clean
 	@${RM} ${OBJS}
+	@printf "${Bad}${BIRed}Delete *.o${NoColor}${Bad}\n"
 
 fclean: clean
 	@make -s -C ${LIB_DIR} fclean
 	@${RM} ${NAME}
+	@printf "${Bad}${BIRed}Delete ${NAME}${NoColor}${Bad}\n"
+
 
 setup:
 	@rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew
 	#echo 'export PATH=$$HOME/goinfre/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc
 	@brew update
 	@brew install readline
-	@echo "Install brew and library in MAC."
-
+	@printf "${God}${BICyan}Install brew and library in MAC.${God} "
 ################################################################################

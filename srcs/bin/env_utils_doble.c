@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:07:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/30 15:01:31 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:34:00 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	len_doble_uniq_one(char **str, char **env)
 	{
 		if (ft_strchr(str[i], '=') != NULL)
 			return (i * -1);
-		if(to_future(str, i) == -1 && find_env_basic(env, str[i]) >= 0)
+		if (to_future(str, i) == -1 && find_env_basic(env, str[i]) >= 0)
 			count++;
 	}
 	return (count);
