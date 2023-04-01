@@ -41,7 +41,7 @@ int	main(int argc, char *argv[], char **env)
 	while (1)
 	{
 		input = readline(PROMPT);
-		ctr_d(input);
+		ctr_d(input, env);
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
 		add_history(input);

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/09 12:13:22 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/01 19:09:28 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ void	handler(int signum)
 	}
 }
 
-void	ctr_d(char *input)
+void	ctr_d(char *input, char **env)
 {
 	if (input == NULL) //ctr+D
 	{
 		rl_replace_line("exit", 0);
 		//rl_redisplay();
+		doble_free(env);
 		exit (0);
 	}
 }

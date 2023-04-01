@@ -27,9 +27,11 @@
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
 void	handler(int signum);
-void	ctr_d(char *input);
+void	ctr_d(char *input, char **env);
 
 t_list	*tokenize(char *input);
+
+void	doble_free(char *str);
 
 //env
 char	**ft_export(char **env, char **comand);

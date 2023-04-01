@@ -37,3 +37,13 @@ int	is_space(unsigned char c)
 		return (1);
 	return (0);
 }
+
+void	doble_free(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != NULL)
+		free(str[i++]);
+	free(str);
+}
