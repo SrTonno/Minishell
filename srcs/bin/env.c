@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/01 16:47:36 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:53:29 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_env(char **env)
 	int	i;
 
 	i = 0;
-	while (env[i] != '\0')
+	while (env[i] != NULL)
 		printf("%s\n", env[i++]);
+	printf("--------------------\n");
 }
 
 char	*env_expand(char **env, char *input)
@@ -30,21 +31,18 @@ char	*env_expand(char **env, char *input)
 	int		i;
 
 	len = find_var(input) + 1;
-	top = len;
-	while (input[top] != '$' && input[top] != ' '
-		&& input[top] != '\0' && input[top - 1] != '?')
-		top++;
-	top++;
-	var = ft_calloc((top) + 1, sizeof(char));
+	top = find_var_end(input, len);
+	var = ft_calloc((top - len) + 1, sizeof(char));
 	ft_strlcpy(var, input + len, (top - len));
-	printf("/%s/, len ->%d, top->%d\n", var, len, top);
 	i = find_env_basic(env, var);
-	if (i >= 0)
+	if (var[0] == '?')
+		str = replace_env(ft_strlen(input) - 1, input, "?");
+	else if (i >= 0)
 		str = replace_env((ft_strlen(input) + ft_strlen(env[i])) \
-			- ((ft_strlen(var) + 1) * 2), input, env[i], len - 1);
+			- ((ft_strlen(var) + 1) * 2), input, env[i]);
 	else
 		str = replace_env((ft_strlen(input) - \
-			(ft_strlen(var) + 1)), input, NULL, len - 1);
+			(ft_strlen(var) + 1)), input, NULL);
 	free (var);
 	free (input);
 	return (str);
@@ -54,26 +52,25 @@ char	**ft_export(char **env, char **comand)
 {
 	int		i;
 	int		j;
-	int		mod;
 	int		len_env;
 	int		len_com;
 	char	**str;
 
 	i = 0;
-	mod = find_mod_env(env, comand);
 	len_env = len_doble_base(env);
-	len_com = len_doble(comand);
-	printf("mod->%d; env->%d; comand->%d\n", mod, len_env, len_com);
-	if ((len_com) < 0)
+	len_com = export_util(env, comand);
+	if (len_com < 0)
 		return (env);
-	str = ft_calloc(((len_com) + len_env + 1), sizeof(char *));
+	str = ft_calloc((len_com + len_env + 1), sizeof(char *));
 	j = 0;
 	while (len_env > j)
 		str[i++] = env[j++];
 	j = 0;
 	while (comand[++j] != '\0')
-		if (ft_strchr(comand[j], '=') != NULL && find_env(env, comand[j]) <= 0 && to_future(comand, j) == -1)
+		if (ft_strchr(comand[j], '=') != NULL && find_env(env, comand[j]) <= 0
+			&& to_future(comand, j) == -1)
 			str[i++] = ft_strdup(comand[j]);
+	str[i] = NULL;
 	free (env);
 	return (str);
 }
@@ -123,6 +120,7 @@ char	**ft_unset(char **env, char **comand)
 		else
 			free(env[i]);
 	}
+	str[j] = NULL;
 	free(env);
 	return (str);
 }

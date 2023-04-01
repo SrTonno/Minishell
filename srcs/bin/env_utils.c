@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/01 16:36:02 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:51:16 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,54 @@ int	to_future(char **str, int i)
 	return (-1);
 }
 
-char	*replace_env(int len, char *org, char *add, int mark)
+static int	replace_var(int j, char *dst, char *add)
+{
+	int	a;
+
+	if (add != NULL)
+	{
+		a = find_char(add, '=') + 1;
+		while (add[a] != '\0')
+			dst[j++] = add[a++];
+	}
+	return (j);
+}
+
+char	*replace_env(int len, char *org, char *add)
 {
 	int		i;
 	int		j;
-	int		a;
-	int		meta;
 	char	*dst;
+	int		mark;
 
 	dst = ft_calloc(len + 1, sizeof(char));
+	mark = find_var(org);
 	i = 0;
 	j = 0;
-	meta = 0;
 	while (len >= j)
 	{
 		if (i == mark)
 		{
-			if (add != NULL)
-			{
-				a = find_char(add, '=') + 1;
-				while (add[a] != '\0')
-					dst[j++] = add[a++];
-			}
-			i++;
-			while (org[i] != '$' && org[i] != ' ' && org[i] != '\0' && org[i - 1] != '?')
+			if (org[++i] == '?')
+				dst[j++] = '0';
+			else
+				j = replace_var(j, dst, add);
+			while (org[i] != '$' && org[i] != ' ' && org[i] != '\0'
+				&& org[i - 1] != '?')
 				i++;
 		}
 		else
 			dst[j++] = org[i++];
 	}
 	return (dst);
+}
+
+int	export_util(char **env, char **comand)
+{
+	int	mod;
+	int	len;
+
+	mod = find_mod_env(env, comand);
+	len = len_doble(comand);
+	return (len - mod);
 }
