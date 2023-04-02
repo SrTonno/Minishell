@@ -31,7 +31,7 @@ void	ctr_d(char *input, char **env);
 
 t_list	*tokenize(char *input);
 
-void	doble_free(char *str);
+void	doble_free(char **str);
 
 //env
 char	**ft_export(char **env, char **comand);

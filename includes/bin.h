@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/01 18:50:43 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/02 13:56:55 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int		find_env(char **env, char *str);
 int		find_var(char *str);
 int		find_var_end(char *str, int i);
 int		export_util(char **env, char **comand);
-
+int		find_env_len(char **env, char *str);
 #endif
 

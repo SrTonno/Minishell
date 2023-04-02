@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-// env var tienen alpha, num, ?, _
 int	is_env_var_char(unsigned char c)
 {
 	if (c == '\0')

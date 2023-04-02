@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/01 18:53:29 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/02 13:57:08 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	**ft_unset(char **env, char **comand)
 	j = 0;
 	while (len_env > ++i)
 	{
-		if (find_env(comand, env[i]) == -2)
+		if (find_env_len(comand, env[i]) == -2)
 			str[j++] = env[i];
 		else
 			free(env[i]);
