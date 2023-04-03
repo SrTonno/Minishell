@@ -55,10 +55,11 @@ int	main(int argc, char *argv[], char **env)
 			break ;
 		print_lst(token_lst);
 		ft_lstclear(&token_lst, free);
-		env = ft_export(env, ft_split("export as=p tractor=red LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sasos=p i o=h i hah= p=oi u=p tr=p tr=re y=4", ' '));
-		ft_env(env);
+		env = ft_export(env, ft_split("export as=p tractor=red LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sasos=p i o=h i hah= p=oi u=p yuy=pap tr=re y=4 bob=p", ' '));
+		//ft_env(env);
 		printf("-------------\n");
-		env = ft_unset(env, ft_split("unset tractor=red as tr= USER iuppppp y", ' '));
+		env = ft_unset(env, ft_split("unset as tr= USER iuppppp yuy= hah", ' '));
+		//printf("HEY\n");
 		ft_env(env);
 		free(input);
 	}

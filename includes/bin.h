@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/02 13:56:55 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/02 15:48:44 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 char	*replace_env(int	len, char *org, char *add);
 int		len_doble(char **str);
 int		len_doble_base(char **str);
-int		len_doble_uniq_one(char **str, char **env);
+int		len_doble_invert(char **str);
+int		len_doble_uniq_one(char **str, char **env, int mode);
 int		to_future(char **str, int i);
 int		find_char(char *str, char c);
 int		find_env_basic(char **env, char *str);

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/02 13:57:08 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:28:30 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*env_expand(char **env, char *input)
 	return (str);
 }
 
+//Error se sale porque no encuentra NULL
 char	**ft_export(char **env, char **comand)
 {
 	int		i;
@@ -57,11 +58,18 @@ char	**ft_export(char **env, char **comand)
 	char	**str;
 
 	i = 0;
+	printf("Export\n");
 	len_env = len_doble_base(env);
+	printf("len_env->%d\n", len_env);
 	len_com = export_util(env, comand);
-	if (len_com < 0)
+	printf("len_com%d\n", len_com);
+	if (len_com <= 1)
+	{
+		printf("////////////////////////HOLA\n");
 		return (env);
+	}
 	str = ft_calloc((len_com + len_env + 1), sizeof(char *));
+	str[(len_com + len_env + 1)] = NULL;
 	j = 0;
 	while (len_env > j)
 		str[i++] = env[j++];
@@ -70,6 +78,7 @@ char	**ft_export(char **env, char **comand)
 		if (ft_strchr(comand[j], '=') != NULL && find_env(env, comand[j]) <= 0
 			&& to_future(comand, j) == -1)
 			str[i++] = ft_strdup(comand[j]);
+	printf("%d/%d\n", ((len_com + len_env + 1)), i);
 	str[i] = NULL;
 	free (env);
 	return (str);
@@ -98,6 +107,7 @@ char	**malloc_env(char **env)
 	return (new_env);
 }
 
+//se livera de mas
 char	**ft_unset(char **env, char **comand)
 {
 	int		len_env;
@@ -106,11 +116,17 @@ char	**ft_unset(char **env, char **comand)
 	int		i;
 	int		j;
 
-	len_com = len_doble_uniq_one(comand, env);
+	printf("UNSET");
+	len_com = len_doble_uniq_one(comand, env, 0);
 	if (len_com < 0)
+	{
 		printf("unset: %s: invalid parameter name\n", comand[(len_com * -1)]);
+		len_com = len_doble_uniq_one(comand, env, 1);
+	}
+	printf("%d\n", len_com);
 	len_env = len_doble_base(env);
 	str = ft_calloc((len_env - len_com) + 1, sizeof(char *));
+	str[((len_env - len_com) + 1)] = NULL;
 	i = -1;
 	j = 0;
 	while (len_env > ++i)
@@ -118,8 +134,12 @@ char	**ft_unset(char **env, char **comand)
 		if (find_env_len(comand, env[i]) == -2)
 			str[j++] = env[i];
 		else
+		{
+			printf("%s\n", env[i]);
 			free(env[i]);
+		}
 	}
+	printf("%d/%d\n", j, (((len_env - len_com) + 1)));
 	str[j] = NULL;
 	free(env);
 	return (str);

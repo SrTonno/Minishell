@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/01 18:51:16 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:17:48 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*replace_env(int len, char *org, char *add)
 		else
 			dst[j++] = org[i++];
 	}
+
 	return (dst);
 }
 
@@ -73,7 +74,9 @@ int	export_util(char **env, char **comand)
 	int	mod;
 	int	len;
 
+	printf("HOLAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
 	mod = find_mod_env(env, comand);
+	printf("FiiiiiiiiiiiiiinnnnNnnnnnNnnnNnnnnnnnnnnnnnn\n");
 	len = len_doble(comand);
-	return (len - mod);
+	return ((len - 1) - mod);
 }
