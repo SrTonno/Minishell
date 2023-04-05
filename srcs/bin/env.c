@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/05 15:24:05 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:41:29 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ char	**ft_export(char **env, char **comand)
 	printf("Export\n");
 	len_env = len_doble_base(env);
 	printf("len_env->%d\n", len_env);
-	len_com = export_util(env, comand);
+	//if (len_env != 0)
+		len_com = export_util(env, comand);
+	//else
+		//len_com = len_doble(comand);
 	printf("len_com%d\n", len_com);
 	if (len_com <= 0)
 	{
@@ -69,22 +72,21 @@ char	**ft_export(char **env, char **comand)
 		return (env);
 	}
 	str = ft_calloc((len_com + len_env + 1), sizeof(char *));
-	str[(len_com + len_env + 1)] = NULL;
 	j = 0;
-	while (len_env > j)
+	while (len_env != 0 && len_env > j)
 		str[i++] = env[j++];
 	j = 0;
 	while (comand[++j] != '\0')
-		if (ft_strchr(comand[j], '=') != NULL && find_env(env, comand[j]) <= 0
+		if (find_char(comand[j], '=') > 0 && find_env(env, comand[j]) <= 0
 			&& to_future(comand, j) == -1)
 			str[i++] = ft_strdup(comand[j]);
-	printf("%d/%d\n", ((len_com + len_env + 1)), i);
+	printf("%d/%d\n", i, ((len_com + len_env + 1)));
 	str[i] = NULL;
 	free (env);
 	//tmp
 	int tmp;
 	tmp = 0;
-	while (comand[tmp] != '\0')
+	while (comand[tmp] != NULL)
 		free(comand[tmp++]);
 	free(comand);
 	return (str);
@@ -141,7 +143,7 @@ char	**ft_unset(char **env, char **comand)
 	//while (len_env > ++i)
 	while (env[++i] != NULL)
 	{
-		//printf("(%d)->>%s)\n", i, env[i]);
+		printf("(%d)->>%s)\n", i, env[i]);
 		if (find_env_len(comand, env[i]) == -2)
 		{
 			//printf("(%d)\n", i);
@@ -149,8 +151,9 @@ char	**ft_unset(char **env, char **comand)
 		}
 		else
 		{
-			printf("///(%d)->>%s)\n", i, env[i]);
+			printf("///(%d)->>%s\n)", i, env[i]);
 			free(env[i]);
+			printf("  \tLIBERADO\n");
 		}
 	}
 	printf("\n%d/%d\n", j, (((len_env - len_com) + 1)));
@@ -159,11 +162,11 @@ char	**ft_unset(char **env, char **comand)
 	free(env);
 	printf("FINN UNSET\n");
 	//tmp
-	int tmp;
+	/*int tmp;
 	tmp = 0;
 	while (comand[tmp] != NULL)
 		free(comand[tmp++]);
-	free(comand);
+	free(comand);*/
 	printf("FINN FIN UNSET\n");
 	return (str);
 }
