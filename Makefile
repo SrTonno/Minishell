@@ -3,7 +3,7 @@ include colors.mk
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/03 18:28:30 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:24:05 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*env_expand(char **env, char *input)
 	return (str);
 }
 
-//Error se sale porque no encuentra NULL
+//Error se sale porque no encuentra NULL// puede duplicar datos
 char	**ft_export(char **env, char **comand)
 {
 	int		i;
@@ -63,9 +63,9 @@ char	**ft_export(char **env, char **comand)
 	printf("len_env->%d\n", len_env);
 	len_com = export_util(env, comand);
 	printf("len_com%d\n", len_com);
-	if (len_com <= 1)
+	if (len_com <= 0)
 	{
-		printf("////////////////////////HOLA\n");
+		printf("////////////////////////IGUALLLLLLLLLLLL\n");
 		return (env);
 	}
 	str = ft_calloc((len_com + len_env + 1), sizeof(char *));
@@ -81,6 +81,12 @@ char	**ft_export(char **env, char **comand)
 	printf("%d/%d\n", ((len_com + len_env + 1)), i);
 	str[i] = NULL;
 	free (env);
+	//tmp
+	int tmp;
+	tmp = 0;
+	while (comand[tmp] != '\0')
+		free(comand[tmp++]);
+	free(comand);
 	return (str);
 }
 /*
@@ -100,14 +106,16 @@ char	**malloc_env(char **env)
 	char	**new_env;
 
 	len = len_doble_base(env);
+	printf("MAALLOC\n");
 	new_env = ft_calloc(len + 1, sizeof(char *));
 	i = -1;
 	while (env[++i] != '\0')
 		new_env[i] = ft_strdup(env[i]);
+	env[++i] = NULL;
 	return (new_env);
 }
 
-//se livera de mas
+//Peta cuando se elimina la ultima variable
 char	**ft_unset(char **env, char **comand)
 {
 	int		len_env;
@@ -129,18 +137,33 @@ char	**ft_unset(char **env, char **comand)
 	str[((len_env - len_com) + 1)] = NULL;
 	i = -1;
 	j = 0;
-	while (len_env > ++i)
+	printf("NEW_ENV\n");
+	//while (len_env > ++i)
+	while (env[++i] != NULL)
 	{
+		//printf("(%d)->>%s)\n", i, env[i]);
 		if (find_env_len(comand, env[i]) == -2)
+		{
+			//printf("(%d)\n", i);
 			str[j++] = env[i];
+		}
 		else
 		{
-			printf("%s\n", env[i]);
+			printf("///(%d)->>%s)\n", i, env[i]);
 			free(env[i]);
 		}
 	}
-	printf("%d/%d\n", j, (((len_env - len_com) + 1)));
+	printf("\n%d/%d\n", j, (((len_env - len_com) + 1)));
 	str[j] = NULL;
+	//if (env != NULL)
 	free(env);
+	printf("FINN UNSET\n");
+	//tmp
+	int tmp;
+	tmp = 0;
+	while (comand[tmp] != NULL)
+		free(comand[tmp++]);
+	free(comand);
+	printf("FINN FIN UNSET\n");
 	return (str);
 }

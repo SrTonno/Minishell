@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:07:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/03 18:18:42 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:03:39 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ int	len_doble_base(char **str)
 	count = 0;
 	while (str[i] != NULL)
 	{
-		printf("len i = %d(%s)\n", i, str[i]);
-		if (ft_strchr(str[i], '=') != NULL)
+		//printf("len i = %d(%s)\n", i, str[i]);
+		//if (ft_strchr(str[i], '=') != NULL)
 			count++;
-		printf("miniFIN\n");
+		//printf("miniFIN\n");
 		i++;
 	}
-	printf("FIN\n");
+	printf("FIN doble\n");
+
 	return (count);
 }
 
