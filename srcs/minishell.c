@@ -35,6 +35,7 @@ int	main(int argc, char *argv[], char **env)
 
 	(void)argc;
 	(void)argv;
+	//env = malloc_env(env);
 	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
@@ -45,7 +46,7 @@ int	main(int argc, char *argv[], char **env)
 		printf("Error2\n");
 	while (1)
 	{
-		/*input = readline(PROMPT);
+		input = readline(PROMPT);
 		ctr_d(input, NULL);
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
@@ -59,20 +60,19 @@ int	main(int argc, char *argv[], char **env)
 		if (token_lst == NULL)
 			break ;
 		print_lst(token_lst);
-		ft_lstclear(&token_lst, free);*/
+		ft_lstclear(&token_lst, free);
 		//ft_env(env);
-		new_env = malloc_env(env);
-		//new_env = ft_export(new_env, ft_split("export bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco", ' '));
-		//new_env = ft_export(new_env, ft_split("export tono=Antonio MAc=caca caca=MAC tr=MOD USER=TONO asds =pass TERM=BuenosDias", ' '));
-		//ft_env(env);
-		//printf("-------------\n");
-		//env = ft_unset(env, ft_split("unset tr tractor= LESS unset saUos as tractor y tr",  ' ')); //unset as  sasos tractor LESS= as  zpapapa
-		new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD LANG= LESS ASFASaadd ZSH HOME SHELL COMMAND_MODE PATH XPC_SERVICE_NAME",  ' '));
-		ft_env(new_env);
-		new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD= ZDOTDIR _ GIT_ASKPASS LANG LESS ZSH HOME SHELL ddss TERM_PROGRAM LSCOLORS COMMAND_MODE PATH",  ' '));
-		//printf("---------------------------##############################-------------------------------------------------\n");
-		ft_env(new_env);
+		//new_env = malloc_env(env);
+		//new_env = export_env(new_env, ft_split("export bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco", ' '));
+		//ft_env(new_env);
+		//new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD= bob ZDOTDIR _ GIT_ASKPASS LANG LESS ZSH HOME SHELL ddss TERM_PROGRAM LSCOLORS COMMAND_MODE PATH",  ' '));
+		////printf("---------------------------##############################-------------------------------------------------\n");
+		env = export_env(env, ft_split("export a paco=nickname LESS=HOLA LES=PA LESSS=GOG maria=a bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds aASDDW=ASFAF<C", ' '));
+		env = export_env(env, ft_split("export Nuevo=new", ' '));
+
+		ft_env(env);
 		//free(input);
+
 		printf("FINN comand\n");
 	}
 	free(input);

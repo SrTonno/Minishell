@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/05 19:41:29 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/08 15:44:33 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ char	**ft_export(char **env, char **comand)
 			str[i++] = ft_strdup(comand[j]);
 	printf("%d/%d\n", i, ((len_com + len_env + 1)));
 	str[i] = NULL;
-	free (env);
+	//free (env);
+	printf("FINN Export\n");
 	//tmp
 	int tmp;
 	tmp = 0;
 	while (comand[tmp] != NULL)
 		free(comand[tmp++]);
 	free(comand);
+	printf("FINN Export 2\n");
 	return (str);
 }
 /*
@@ -143,7 +145,7 @@ char	**ft_unset(char **env, char **comand)
 	//while (len_env > ++i)
 	while (env[++i] != NULL)
 	{
-		printf("(%d)->>%s)\n", i, env[i]);
+		//printf("(%d)->>%s)\n", i, env[i]);
 		if (find_env_len(comand, env[i]) == -2)
 		{
 			//printf("(%d)\n", i);
@@ -152,14 +154,14 @@ char	**ft_unset(char **env, char **comand)
 		else
 		{
 			printf("///(%d)->>%s\n)", i, env[i]);
-			free(env[i]);
-			printf("  \tLIBERADO\n");
+			//free(env[i]);
+			//env[i] = NULL;
 		}
 	}
 	printf("\n%d/%d\n", j, (((len_env - len_com) + 1)));
 	str[j] = NULL;
 	//if (env != NULL)
-	free(env);
+	//free(env);
 	printf("FINN UNSET\n");
 	//tmp
 	/*int tmp;
