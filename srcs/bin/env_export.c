@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_add_del.c                                      :+:      :+:    :+:   */
+/*   env_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:38:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/08 19:29:41 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:07:32 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static int len_error_expot(char **str)//revisar funcion
 			error++;
 		}
 		else if(find_char(str[i], '=') > 0 && to_future(str, i) == -1)
+		{
+			printf("%d->%s\n", count, str[i]);
 			count++;
+		}
 	}
 	return (count);
 }
@@ -92,26 +95,20 @@ char	**export_env(char **env, char **coman)
 
 	len_com = len_comando(coman, env);
 	printf("%d\n", len_com);
-	if (len_com <= 0)
+	if (len_com <= 1)
 		return (env);
-	printf("--------------------\n");
+	printf("--------------------HOLI\n");
 	len_env = len_doble_base(env);
 	printf("%d + %d\n", len_com, len_env);
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
 	crearte_new_env(new_env, coman, env);
+	free(env);
+	int tmp;
+	tmp = 0;
+	while (coman[tmp] != NULL)
+		free(coman[tmp++]);
+	free(coman);
 	return (new_env);
 }
 
-/*
-UNSET PASSOS:
-1.-Comprobar Si hay alguna variable que contenga '=', si la hay mostrar mensage de error y continual con la ejecuion
-2.-Conttar cuantas valiables de la instrucion existen en env
-3.-mallocquerar el char**
-4.-Pasar las variables validas del input y que exitan en env al new_env y las que no liberarlas
-4.-
-5.-
-EXTTRAAA(CAOSOS con los que tener cuidado)
-->
-->
-->
-*/
+

@@ -42,5 +42,6 @@ char	*env_expand(char **env, char *input);
 int		find_var(char *str);
 
 char	**export_env(char **env, char **coman);
+char	**unset_env(char **env, char **comand);
 
 #endif

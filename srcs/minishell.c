@@ -46,7 +46,7 @@ int	main(int argc, char *argv[], char **env)
 		printf("Error2\n");
 	while (1)
 	{
-		input = readline(PROMPT);
+		/*input = readline(PROMPT);
 		ctr_d(input, NULL);
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
@@ -60,16 +60,18 @@ int	main(int argc, char *argv[], char **env)
 		if (token_lst == NULL)
 			break ;
 		print_lst(token_lst);
-		ft_lstclear(&token_lst, free);
+		ft_lstclear(&token_lst, free);*/
 		//ft_env(env);
 		//new_env = malloc_env(env);
 		//new_env = export_env(new_env, ft_split("export bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco", ' '));
 		//ft_env(new_env);
 		//new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD= bob ZDOTDIR _ GIT_ASKPASS LANG LESS ZSH HOME SHELL ddss TERM_PROGRAM LSCOLORS COMMAND_MODE PATH",  ' '));
-		////printf("---------------------------##############################-------------------------------------------------\n");
-		env = export_env(env, ft_split("export a paco=nickname LESS=HOLA LES=PA LESSS=GOG maria=a bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds aASDDW=ASFAF<C", ' '));
-		env = export_env(env, ft_split("export Nuevo=new", ' '));
 
+		////printf("---------------------------##############################-------------------------------------------------\n");
+		//env = export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds aASDDW=ASFAF<C", ' '));
+		env = export_env(env, ft_split("export Nuevo=new USER=tono  tr=paco tractor=red aass LESS=MORE SHELL=minishell", ' '));
+		ft_env(env);
+		env = unset_env(env, ft_split("unset Nuevo OLDPWD LESS tr USER NADA", ' '));
 		ft_env(env);
 		//free(input);
 
