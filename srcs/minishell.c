@@ -68,10 +68,11 @@ int	main(int argc, char *argv[], char **env)
 		//new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD= bob ZDOTDIR _ GIT_ASKPASS LANG LESS ZSH HOME SHELL ddss TERM_PROGRAM LSCOLORS COMMAND_MODE PATH",  ' '));
 
 		////printf("---------------------------##############################-------------------------------------------------\n");
-		//env = export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds aASDDW=ASFAF<C", ' '));
-		env = export_env(env, ft_split("export Nuevo=new USER=tono  tr=paco tractor=red aass LESS=MORE SHELL=minishell", ' '));
+		env = export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds aASDDW=ASFAF<C", ' '));
+		env = export_env(env, ft_split("export Nuevo=new USER=tono y=pa yuy=ap a=as as=a tr=paco tractor=red aass LESS=MORE SHELL=minishell", ' '));
 		ft_env(env);
-		env = unset_env(env, ft_split("unset Nuevo OLDPWD LESS tr USER NADA", ' '));
+		env = unset_env(env, ft_split("unset Nuevo OLDPWD LESS a tr yuy USER NADA", ' '));
+		env = unset_env(env, ft_split("unset paco maria bob o as=a ", ' '));
 		ft_env(env);
 		//free(input);
 
