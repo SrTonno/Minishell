@@ -23,12 +23,20 @@
 # include <signal.h>
 
 # include "libft.h"
+# include "ast.h"
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
-void	handler(int signum);
-void	ctr_d(char *input);
+int			handle_input(char *input, char *envp[]);
 
-t_list	*tokenize(char *input);
+void		handler(int signum);
+void		ctr_d(char *input);
+
+t_list		*tokenize(char *input);
+
+t_ast_node	*parse(t_list *list);
+void		free_ast(t_ast_node *ast);
+
+int			execute(t_ast_node *ast, char *envp[]);
 
 #endif
