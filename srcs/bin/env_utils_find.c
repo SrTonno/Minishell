@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:36:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/03 16:32:07 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/10 12:27:21 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	find_env_len(char **env, char *str)
 		return (-1);
 	i = 0;
 	while (env[++i] != '\0')
-		if (len == (int)ft_strlen(env[i]) && ft_strncmp(env[i], str, len) == 0) // && (env[i][(len + 1)] == '=')
+		if (len == (int)ft_strlen(env[i]) && ft_strncmp(env[i], str, len) == 0)
 			return (i);
 	return (-2);
 }
@@ -85,29 +85,4 @@ int	find_mod_env(char **env, char **comand)
 		}
 	}
 	return (mod);
-}
-
-int	find_var(char *str)
-{
-	int	i;
-	int	len;
-	int	quotes;
-
-	i = -1;
-	quotes = 0;
-	len = ft_strlen(str);
-	while (str[++i] != '\0')
-	{
-		if (str[i] == SINGLE_QUOTE)
-		{
-			if (quotes == 0)
-				quotes = 1;
-			else
-				quotes = 0;
-		}
-		if ((len > i && str[i] == '$' && quotes == 0)
-			&& (str[(i + 1)] != ' ' || str[i + 1] == '?'))
-			return (i);
-	}
-	return (-1);
 }

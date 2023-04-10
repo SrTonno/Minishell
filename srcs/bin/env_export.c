@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:38:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/09 18:28:10 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/10 12:33:48 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ char	**export_env(char **env, char **coman)
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
 	crearte_new_env(new_env, coman, env);
 	free(env);
+	int tmp;
+	tmp = 0;
+	while (coman[tmp] != NULL)
+		free(coman[tmp++]);
+	free(coman);
 	return (new_env);
 }
 
