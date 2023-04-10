@@ -22,12 +22,12 @@ int	check_metachars(t_list *token_lst)
 		if (is_special(*c))
 		{
 			if (*c == '|' && ft_strlen(c) != 1)
-				return (handle_error(SYNTAX_ERROR, c + 1));
+				return (handle_par_error(SYNTAX_ERROR, c + 1));
 			else if ((*c == '<' || *c == '>')
 				&& ft_strlen(c) == 2 && *c != *(c + 1))
-				return (handle_error(SYNTAX_ERROR, c + 1));
+				return (handle_par_error(SYNTAX_ERROR, c + 1));
 			else if ((*c == '<' || *c == '>') && ft_strlen(c) > 2)
-				return (handle_error(SYNTAX_ERROR, c + 2));
+				return (handle_par_error(SYNTAX_ERROR, c + 2));
 		}
 		token_lst = token_lst->next;
 	}
@@ -44,16 +44,18 @@ int	check_text_after_metachars(t_list *token_lst)
 		if (*c == '|')
 		{
 			if (token_lst->next == NULL)
-				return (handle_error(SYNTAX_ERROR, NULL));
+				return (handle_par_error(SYNTAX_ERROR, NULL));
 			if (*(char *)token_lst->next->content == '|')
-				return (handle_error(SYNTAX_ERROR, token_lst->next->content));
+				return (handle_par_error(SYNTAX_ERROR, 
+					token_lst->next->content));
 		}
 		else if (*c == '<' || *c == '>')
 		{
 			if (token_lst->next == NULL)
-				return (handle_error(SYNTAX_ERROR, NULL));
+				return (handle_par_error(SYNTAX_ERROR, NULL));
 			else if (is_special(*(char *)token_lst->next->content))
-				return (handle_error(SYNTAX_ERROR, token_lst->next->content));
+				return (handle_par_error(SYNTAX_ERROR,
+					token_lst->next->content));
 		}
 		token_lst = token_lst->next;
 	}
@@ -82,7 +84,7 @@ int	check_files(t_list *token_lst)
 		{
 			if (access(token_lst->next->content, R_OK) == -1)
 			{
-				count = handle_error(NO_FILE_ERROR, token_lst->next->content);
+				count = handle_par_error(NO_FILE_ERROR, token_lst->next->content);
 				token_lst = jump_next_pipe(token_lst);
 			}
 		}
@@ -91,7 +93,7 @@ int	check_files(t_list *token_lst)
 			if (access(token_lst->next->content, F_OK) == 0
 				&& access(token_lst->next->content, W_OK) == -1)
 			{
-				count = handle_error(PERM_ERR, token_lst->next->content);
+				count = handle_par_error(PERM_ERR, token_lst->next->content);
 				token_lst = jump_next_pipe(token_lst);
 			}
 			else

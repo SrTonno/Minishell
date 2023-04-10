@@ -23,27 +23,11 @@
 # include <signal.h>
 # include <fcntl.h>
 
+# include "ast.h"
+
 # define PERM_ERR 1
 # define SYNTAX_ERROR 2
 # define NO_FILE_ERROR 3
-
-# define NOFILE 0
-# define OVERWRITE 1
-# define APPEND 2
-
-# define READ_END 0
-# define WRITE_END 1
-
-typedef struct s_ast_node
-{
-	char				**command;
-	int					input_fd;
-	int					mode_write;
-	int					output_fd;
-	char				**heredocs;
-	int					*pipe_fd;
-	struct s_ast_node	*next;
-}	t_ast_node;
 
 typedef struct s_len_ast
 {
@@ -56,7 +40,7 @@ t_ast_node	*find_end_ast(t_ast_node *ast);
 t_list		*mov_to_next_list(t_list *list, int num);
 t_ast_node	*list_to_char(t_list *list, t_len_ast max);
 
-int			handle_error(int error, char *str);
+int			handle_par_error(int error, char *str);
 
 int			check_metachars(t_list *token_list);
 int			check_text_after_metachars(t_list *token_lst);

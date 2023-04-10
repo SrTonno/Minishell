@@ -14,7 +14,7 @@
 
 int	syntax_error(char *str);
 
-int	handle_error(int error, char *str)
+int	handle_par_error(int error, char *str)
 {
 	int	status;
 
