@@ -43,15 +43,14 @@ int	handle_par_error(int error, char *str)
 int	syntax_error(char *str)
 {
 	if (str == NULL)
-		ft_putstr_fd("-bash: syntax error near unexpected token 'newline'", \
+		ft_putstr_fd("-bash: syntax error near unexpected token 'newline'\n", \
 			STDERR_FILENO);
 	else
 	{
 		ft_putstr_fd("-bash: syntax error near unexpected token `", \
 			STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd("'", STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
-	ft_putchar_fd('\n', STDERR_FILENO);
 	return (2);
 }

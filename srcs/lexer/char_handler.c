@@ -32,28 +32,28 @@ int	handle_char(t_lexer *lexer)
 		if (handle_special(lexer) == -1)
 			return (-1);
 	}
-	else if (*curr_char == '$' && is_env_var_char(*(curr_char + 1)))
-	{
-		if (handle_dollar(lexer) == -1)
-			return (-1);
-	}
+	// else if (*curr_char == '$' && is_env_var_char(*(curr_char + 1)))
+	// {
+	// 	if (handle_dollar(lexer) == -1)
+	// 		return (-1);
+	// }
 	else
 		lexer->index++;
 	return (0);
 }
 
-static int	handle_dollar(t_lexer *lexer)
-{
-	if (add_new_token_lst(lexer) == -1)
-		return (-1);
-	lexer->token_start = lexer->str + lexer->index;
-	while (is_env_var_char(lexer->str[++lexer->index]))
-		;
-	if (add_new_token_lst(lexer) == -1)
-		return (-1);
-	lexer->token_start = lexer->str + lexer->index;
-	return (0);
-}
+// static int	handle_dollar(t_lexer *lexer)
+// {
+// 	if (add_new_token_lst(lexer) == -1)
+// 		return (-1);
+// 	lexer->token_start = lexer->str + lexer->index;
+// 	while (is_env_var_char(lexer->str[++lexer->index]))
+// 		;
+// 	if (add_new_token_lst(lexer) == -1)
+// 		return (-1);
+// 	lexer->token_start = lexer->str + lexer->index;
+// 	return (0);
+// }
 
 static int	handle_special(t_lexer *lexer)
 {
@@ -68,30 +68,30 @@ static int	handle_special(t_lexer *lexer)
 	return (0);
 }
 
-static int	handle_env_var(t_lexer *lexer)
-{
-	char	*curr_pos;
-	char	*quotes_end;
-	char	*env_var_start;
+// static int	handle_env_var(t_lexer *lexer)
+// {
+// 	char	*curr_pos;
+// 	char	*quotes_end;
+// 	char	*env_var_start;
 
-	curr_pos = lexer->str + lexer->index;
-	env_var_start = ft_strchr(curr_pos, '$');
-	quotes_end = ft_strchr(curr_pos + 1, *curr_pos);
-	while (env_var_start != NULL && env_var_start < quotes_end)
-	{
-		if (is_env_var_char(*(env_var_start + 1)))
-		{
-			lexer->index = (size_t)(env_var_start - lexer->str);
-			handle_dollar(lexer);
-		}
-		env_var_start = ft_strchr(env_var_start + 1, '$');
-	}
-	lexer->index = quotes_end - lexer->str + 1;
-	if (add_new_token_lst(lexer) == -1)
-		return (-1);
-	lexer->token_start = quotes_end + 1;
-	return (0);
-}
+// 	curr_pos = lexer->str + lexer->index;
+// 	env_var_start = ft_strchr(curr_pos, '$');
+// 	quotes_end = ft_strchr(curr_pos + 1, *curr_pos);
+// 	while (env_var_start != NULL && env_var_start < quotes_end)
+// 	{
+// 		if (is_env_var_char(*(env_var_start + 1)))
+// 		{
+// 			lexer->index = (size_t)(env_var_start - lexer->str);
+// 			handle_dollar(lexer);
+// 		}
+// 		env_var_start = ft_strchr(env_var_start + 1, '$');
+// 	}
+// 	lexer->index = quotes_end - lexer->str + 1;
+// 	if (add_new_token_lst(lexer) == -1)
+// 		return (-1);
+// 	lexer->token_start = quotes_end + 1;
+// 	return (0);
+// }
 
 static int	handle_quotation_marks(t_lexer *lexer)
 {
@@ -107,15 +107,15 @@ static int	handle_quotation_marks(t_lexer *lexer)
 		if (add_new_token_lst(lexer) == -1)
 			return (-1);
 		lexer->token_start = lexer->str + lexer->index;
-		if (quote == DOUBLE_QUOTE && any_env_var_str(lexer->str + lexer->index))
-			return (handle_env_var(lexer));
-		else
-		{
+		// if (quote == DOUBLE_QUOTE && any_env_var_str(lexer->str + lexer->index))
+		// 	return (handle_env_var(lexer));
+		// else
+		// {
 			lexer->index = end_quote - lexer->str + 1;
 			if (add_new_token_lst(lexer) == -1)
 				return (-1);
 			lexer->token_start = lexer->str + lexer->index;
-		}
+		// }
 	}
 	return (0);
 }

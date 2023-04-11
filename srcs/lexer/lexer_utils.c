@@ -24,21 +24,21 @@ t_lexer	init_lexer(char *_lexer)
 	return (lexer);
 }
 
-int	any_env_var_str(char *str)
-{
-	char	*env_var_start;
-	char	*quotes_end;
+// int	any_env_var_str(char *str)
+// {
+// 	char	*env_var_start;
+// 	char	*quotes_end;
 
-	env_var_start = ft_strchr(str, '$');
-	quotes_end = ft_strchr(str + 1, *str);
-	while (env_var_start != NULL && env_var_start < quotes_end)
-	{
-		if (is_space(*(env_var_start + 1)) == 0)
-			return (1);
-		env_var_start = ft_strchr(env_var_start + 1, '$');
-	}
-	return (0);
-}
+// 	env_var_start = ft_strchr(str, '$');
+// 	quotes_end = ft_strchr(str + 1, *str);
+// 	while (env_var_start != NULL && env_var_start < quotes_end)
+// 	{
+// 		if (is_space(*(env_var_start + 1)) == 0)
+// 			return (1);
+// 		env_var_start = ft_strchr(env_var_start + 1, '$');
+// 	}
+// 	return (0);
+// }
 
 int	add_new_token_lst(t_lexer *lexer)
 {

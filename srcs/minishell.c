@@ -89,7 +89,7 @@ int	handle_input(char *input, char *envp[])
 	token_lst = tokenize(input);
 	if (token_lst == NULL)
 		return (-1);
-	print_lst(token_lst);
+	// print_lst(token_lst);
 	ast = parse(token_lst);
 	if (ast == NULL)
 	{

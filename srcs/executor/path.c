@@ -52,13 +52,15 @@ char	**get_paths_envp(char *envp[])
 
 int	check_binary(char *command, char **paths)
 {
-	int		index;
-	char	*binary;
+	int				index;
+	char			*binary;
 
 	if (ft_strchr(command, '/'))
 	{
 		if (access(command, X_OK) == 0)
 			return (0);
+		if (access(command, F_OK) == -1)
+			return (handle_exe_error(NO_FILE_DIR, command));
 		if (access(command, X_OK) == -1)
 			return (handle_exe_error(COMM_NPERM, command));
 		return (handle_exe_error(NO_FILE_DIR, command));
