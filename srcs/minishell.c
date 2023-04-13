@@ -52,13 +52,18 @@ static void	all_free(t_list *token_lst, t_ast_node *ast, char *input)
 	free(input);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
+	char				**new_env;
 	struct sigaction	sa;
 
 	if (argc != 1)
 		return (0);
+	(void)argc;
+	(void)argv;
+	//env = malloc_env(env);
+	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
@@ -67,25 +72,28 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		input = readline(PROMPT);
-		ctr_d(input);
+		ctr_d(input, NULL);
 		if (ft_strncmp(input, "exit", 5) == 0)
 			break ;
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
 		add_history(input);
-		if (handle_input(input, envp) == -1)
+		if (handle_input(input, env) == -1)
 			return (0);
 	}
 	free(input);
 	return (0);
 }
 
-int	handle_input(char *input, char *envp[])
+int	handle_input(char *input, char *env[])
 {
 	t_list		*token_lst;
 	t_ast_node	*ast;
 	int			status; // exit code del ultimo comando -> $?
 
+	while (find_var(input) >= 0)
+		input = env_expand(env, input);
+	printf("input = %s\n", input);
 	token_lst = tokenize(input);
 	if (token_lst == NULL)
 		return (-1);
@@ -97,7 +105,7 @@ int	handle_input(char *input, char *envp[])
 		return (-1);
 	}
 	// print_ast(ast);
-	status = execute(ast, envp);
+	status = execute(ast, env);
 	// all_free(token_lst, ast, input);
 	return (0);
 }

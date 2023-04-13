@@ -3,7 +3,7 @@ include colors.mk
 NAME = minishell
 
 CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
@@ -12,7 +12,7 @@ SRCSDIR = ./srcs/
 SRCSCFILES = minishell.c signal.c utils.c
 
 BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES =
+BINCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_export.c env_unset.c
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
@@ -51,6 +51,7 @@ test: ${NAME}
 ${NAME}: ${OBJS}
 	@make -s -C ${LIB_DIR}
 	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
+	@printf "${God} ${BIBlue}Mini${NoColor}🐚 de ${BIPurple}LaLora${NoColor}${God}\n"
 
 ${LFT_NAME}:
 	@make -s -C ${LIB_DIR}
@@ -63,16 +64,18 @@ re: fclean all
 clean:
 	@make -s -C ${LIB_DIR} clean
 	@${RM} ${OBJS}
+	@printf "${Bad}${BIRed}Delete *.o${NoColor}${Bad}\n"
 
 fclean: clean
 	@make -s -C ${LIB_DIR} fclean
 	@${RM} ${NAME}
+	@printf "${Bad}${BIRed}Delete ${NAME}${NoColor}${Bad}\n"
+
 
 setup:
-	rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew
+	@rm -rf $$HOME/.brew && git clone https://github.com/Homebrew/brew $$HOME/goinfre/.brew
 	#echo 'export PATH=$$HOME/goinfre/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc
-	brew update
-	brew install readline
-	@echo "Install brew and library in MAC."
-
+	@brew update
+	@brew install readline
+	@printf "${God}${BICyan}Install brew and library in MAC.${God} "
 ################################################################################

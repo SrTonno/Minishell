@@ -30,7 +30,7 @@
 int			handle_input(char *input, char *envp[]);
 
 void		handler(int signum);
-void		ctr_d(char *input);
+void		ctr_d(char *input, char **env);
 
 t_list		*tokenize(char *input);
 
@@ -38,5 +38,18 @@ t_ast_node	*parse(t_list *list);
 void		free_ast(t_ast_node *ast);
 
 int			execute(t_ast_node *ast, char *envp[]);
+
+void	free_split(char **str);
+
+//env
+char	**ft_export(char **env, char **comand);
+char	**malloc_env(char **env);
+void	ft_env(char **env);
+char	**ft_unset(char **env, char **comand);
+char	*env_expand(char **env, char *input);
+int		find_var(char *str);
+
+char	**export_env(char **env, char **coman);
+char	**unset_env(char **env, char **comand);
 
 #endif
