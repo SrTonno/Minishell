@@ -75,9 +75,9 @@ int	main(int argc, char *argv[], char **env)
 		env = unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a", ' '));
 		env = unset_env(env, ft_split("unset PATH ORIGINAL_XDG_CURRENT_DESKTOP pq", ' '));
 		env = unset_env(env, ft_split("unset PATH COMMAND_MODE cositas21", ' '));
-		env = unset_env(env, ft_split("unset antonio", ' '));*/
-		//ft_env(env);
-		//free(input);
+		env = unset_env(env, ft_split("unset antonio", ' '));
+		ft_env(env);*/
+		free(input);
 
 		printf("FINN comand\n");
 	}
