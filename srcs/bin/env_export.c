@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:38:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:25:49 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:59:31 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	dst[j] = NULL;
 }
 
-/*
-(ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
-			&& find_char(env[i], '=') > 0
-			&& to_future(comd, i) == -1 && find_env(env, comd[i]) == -2)
-*/
 static void	only_coman(char **dst, char **comd)
 {
 	int	i;
@@ -109,15 +104,18 @@ char	**export_env(char **env, char **coman)
 	printf("%d\n", len_com);
 	if (len_com <= 1)
 		return (env);
-	printf("--------------------HOLI\n");
 	len_env = len_doble_base(env);
 	printf("%d + %d\n", len_com, len_env);
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
+	if (new_env == NULL)
+	{
+		//liberar cosas
+		exit(1);
+	}
 	if (len_env == 0)
 		only_coman(new_env, coman);
 	else
 		crearte_new_env(new_env, coman, env);
-	printf("--------------------ADIOS\n");
 	free(env);
 	int tmp;
 	tmp = 0;
