@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:36:08 by javmarti          #+#    #+#             */
-/*   Updated: 2023/03/07 15:36:08 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:01:03 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,17 @@ int	main(int argc, char *argv[], char **env)
 		//new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD= bob ZDOTDIR _ GIT_ASKPASS LANG LESS ZSH HOME SHELL ddss TERM_PROGRAM LSCOLORS COMMAND_MODE PATH",  ' '));
 
 		////printf("---------------------------##############################-------------------------------------------------\n");
-		/*env = export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds aASDDW=ASFAF<C pq=qp cositas21=pa", ' '));
+		env = export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds pq=qp cositas21=pa", ' '));
 		env = export_env(env, ft_split("export Nuevo=new USER=tono y=pa yuy=ap a=as as=a tr=paco tractor=red aass LESS=MORE SHELL=minishell antonio=tono", ' '));
+		env = export_env(env, ft_split("export bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco", ' '));
 		ft_env(env);
 		env = unset_env(env, ft_split("unset Nuevo OLDPWD LESS a tr yuy USER NADA", ' '));
 		env = unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a", ' '));
 		env = unset_env(env, ft_split("unset PATH ORIGINAL_XDG_CURRENT_DESKTOP pq", ' '));
 		env = unset_env(env, ft_split("unset PATH COMMAND_MODE cositas21", ' '));
 		env = unset_env(env, ft_split("unset antonio", ' '));
-		ft_env(env);*/
-		free(input);
+		ft_env(env);
+		//free(input);
 
 		printf("FINN comand\n");
 	}

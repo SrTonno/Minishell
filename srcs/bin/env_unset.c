@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 13:17:45 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/10 12:33:34 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:47:36 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**unset_env(char **env, char **comand)
 	new_env = ft_calloc((len - del) + 1, sizeof(char *));
 	delete_unset(new_env, env, comand);
 	free (env);
-		int tmp;
+	int tmp;
 	tmp = 0;
 	while (comand[tmp] != NULL)
 		free(comand[tmp++]);
