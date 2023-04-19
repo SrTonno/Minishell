@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/03/31 18:32:23 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:59:42 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,55 +41,50 @@ static t_len_ast	count_blocks(t_list *list, int mode)
 	return (command);
 }
 
-static void	new_block_ast(t_ast_node *ast, t_list *list, t_len_ast max)
+t_list	*create_new_node(t_list *token_lst, t_len_ast num)
 {
-	ast = find_end_ast(ast);
-	ast->next = list_to_char(list, max);
-}
+	t_ast_node	*ast_node;
+	t_list		*new_node;
 
-int	create_pipes(t_ast_node *ast)
-{
-	if (ast == NULL && ast->next == NULL)
-		return (1);
-	while (ast->next != NULL)
+	ast_node = list_to_char(token_lst, num);
+	if (ast_node == NULL)
+		return (NULL);
+	new_node = ft_lstnew(ast_node);
+	if (new_node == NULL)
 	{
-		if (ast->output_fd == 1 && ast->next->input_fd == 0)
-		{
-			ast->pipe_fd = (int *)ft_calloc(2, sizeof(int));
-			if (ast->pipe_fd == NULL || pipe(ast->pipe_fd))
-				return (0);
-			ast->output_fd = ast->pipe_fd[WRITE_END];
-			ast->next->input_fd = ast->pipe_fd[READ_END];
-		}
-		ast = ast->next;
+		ast_node_free(ast_node);
+		return (NULL);
 	}
-	return (1);
+	return (new_node);
 }
 
-t_ast_node	*parse(t_list *token_lst)
+t_list	*parse(t_list *token_lst)
 {
-	t_ast_node	*ast;
+	t_list		*ast;
+	t_list		*new_node;
 	t_len_ast	num;
 
-	if (check_metachars(token_lst) != 0
-		|| check_text_after_metachars(token_lst) != 0
-		|| check_files(token_lst) != 0)
-		return (NULL); // NULL está asociado con error, devolver otra cosa porque no es un error que suponga exit del programa
+	ast = NULL;
 	num = count_blocks(token_lst, 0);
-	ast = list_to_char(token_lst, num);
+	new_node = create_new_node(token_lst, num);
+	if (new_node == NULL)
+		return (NULL);
+	ft_lstadd_back(&ast, new_node);
 	token_lst = mov_to_next_list(token_lst, num.len);
 	while (token_lst != NULL)
 	{
 		num = count_blocks(token_lst, 0);
 		if (*((unsigned char *)token_lst->content) != '|')
-			new_block_ast(ast, token_lst, num);
+		{
+			new_node = create_new_node(token_lst, num);
+			if (new_node == NULL)
+			{
+				ft_lstclear(&ast, ast_node_free);
+				return (NULL);
+			}
+			ft_lstadd_back(&ast, new_node);
+		}
 		token_lst = mov_to_next_list(token_lst, num.len);
-	}
-	create_pipes(ast);
-	if (create_pipes(ast) == 0)
-	{
-		free_ast(ast);
-		return (NULL);
 	}
 	return (ast);
 }

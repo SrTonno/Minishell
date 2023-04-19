@@ -24,10 +24,7 @@
 # include <fcntl.h>
 
 # include "ast.h"
-
-# define PERM_ERR 1
-# define SYNTAX_ERROR 2
-# define NO_FILE_ERROR 3
+# include "error_msg.h"
 
 typedef struct s_len_ast
 {
@@ -36,7 +33,6 @@ typedef struct s_len_ast
 	int	heredocs;
 }	t_len_ast;
 
-t_ast_node	*find_end_ast(t_ast_node *ast);
 t_list		*mov_to_next_list(t_list *list, int num);
 t_ast_node	*list_to_char(t_list *list, t_len_ast max);
 

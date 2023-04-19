@@ -12,56 +12,6 @@
 
 #include "parser.h"
 
-int	check_metachars(t_list *token_lst)
-{
-	char	*c;
-
-	while (token_lst)
-	{
-		c = token_lst->content;
-		if (is_special(*c))
-		{
-			if (*c == '|' && ft_strlen(c) != 1)
-				return (handle_par_error(SYNTAX_ERROR, c + 1));
-			else if ((*c == '<' || *c == '>')
-				&& ft_strlen(c) == 2 && *c != *(c + 1))
-				return (handle_par_error(SYNTAX_ERROR, c + 1));
-			else if ((*c == '<' || *c == '>') && ft_strlen(c) > 2)
-				return (handle_par_error(SYNTAX_ERROR, c + 2));
-		}
-		token_lst = token_lst->next;
-	}
-	return (0);
-}
-
-int	check_text_after_metachars(t_list *token_lst)
-{
-	char	*c;
-
-	while (token_lst)
-	{
-		c = token_lst->content;
-		if (*c == '|')
-		{
-			if (token_lst->next == NULL)
-				return (handle_par_error(SYNTAX_ERROR, NULL));
-			if (*(char *)token_lst->next->content == '|')
-				return (handle_par_error(SYNTAX_ERROR, 
-					token_lst->next->content));
-		}
-		else if (*c == '<' || *c == '>')
-		{
-			if (token_lst->next == NULL)
-				return (handle_par_error(SYNTAX_ERROR, NULL));
-			else if (is_special(*(char *)token_lst->next->content))
-				return (handle_par_error(SYNTAX_ERROR,
-					token_lst->next->content));
-		}
-		token_lst = token_lst->next;
-	}
-	return (0);
-}
-
 t_list	*jump_next_pipe(t_list *token_lst)
 {
 	while (token_lst->next)
@@ -82,9 +32,14 @@ int	check_files(t_list *token_lst)
 	{
 		if (ft_strncmp(token_lst->content, "<", 2) == 0)
 		{
-			if (access(token_lst->next->content, R_OK) == -1)
+			if (access(token_lst->next->content, F_OK) == -1)
 			{
 				count = handle_par_error(NO_FILE_ERROR, token_lst->next->content);
+				token_lst = jump_next_pipe(token_lst);
+			}
+			else if (access(token_lst->next->content, R_OK) == -1)
+			{
+				count = handle_par_error(PERM_ERR, token_lst->next->content);
 				token_lst = jump_next_pipe(token_lst);
 			}
 		}

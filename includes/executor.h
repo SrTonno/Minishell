@@ -23,14 +23,18 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "ast.h"
-
-# define COMM_NFOUND 4
-# define COMM_NPERM 5
-# define MALLOC_ERR 6
-# define NO_FILE_DIR 7
-# define FORK_ERR 8
+# include "error_msg.h"
 
 # define TEMP_FILE ".temp"
+
+typedef struct s_exec_child
+{
+	char	**command;
+	char	*binary;
+	int		infile;
+	int		outfile;
+	int		*pipe_fd;
+}	t_exec_child;
 
 char	*get_path_envp(char *envp[]);
 char	**get_paths_envp(char *envp[]);

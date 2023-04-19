@@ -19,10 +19,10 @@ int	create_child(t_ast_node ast_node, char **envp)
 
 	pid = fork();
 	if (pid < 0)
-		return (1);
+		return (-1);
 	else if (pid == 0)
 	{
-		heredoc_fd = create_heredocs(ast_node.heredocs);
+		heredoc_fd = create_heredocs(ast_node.heredocs); // redir checker
 		if (ast_node.input_fd == -1 && heredoc_fd != -1)
 			dup2(heredoc_fd, STDIN_FILENO);
 		else
@@ -35,14 +35,14 @@ int	create_child(t_ast_node ast_node, char **envp)
 		if (ast_node.output_fd != STDOUT_FILENO)
 			close(ast_node.output_fd);
 		execve(ast_node.binary, ast_node.command, envp);
+		return (-1);
 	}
 	return (0);
 }
 
 void	close_fds(t_ast_node *ast_node)
 {
-	if (ast_node->input_fd == -1)
-		unlink(TEMP_FILE);
+	unlink(TEMP_FILE);
 	else if (ast_node->input_fd != STDIN_FILENO)
 		close(ast_node->input_fd);
 	if (ast_node->output_fd != STDOUT_FILENO)
@@ -52,27 +52,29 @@ void	close_fds(t_ast_node *ast_node)
 
 int	execute(t_ast_node *ast, char *envp[])
 {
-	char	**paths;
-	char	*binary;
-	int		status;
+	char		**paths;
+	char		*binary;
+	t_ast_node	*ast_node;
+	int			status;
 
 	paths = get_paths_envp(envp);
 	if (paths == NULL)
 		return (1);
 	while (ast != NULL)
 	{
-		status = check_binary(ast->command[0], paths);
+		ast_node = (t_ast_node *)ast->content;
+		status = check_binary(ast_node->command[0], paths);
 		if (status == 0)
 		{
-			binary = find_binary(ast->command[0], paths);
+			binary = find_binary(ast_node->command[0], paths);
 			if (binary == NULL)
 				return (handle_exe_error(MALLOC_ERR, NULL));
-			ast->binary = binary;
-			if (create_child(*ast, envp) == 1)
+			ast_node->binary = binary;
+			if (create_child(*ast_node, envp) == -1)
 				return (handle_exe_error(FORK_ERR, NULL));
 			waitpid(-1, &status, 0);
 		}
-		close_fds(ast);
+		close_fds(ast_node);
 		ast = ast->next;
 	}
 	return (status);

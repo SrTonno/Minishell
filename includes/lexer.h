@@ -31,7 +31,7 @@ typedef struct s_lexer
 	t_list	*token_lst;
 }	t_lexer;
 
-t_lexer	init_lexer(char *_lexer);
+t_lexer	init_lexer(char *inputLine);
 int		add_new_token_lst(t_lexer *lexer);
 int		any_env_var_str(char *str);
 

@@ -24,24 +24,24 @@
 
 # include "libft.h"
 # include "ast.h"
+# include "error_msg.h"
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
-int			handle_input(char *input, char *envp[]);
+int		handle_input(char *input, char *envp[]);
 
-void		handler(int signum);
-void		ctr_d(char *input, char **env);
+void	handler(int signum);
+void	ctr_d(char *input, char **env);
 
-t_list		*tokenize(char *input);
+t_list	*tokenize(char *inputLine);
 
-t_ast_node	*parse(t_list *list);
-void		free_ast(t_ast_node *ast);
+t_list	*parse(t_list *list);
+void	free_ast(t_list *ast);
 
-int			execute(t_ast_node *ast, char *envp[]);
+int		execute(t_list *ast, char *envp[]);
 
 void	free_split(char **str);
 
-//env
 char	**ft_export(char **env, char **comand);
 char	**malloc_env(char **env);
 void	ft_env(char **env);

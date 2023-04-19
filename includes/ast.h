@@ -13,23 +13,29 @@
 #ifndef AST_H
 # define AST_H
 
-# define NOFILE 0
-# define OVERWRITE 1
-# define APPEND 2
+# include "libft.h"
 
 # define READ_END 0
 # define WRITE_END 1
 
+# define INFILE 0
+# define HEREDOC 1
+# define OVERWRITE 3
+# define APPEND 4
+
+typedef struct s_redir_type
+{
+	char	*text;
+	int		type;
+}	t_redir_type;
+
 typedef struct s_ast_node
 {
 	char				**command;
-	char				*binary;
-	int					input_fd;
-	int					mode_write;
-	int					output_fd;
-	char				**heredocs;
-	int					*pipe_fd;
-	struct s_ast_node	*next;
+	t_list				*redir;
 }	t_ast_node;
+
+void	ast_node_free(void *ptr);
+void	redir_free(void *ptr);
 
 #endif

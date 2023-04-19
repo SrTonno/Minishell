@@ -22,33 +22,57 @@ void	print_lst(t_list *lst)
 	return ;
 }
 
-static	void print_ast(t_ast_node *ast)
+static	void print_ast(t_list *ast)
 {
 	int	i;
 	int	index = 1;
+	t_ast_node *ast_node;
+	t_redir_type *redir;
 
 	while(ast != NULL)
 	{
+		ast_node = (t_ast_node *)ast->content;
 		printf("NODO AST Nº%i\n", index++);
 		printf("---------------------------------------------\ncommandos: ");
 		i = -1;
-		while (ast->command[++i] != NULL)
-			printf("%s ", ast->command[i]);
-		i = -1;
-		printf("\nheredocs: ");
-		while (ast->heredocs[++i] != NULL)
-			printf("%s ", ast->heredocs[i]);
-		printf("\ninfile: %i/ outfile: %i mode %i", ast->input_fd, ast->output_fd, ast->mode_write);
-		printf("\n---------------------------------------------\n");
+		while (ast_node->command[++i] != NULL)
+			printf("%s ", ast_node->command[i]);
+		printf("\narchivos y heredocs:\n");
+		while (ast_node->redir != NULL)
+		{
+			redir = (t_redir_type *)ast_node->redir->content;
+			printf("%s -> %i\n", redir->text, redir->type);
+			ast_node->redir = ast_node->redir->next;
+		}
 		ast = ast->next;
 	}
 }
 
-static void	all_free(t_list *token_lst, t_ast_node *ast, char *input)
+void	redir_free(void *ptr)
+{
+	t_redir_type	*redir;
+
+	redir = (t_redir_type *)ptr;
+	free(redir->text);
+	free(redir);
+	return ;
+}
+
+void	ast_node_free(void *ptr)
+{
+	t_ast_node	*ast_node;
+
+	ast_node = (t_ast_node *)ptr;
+	free_split(ast_node->command);
+	ft_lstclear(&ast_node->redir, redir_free);
+	free(ast_node);
+	return ;
+}
+
+static void	all_free(t_list *token_lst, t_list *ast, char *input)
 {
 	ft_lstclear(&token_lst, free);
-	if (ast != NULL)
-		free_ast(ast);
+	ft_lstclear(&ast, ast_node_free);
 	free(input);
 }
 
@@ -62,7 +86,6 @@ int	main(int argc, char *argv[], char **env)
 		return (0);
 	(void)argc;
 	(void)argv;
-	//env = malloc_env(env);
 	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
@@ -87,25 +110,31 @@ int	main(int argc, char *argv[], char **env)
 
 int	handle_input(char *input, char *env[])
 {
-	t_list		*token_lst;
-	t_ast_node	*ast;
-	int			status; // exit code del ultimo comando -> $?
+	t_list	*token_lst;
+	t_list	*ast;
+	int		status; // exit code del ultimo comando -> $?
 
 	while (find_var(input) >= 0)
 		input = env_expand(env, input);
-	printf("input = %s\n", input);
+	// printf("input = %s\n", input);
 	token_lst = tokenize(input);
 	if (token_lst == NULL)
-		return (-1);
+		return (malloc_error()); // crear errors.h con fatal error para malloc/fork/execve...
+	if (check_metachars(token_lst) != 0
+		|| check_text_after_metachars(token_lst) != 0)
+	{
+		ft_lstclear(&token_lst, free);
+		return (malloc_error());
+	}
 	// print_lst(token_lst);
 	ast = parse(token_lst);
 	if (ast == NULL)
 	{
 		all_free(token_lst, ast, input);
-		return (-1);
+		return (0);
 	}
-	// print_ast(ast);
-	status = execute(ast, env);
+	print_ast(ast);
+	// status = execute(ast, env);
 	// all_free(token_lst, ast, input);
 	return (0);
 }

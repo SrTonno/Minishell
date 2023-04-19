@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/13 17:46:11 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:11:04 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 
 # include "libft.h"
-
 
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39
