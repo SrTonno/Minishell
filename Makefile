@@ -18,10 +18,10 @@ LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES = parser.c parser_utils.c parser_checker.c create_ast.c
+PARSECFILES = parser.c create_ast.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-#EXECCFILES = execute.c path.c executor_errors.c heredocs.c
+EXECCFILES = execute.c path.c heredocs.c redir.c
 
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \

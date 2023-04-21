@@ -30,7 +30,6 @@ typedef struct s_len_ast
 {
 	int	len;
 	int	meta;
-	int	heredocs;
 }	t_len_ast;
 
 t_list		*mov_to_next_list(t_list *list, int num);

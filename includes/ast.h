@@ -31,8 +31,12 @@ typedef struct s_redir_type
 
 typedef struct s_ast_node
 {
-	char				**command;
-	t_list				*redir;
+	char	**command;
+	t_list	*redir;
+	char	*binary;
+	int		input_fd;
+	int		output_fd;
+	int		*pipe_fd;
 }	t_ast_node;
 
 void	ast_node_free(void *ptr);

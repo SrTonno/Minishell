@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/19 18:38:12 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:57:24 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	store_redir(t_ast_node *ast, t_list *list)
 		else
 		{
 			redir = create_redir(ft_strjoin(list->next->content, "\n"),
-				HEREDOC);
+					HEREDOC);
 		}
 	}
 	else
@@ -72,6 +72,10 @@ static t_ast_node	*create_ast_node(t_len_ast max)
 	if (new_ast == NULL)
 		return (NULL);
 	new_ast->redir = NULL;
+	new_ast->binary = NULL;
+	new_ast->input_fd = 0;
+	new_ast->output_fd = 1;
+	new_ast->pipe_fd = NULL;
 	return (new_ast);
 }
 
@@ -100,7 +104,14 @@ t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max)
 			token_lst = token_lst->next;
 		}
 		else
-			new_ast->command[i++] = (char *)token_lst->content;
+		{
+			new_ast->command[i] = ft_strdup(token_lst->content);
+			if (new_ast->command[i++] == NULL)
+			{
+				ast_node_free(new_ast);
+				return (NULL);
+			}
+		}
 		token_lst = token_lst->next;
 	}
 	return (new_ast);

@@ -60,24 +60,24 @@ int	check_binary(char *command, char **paths)
 		if (access(command, X_OK) == 0)
 			return (0);
 		if (access(command, F_OK) == -1)
-			return (handle_exe_error(NO_FILE_DIR, command));
+			return (handle_file_error(NO_FILE_DIR, command));
 		if (access(command, X_OK) == -1)
-			return (handle_exe_error(COMM_NPERM, command));
-		return (handle_exe_error(NO_FILE_DIR, command));
+			return (handle_file_error(COMM_NPERM, command));
+		return (handle_file_error(NO_FILE_DIR, command));
 	}
 	index = -1;
 	while (paths[++index])
 	{
 		binary = ft_strjoin(paths[index], command);
 		if (binary == NULL)
-			return (handle_exe_error(MALLOC_ERR, NULL));
+			return (handle_file_error(MALLOC_ERR, NULL));
 		if (access(binary, X_OK) == 0)
 			return (0);
 		if (access(binary, F_OK) == 0 && access(binary, X_OK) == -1)
-			return (handle_exe_error(COMM_NPERM, command));
+			return (handle_file_error(COMM_NPERM, command));
 		free(binary);
 	}
-	return (handle_exe_error(COMM_NFOUND, command));
+	return (handle_file_error(COMM_NFOUND, command));
 }
 
 char	*find_binary(char *command, char **paths)

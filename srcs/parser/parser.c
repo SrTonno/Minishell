@@ -6,11 +6,21 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/19 16:59:42 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:54:11 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+t_list	*mov_to_next_list(t_list *list, int num)
+{
+	int	i;
+
+	i = 0;
+	while (num > i++)
+		list = list->next;
+	return (list);
+}
 
 static t_len_ast	count_blocks(t_list *list, int mode)
 {
@@ -18,7 +28,6 @@ static t_len_ast	count_blocks(t_list *list, int mode)
 
 	command.len = 1;
 	command.meta = 0;
-	command.heredocs = 0;
 	while (list->next != NULL)
 	{
 		if (*((unsigned char *)list->content) == '|')
@@ -29,12 +38,7 @@ static t_len_ast	count_blocks(t_list *list, int mode)
 		}
 		if (*((unsigned char *)list->content) == '<'
 			|| (*((unsigned char *)list->content) == '>') || mode == 1)
-		{
-			if (*((unsigned char *)list->content) == '<'
-				&& ft_strlen(list->content) == 2)
-				command.heredocs++;
 			command.meta++;
-		}
 		command.len++;
 		list = list->next;
 	}

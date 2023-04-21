@@ -118,23 +118,22 @@ int	handle_input(char *input, char *env[])
 		input = env_expand(env, input);
 	// printf("input = %s\n", input);
 	token_lst = tokenize(input);
+	free(input);
 	if (token_lst == NULL)
 		return (malloc_error()); // crear errors.h con fatal error para malloc/fork/execve...
-	if (check_metachars(token_lst) != 0
-		|| check_text_after_metachars(token_lst) != 0)
+	if (check_syntax_metachars(token_lst) != 0
+		|| check_syntax_after_metachars(token_lst) != 0)
 	{
 		ft_lstclear(&token_lst, free);
-		return (malloc_error());
+		return (2);
 	}
 	// print_lst(token_lst);
 	ast = parse(token_lst);
+	ft_lstclear(&token_lst, free);
 	if (ast == NULL)
-	{
-		all_free(token_lst, ast, input);
 		return (0);
-	}
-	print_ast(ast);
-	// status = execute(ast, env);
+	// print_ast(ast);
+	status = execute(ast, env);
 	// all_free(token_lst, ast, input);
 	return (0);
 }

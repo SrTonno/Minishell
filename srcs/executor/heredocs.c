@@ -34,25 +34,18 @@ char	*do_heredoc(char *delimitator)
 	return (text);
 }
 
-int	create_heredocs(char **heredocs)
+int	create_heredoc(char *delimiter)
 {
 	int		heredoc_fd;
-	int		index;
 	char	*text;
 
-	index = -1;
-	while (heredocs[++index])
-	{
-		heredoc_fd = open(TEMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
-		if (heredoc_fd == -1)
-			return (-1);
-		text = do_heredoc(heredocs[index]);
-		ft_putstr_fd(text, heredoc_fd);
-		free(text);
-		if (heredocs[index + 1] != NULL)
-			unlink(TEMP_FILE);
-		close(heredoc_fd);
-	}
+	heredoc_fd = open(TEMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+	if (heredoc_fd == -1)
+		return (-1);
+	text = do_heredoc(delimiter);
+	ft_putstr_fd(text, heredoc_fd);
+	free(text);
+	close(heredoc_fd);
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
 	return (heredoc_fd);
 }

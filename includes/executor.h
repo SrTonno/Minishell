@@ -27,21 +27,14 @@
 
 # define TEMP_FILE ".temp"
 
-typedef struct s_exec_child
-{
-	char	**command;
-	char	*binary;
-	int		infile;
-	int		outfile;
-	int		*pipe_fd;
-}	t_exec_child;
-
 char	*get_path_envp(char *envp[]);
 char	**get_paths_envp(char *envp[]);
 int		check_binary(char *command, char **paths);
 char	*find_binary(char *filename, char **paths);
 
-int		create_heredocs(char **heredocs);
+int		parse_redir(t_list *ast_node);
+
+int		create_heredoc(char *delimiter);
 char	*do_heredoc(char *delimitator);
 
 void	free_split(char **split);
