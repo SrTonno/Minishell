@@ -64,6 +64,7 @@ void	ast_node_free(void *ptr)
 
 	ast_node = (t_ast_node *)ptr;
 	free_split(ast_node->command);
+	free(ast_node->pipe_fd);
 	ft_lstclear(&ast_node->redir, redir_free);
 	free(ast_node);
 	return ;
@@ -121,7 +122,7 @@ int	check_quotes(char *input)
 		{
 			end_quote = ft_strchr(input + 1, *input);
 			if (end_quote == NULL)
-				return (syntax_error(NULL));
+				return (error_msg(SYNTAX_ERROR, NULL));
 			input = end_quote + 1;
 		}
 		input++;
@@ -146,20 +147,20 @@ int	handle_input(char *input, char *env[])
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)
-		return (malloc_error()); // crear errors.h con fatal error para malloc/fork/execve...
+		return (error_msg(MALLOC_ERROR, NULL));
 	if (check_syntax_metachars(token_lst) != 0
 		|| check_syntax_after_metachars(token_lst) != 0)
 	{
 		ft_lstclear(&token_lst, free);
 		return (2);
 	}
-	print_lst(token_lst);
-	// ast = parse(token_lst);
-	// ft_lstclear(&token_lst, free);
-	// if (ast == NULL)
-	// 	return (0);
-	// // print_ast(ast);
-	// status = execute(ast, env);
+	// print_lst(token_lst);
+	ast = parse(token_lst);
+	ft_lstclear(&token_lst, free);
+	if (ast == NULL)
+		return (0);
+	// print_ast(ast);
+	status = execute(ast, env);
 	// all_free(token_lst, ast, input);
 	return (0);
 }

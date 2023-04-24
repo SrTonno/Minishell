@@ -20,7 +20,7 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 	{
 		if (access(redir_type->text, F_OK) == 0
 			&& access(redir_type->text, W_OK) == -1)
-			return (handle_file_error(PERM_ERR, redir_type->text));
+			return (error_msg(PERM_ERR, redir_type->text));
 	}
 	if (redir_type->type == OVERWRITE)
 	{
@@ -50,9 +50,9 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 	if (redir_type->type == INFILE)
 	{
 		if (access(redir_type->text, F_OK) == -1)
-			return (handle_file_error(NO_FILE_ERROR, redir_type->text));
+			return (error_msg(NO_FILE_ERROR, redir_type->text));
 		if (access(redir_type->text, R_OK) == -1)
-			return (handle_file_error(PERM_ERR, redir_type->text));
+			return (error_msg(PERM_ERR, redir_type->text));
 		fd = open(redir_type->text, O_RDONLY);
 		if (fd == -1)
 			return (-1);
@@ -104,7 +104,7 @@ int	create_pipe(t_list *ast)
 
 	pipe_fd = (int *)ft_calloc(2, sizeof(int));
 	if (pipe_fd == NULL)
-		return (malloc_error());
+		return (error_msg(MALLOC_ERROR, NULL));
 	if (pipe(pipe_fd) == -1)
 		return (-1); // pipe error
 	ast_node = (t_ast_node *)ast->content;
@@ -127,7 +127,7 @@ int	parse_redir(t_list *ast)
 	if (is_pipe_necessary(ast))
 	{
 		if (create_pipe(ast) != 0)
-			return (malloc_error());
+			return (error_msg(MALLOC_ERROR, NULL));
 	}
 	ast_node = (t_ast_node *)ast->content;
 	redir = ast_node->redir;

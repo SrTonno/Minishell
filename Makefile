@@ -9,7 +9,7 @@ CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 
 
 SRCSDIR = ./srcs/
-SRCSCFILES = minishell.c signal.c utils.c error_msg.c
+SRCSCFILES = minishell.c signal.c utils.c
 
 BINDIR = ${addprefix ${SRCSDIR}, bin/}
 BINCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_export.c env_unset.c
@@ -23,11 +23,15 @@ PARSECFILES = parser.c create_ast.c
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
 EXECCFILES = execute.c path.c heredocs.c redir.c
 
+ERRDIR = ${addprefix ${SRCSDIR}, errors/}
+ERRFILES = error_msg.c syntax_errors.c
+
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \
 		${addprefix ${LEXDIR}, ${LEXCFILES}} \
 		${addprefix ${PARSEDIR}, ${PARSECFILES}} \
-		${addprefix ${EXECDIR}, ${EXECCFILES}}
+		${addprefix ${EXECDIR}, ${EXECCFILES}} \
+		${addprefix ${ERRDIR}, ${ERRFILES}}
 
 OBJS = ${SRCS:.c=.o}
 

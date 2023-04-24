@@ -55,19 +55,23 @@ int	execute(t_list *ast, char *envp[])
 
 	paths = get_paths_envp(envp);
 	if (paths == NULL)
-		return (malloc_error());
+		return (error_msg(MALLOC_ERROR, NULL));
 	while (ast != NULL)
 	{
 		status = parse_redir(ast);
 		ast_node = (t_ast_node *)ast->content;
 		if (status == 0)
 		{
-			ast_node->binary = find_binary(ast_node->command[0], paths);
-			if (ast_node->binary == NULL)
-				return (malloc_error());
-			if (create_child(ast_node, envp) == -1)
-				return (handle_exec_error(FORK_ERR, NULL));
-			waitpid(-1, &status, 0);
+			status = check_binary(ast_node->command[0], paths);
+			if (status == 0)
+			{
+				ast_node->binary = find_binary(ast_node->command[0], paths);
+				if (ast_node->binary == NULL)
+					return (error_msg(MALLOC_ERROR, NULL));
+				if (create_child(ast_node, envp) == -1)
+					return (error_msg(FORK_ERR, NULL));
+				waitpid(-1, &status, 0);
+			}
 		}
 		close_fds(ast_node);
 		ast = ast->next;
