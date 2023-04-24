@@ -81,6 +81,7 @@ int	main(int argc, char *argv[], char **env)
 	char				*input;
 	char				**new_env;
 	struct sigaction	sa;
+	int					status;
 
 	if (argc != 1)
 		return (0);
@@ -92,6 +93,7 @@ int	main(int argc, char *argv[], char **env)
 	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
 		printf("Error\n");
 	input = argv[0];
+	status = 0;
 	while (1)
 	{
 		input = readline(PROMPT);
@@ -101,10 +103,29 @@ int	main(int argc, char *argv[], char **env)
 		if (ft_strncmp(input, "\0", 1) == 0)
 			continue ;
 		add_history(input);
-		if (handle_input(input, env) == -1)
+		status = handle_input(input, env);
+		if (status == -1)
 			return (0);
 	}
 	free(input);
+	return (0);
+}
+
+int	check_quotes(char *input)
+{
+	char	*end_quote;
+
+	while (*input)
+	{
+		if (*input == DOUBLE_QUOTE || *input == SINGLE_QUOTE)
+		{
+			end_quote = ft_strchr(input + 1, *input);
+			if (end_quote == NULL)
+				return (syntax_error(NULL));
+			input = end_quote + 1;
+		}
+		input++;
+	}
 	return (0);
 }
 
@@ -114,6 +135,11 @@ int	handle_input(char *input, char *env[])
 	t_list	*ast;
 	int		status; // exit code del ultimo comando -> $?
 
+	if (check_quotes(input) != 0)
+	{
+		free(input);
+		return (2);
+	}
 	while (find_var(input) >= 0)
 		input = env_expand(env, input);
 	// printf("input = %s\n", input);
@@ -127,13 +153,13 @@ int	handle_input(char *input, char *env[])
 		ft_lstclear(&token_lst, free);
 		return (2);
 	}
-	// print_lst(token_lst);
-	ast = parse(token_lst);
-	ft_lstclear(&token_lst, free);
-	if (ast == NULL)
-		return (0);
-	// print_ast(ast);
-	status = execute(ast, env);
+	print_lst(token_lst);
+	// ast = parse(token_lst);
+	// ft_lstclear(&token_lst, free);
+	// if (ast == NULL)
+	// 	return (0);
+	// // print_ast(ast);
+	// status = execute(ast, env);
 	// all_free(token_lst, ast, input);
 	return (0);
 }

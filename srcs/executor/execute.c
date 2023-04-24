@@ -60,8 +60,6 @@ int	execute(t_list *ast, char *envp[])
 	{
 		status = parse_redir(ast);
 		ast_node = (t_ast_node *)ast->content;
-		printf("input %i, output %i -> status %i\n",
-			ast_node->input_fd, ast_node->output_fd, status);
 		if (status == 0)
 		{
 			ast_node->binary = find_binary(ast_node->command[0], paths);

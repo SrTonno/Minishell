@@ -33,6 +33,7 @@ int	check_syntax_after_metachars(t_list *token_lst);
 int	check_syntax_metachars(t_list *token_lst);
 int	handle_file_error(int error, char *str);
 int	handle_exec_error(int error, char *str);
+int	syntax_error(char *str);
 
 int	is_special(unsigned char c);
 

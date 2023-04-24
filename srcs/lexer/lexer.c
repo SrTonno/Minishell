@@ -30,7 +30,8 @@ t_list	*tokenize(char *inputLine)
 			if (handle_char(&lexer) == -1)
 				return (NULL);
 		}
-		if (add_new_token_lst(&lexer) == -1)
+		if (lexer.str + lexer.index - lexer.token_start > 0
+				&& add_new_token_lst(&lexer) == -1)
 			return (NULL);
 	}
 	return (lexer.token_lst);

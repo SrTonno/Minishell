@@ -12,7 +12,6 @@
 
 #include "lexer.h"
 
-static int	handle_dollar(t_lexer *lexer);
 static int	handle_special(t_lexer *lexer);
 static int	handle_env_var(t_lexer *lexer);
 static int	handle_quotation_marks(t_lexer *lexer);
@@ -63,17 +62,16 @@ static int	handle_quotation_marks(t_lexer *lexer)
 
 	quote = lexer->str[lexer->index];
 	end_quote = ft_strchr(lexer->str + lexer->index + 1, quote);
-	if (end_quote == NULL)
-		lexer->index++;
-	else
-	{
-		if (add_new_token_lst(lexer) == -1)
-			return (-1);
-		lexer->token_start = lexer->str + lexer->index;
-		lexer->index = end_quote - lexer->str + 1;
-		if (add_new_token_lst(lexer) == -1)
-			return (-1);
-		lexer->token_start = lexer->str + lexer->index;
-	}
+	if (lexer->str + lexer->index - lexer->token_start > 0
+			&& add_new_token_lst(lexer) == -1)
+		return (-1);
+	lexer->token_start = lexer->str + lexer->index + 1;
+	lexer->index = end_quote - lexer->str;
+	if (*lexer->token_start == '\0')
+		return (0);
+	if (add_new_token_lst(lexer) == -1)
+		return (-1);
+	lexer->index++;
+	lexer->token_start = lexer->str + lexer->index;
 	return (0);
 }

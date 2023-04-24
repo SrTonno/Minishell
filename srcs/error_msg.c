@@ -27,7 +27,10 @@ int	handle_exec_error(int error, char *str)
 	if (error == COMM_NFOUND)
 	{
 		ft_putstr_fd("Command '", STDERR_FILENO);
-		ft_putstr_fd(str, STDERR_FILENO);
+		if (*str == '\0')
+			ft_putstr_fd("''", STDERR_FILENO);
+		else
+			ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd("' not found\n", STDERR_FILENO);
 		status = 127;
 	}
