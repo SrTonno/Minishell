@@ -50,9 +50,28 @@ char	**get_paths_envp(char *envp[])
 	return (path_splitted);
 }
 
+int	check_binary_path(char *command, char **paths)
+{
+	char	*binary;
+	int		index;
+
+	index = -1;
+	while (paths[++index])
+	{
+		binary = ft_strjoin(paths[index], command);
+		if (binary == NULL)
+			return (error_msg(MALLOC_ERROR, NULL));
+		if (access(binary, X_OK) == 0)
+			return (0);
+		if (access(binary, F_OK) == 0 && access(binary, X_OK) == -1)
+			return (error_msg(COMM_NPERM, command));
+		free(binary);
+	}
+	return (error_msg(COMM_NFOUND, command));
+}
+
 int	check_binary(char *command, char **paths)
 {
-	int				index;
 	char			*binary;
 
 	if (*command == '\0')
@@ -67,19 +86,7 @@ int	check_binary(char *command, char **paths)
 			return (error_msg(COMM_NPERM, command));
 		return (error_msg(NO_FILE_DIR, command));
 	}
-	index = -1;
-	while (paths[++index])
-	{
-		binary = ft_strjoin(paths[index], command);
-		if (binary == NULL)
-			return (error_msg(MALLOC_ERROR, NULL));
-		if (access(binary, X_OK) == 0)
-			return (0);
-		if (access(binary, F_OK) == 0 && access(binary, X_OK) == -1)
-			return (error_msg(COMM_NPERM, command));
-		free(binary);
-	}
-	return (error_msg(COMM_NFOUND, command));
+	return (check_binary_path(command, paths));
 }
 
 char	*find_binary(char *command, char **paths)

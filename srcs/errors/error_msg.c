@@ -61,8 +61,12 @@ static void	error_msg2(int error, char *str, int *status)
 		ft_putstr_fd("fork error\n", STDERR_FILENO);
 		*status = 1;
 	}
+	else if (error == PIPE_ERROR)
+	{
+		ft_putstr_fd("pipe error\n", STDERR_FILENO);
+		*status = 1;
+	}
 }
-
 
 static int	syntax_error(int error, char *str, int *status)
 {

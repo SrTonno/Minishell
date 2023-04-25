@@ -16,12 +16,9 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 {
 	int	fd;
 
-	if (redir_type->type == OVERWRITE || redir_type->type == APPEND)
-	{
-		if (access(redir_type->text, F_OK) == 0
-			&& access(redir_type->text, W_OK) == -1)
-			return (error_msg(PERM_ERR, redir_type->text));
-	}
+	if (access(redir_type->text, F_OK) == 0
+		&& access(redir_type->text, W_OK) == -1)
+		return (error_msg(PERM_ERR, redir_type->text));
 	if (redir_type->type == OVERWRITE)
 	{
 		fd = open(redir_type->text, O_CREAT | O_TRUNC | O_WRONLY);
@@ -46,7 +43,7 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 {
 	int	fd;
-	
+
 	if (redir_type->type == INFILE)
 	{
 		if (access(redir_type->text, F_OK) == -1)
@@ -106,7 +103,7 @@ int	create_pipe(t_list *ast)
 	if (pipe_fd == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
 	if (pipe(pipe_fd) == -1)
-		return (-1); // pipe error
+		return (error_msg(PIPE_ERROR, NULL));
 	ast_node = (t_ast_node *)ast->content;
 	ast_node->pipe_fd = pipe_fd;
 	ast_node->output_fd = pipe_fd[WRITE_END];
@@ -135,7 +132,7 @@ int	parse_redir(t_list *ast)
 	{
 		if (redir->content != NULL)
 			status = do_redir((t_redir_type *)redir->content,
-				ast_node);
+					ast_node);
 		if (status != 0)
 			break ;
 		redir = redir->next;

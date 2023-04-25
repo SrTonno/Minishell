@@ -70,13 +70,6 @@ void	ast_node_free(void *ptr)
 	return ;
 }
 
-static void	all_free(t_list *token_lst, t_list *ast, char *input)
-{
-	ft_lstclear(&token_lst, free);
-	ft_lstclear(&ast, ast_node_free);
-	free(input);
-}
-
 int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
@@ -86,14 +79,11 @@ int	main(int argc, char *argv[], char **env)
 
 	if (argc != 1)
 		return (0);
-	(void)argc;
-	(void)argv;
 	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
 		printf("Error\n");
-	input = argv[0];
 	status = 0;
 	while (1)
 	{
@@ -112,29 +102,11 @@ int	main(int argc, char *argv[], char **env)
 	return (0);
 }
 
-int	check_quotes(char *input)
-{
-	char	*end_quote;
-
-	while (*input)
-	{
-		if (*input == DOUBLE_QUOTE || *input == SINGLE_QUOTE)
-		{
-			end_quote = ft_strchr(input + 1, *input);
-			if (end_quote == NULL)
-				return (error_msg(SYNTAX_ERROR, NULL));
-			input = end_quote + 1;
-		}
-		input++;
-	}
-	return (0);
-}
-
 int	handle_input(char *input, char *env[])
 {
 	t_list	*token_lst;
 	t_list	*ast;
-	int		status; // exit code del ultimo comando -> $?
+	int		status;
 
 	if (check_quotes(input) != 0)
 	{
@@ -161,6 +133,5 @@ int	handle_input(char *input, char *env[])
 		return (0);
 	// print_ast(ast);
 	status = execute(ast, env);
-	// all_free(token_lst, ast, input);
 	return (0);
 }

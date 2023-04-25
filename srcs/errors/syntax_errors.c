@@ -12,6 +12,24 @@
 
 #include "error_msg.h"
 
+int	check_quotes(char *input)
+{
+	char	*end_quote;
+
+	while (*input)
+	{
+		if (*input == DOUBLE_QUOTE || *input == SINGLE_QUOTE)
+		{
+			end_quote = ft_strchr(input + 1, *input);
+			if (end_quote == NULL)
+				return (error_msg(SYNTAX_ERROR, NULL));
+			input = end_quote + 1;
+		}
+		input++;
+	}
+	return (0);
+}
+
 int	check_syntax_metachars(t_list *token_lst)
 {
 	char	*c;
@@ -59,4 +77,3 @@ int	check_syntax_after_metachars(t_list *token_lst)
 	}
 	return (0);
 }
-

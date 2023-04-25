@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/21 13:57:24 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:58:54 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,31 @@ static t_ast_node	*create_ast_node(t_len_ast max)
 	return (new_ast);
 }
 
+t_ast_node	*fill_ast_node(t_list **token_lst, t_ast_node *new_ast,
+	int *i, int *extra)
+{
+	if (*((unsigned char *)(*token_lst)->content) == '>'
+		|| *((unsigned char *)(*token_lst)->content) == '<')
+	{
+		if (store_redir(new_ast, *token_lst) == -1)
+		{
+			ast_node_free(new_ast);
+			return (NULL);
+		}
+		*extra += 2;
+		(*token_lst) = (*token_lst)->next;
+	}
+	else
+	{
+		new_ast->command[*i] = ft_strdup((*token_lst)->content);
+		if (new_ast->command[(*i)++] == NULL)
+		{
+			ast_node_free(new_ast);
+			return (NULL);
+		}
+	}
+}
+
 t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max)
 {
 	int			i;
@@ -92,26 +117,8 @@ t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max)
 		return (NULL);
 	while ((max.len) > i + extra)
 	{
-		if (*((unsigned char *)token_lst->content) == '>'
-			|| *((unsigned char *)token_lst->content) == '<')
-		{
-			if (store_redir(new_ast, token_lst) == -1)
-			{
-				ast_node_free(new_ast);
-				return (NULL);
-			}
-			extra = extra + 2;
-			token_lst = token_lst->next;
-		}
-		else
-		{
-			new_ast->command[i] = ft_strdup(token_lst->content);
-			if (new_ast->command[i++] == NULL)
-			{
-				ast_node_free(new_ast);
-				return (NULL);
-			}
-		}
+		if (fill_ast_node(&token_lst, new_ast, &i, &extra) == NULL)
+			return (NULL);
 		token_lst = token_lst->next;
 	}
 	return (new_ast);

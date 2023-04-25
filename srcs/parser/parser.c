@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/21 13:54:11 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:46:15 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,17 @@ t_list	*create_new_node(t_list *token_lst, t_len_ast num)
 	return (new_node);
 }
 
+t_list	*add_new_node(t_list *token_lst, t_list **ast, t_len_ast num)
+{
+	t_list		*new_node;
+
+	new_node = create_new_node(token_lst, num);
+	if (new_node == NULL)
+		return (NULL);
+	ft_lstadd_back(ast, new_node);
+	return (new_node);
+}
+
 t_list	*parse(t_list *token_lst)
 {
 	t_list		*ast;
@@ -70,23 +81,19 @@ t_list	*parse(t_list *token_lst)
 
 	ast = NULL;
 	num = count_blocks(token_lst, 0);
-	new_node = create_new_node(token_lst, num);
-	if (new_node == NULL)
+	if (add_new_node(token_lst, &ast, num) == NULL)
 		return (NULL);
-	ft_lstadd_back(&ast, new_node);
 	token_lst = mov_to_next_list(token_lst, num.len);
 	while (token_lst != NULL)
 	{
 		num = count_blocks(token_lst, 0);
 		if (*((unsigned char *)token_lst->content) != '|')
 		{
-			new_node = create_new_node(token_lst, num);
-			if (new_node == NULL)
+			if (add_new_node(token_lst, &ast, num) == NULL)
 			{
 				ft_lstclear(&ast, ast_node_free);
 				return (NULL);
 			}
-			ft_lstadd_back(&ast, new_node);
 		}
 		token_lst = mov_to_next_list(token_lst, num.len);
 	}

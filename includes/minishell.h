@@ -28,9 +28,6 @@
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
-# define DOUBLE_QUOTE 34
-# define SINGLE_QUOTE 39
-
 int		handle_input(char *input, char *envp[]);
 
 void	handler(int signum);
