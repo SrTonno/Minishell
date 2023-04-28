@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/10 12:18:57 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:58:23 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*env_expand(char **env, char *input)
 	len = find_var(input) + 1;
 	top = find_var_end(input, len);
 	var = ft_calloc((top - len) + 1, sizeof(char));
+	if (var == NULL)
+		exit (0);
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env, var);
 	if (var[0] == '?')
@@ -45,6 +47,8 @@ char	*env_expand(char **env, char *input)
 			(ft_strlen(var) + 1)), input, NULL);
 	free (var);
 	free (input);
+	if (str == NULL)
+		return (NULL);
 	return (str);
 }
 

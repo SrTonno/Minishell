@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:38:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/10 12:33:48 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:59:31 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,37 +62,67 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	while (env[i] != NULL)
 		dst[j++] = env[i++];
 	i = -1;
+	printf("%ddcrearte_new_env\n", j);
 	while (comd[++i] != NULL)
 	{
+
 		if ((ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
-			&& find_char(env[i], '=') > 0
+			&& find_char(comd[i], '=') > 0
 			&& to_future(comd, i) == -1 && find_env(env, comd[i]) == -2)
+		{
+			printf("%s\n", comd[i]);
 			dst[j++] = ft_strdup(comd[i]);
+		}
 	}
 	dst[j] = NULL;
 }
 
+static void	only_coman(char **dst, char **comd)
+{
+	int	i;
+	int	j;
+	int	len_env;
+	j = 0;
+	i = -1;
+	printf("only_coman\n");
+	while (comd[++i] != NULL)
+	{
+		if ((ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
+			&& to_future(comd, i) == -1)
+			dst[j++] = ft_strdup(comd[i]);
+	}
+	dst[j] = NULL;
+}
 char	**export_env(char **env, char **coman)
 {
 	char	**new_env;
 	int		len_com;
 	int		len_env;
 
+	printf("EXPORT\n");
 	len_com = len_comando(coman, env);
 	printf("%d\n", len_com);
 	if (len_com <= 1)
 		return (env);
-	printf("--------------------HOLI\n");
 	len_env = len_doble_base(env);
 	printf("%d + %d\n", len_com, len_env);
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
-	crearte_new_env(new_env, coman, env);
+	if (new_env == NULL)
+	{
+		//liberar cosas
+		exit(1);
+	}
+	if (len_env == 0)
+		only_coman(new_env, coman);
+	else
+		crearte_new_env(new_env, coman, env);
 	free(env);
 	int tmp;
 	tmp = 0;
 	while (coman[tmp] != NULL)
 		free(coman[tmp++]);
 	free(coman);
+
 	return (new_env);
 }
 

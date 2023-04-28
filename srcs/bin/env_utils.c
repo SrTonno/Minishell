@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/13 17:25:16 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:58:33 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*replace_env(int len, char *org, char *add)
 	int		mark;
 
 	dst = ft_calloc(len + 1, sizeof(char));
+	if (dst == NULL)
+		return(NULL);
 	mark = find_var(org);
 	i = 0;
 	j = 0;
@@ -60,7 +62,8 @@ char	*replace_env(int len, char *org, char *add)
 			else
 				j = replace_var(j, dst, add);
 			while (org[i] != '$' && org[i] != ' ' && org[i] != '\0'
-				&& org[i - 1] != '?')
+				&& org[i - 1] != '?' && org[i] != '/' && org[i] != '>'
+				&& org[i] != '<'  && org[i] != '|')
 				i++;
 		}
 		else
