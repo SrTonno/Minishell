@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/25 19:46:15 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:38:08 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static t_len_ast	count_blocks(t_list *list, int mode)
 	return (command);
 }
 
-t_list	*create_new_node(t_list *token_lst, t_len_ast num)
+t_list	*create_new_node(t_list *token_lst, t_len_ast num, int i)
 {
 	t_ast_node	*ast_node;
 	t_list		*new_node;
 
-	ast_node = list_to_char(token_lst, num);
+	ast_node = list_to_char(token_lst, num, i);
 	if (ast_node == NULL)
 		return (NULL);
 	new_node = ft_lstnew(ast_node);
@@ -62,11 +62,11 @@ t_list	*create_new_node(t_list *token_lst, t_len_ast num)
 	return (new_node);
 }
 
-t_list	*add_new_node(t_list *token_lst, t_list **ast, t_len_ast num)
+t_list	*add_new_node(t_list *token_lst, t_list **ast, t_len_ast num, int i)
 {
 	t_list		*new_node;
 
-	new_node = create_new_node(token_lst, num);
+	new_node = create_new_node(token_lst, num, i);
 	if (new_node == NULL)
 		return (NULL);
 	ft_lstadd_back(ast, new_node);
@@ -78,10 +78,12 @@ t_list	*parse(t_list *token_lst)
 	t_list		*ast;
 	t_list		*new_node;
 	t_len_ast	num;
+	int			index;
 
 	ast = NULL;
+	index = 0;
 	num = count_blocks(token_lst, 0);
-	if (add_new_node(token_lst, &ast, num) == NULL)
+	if (add_new_node(token_lst, &ast, num, index++) == NULL)
 		return (NULL);
 	token_lst = mov_to_next_list(token_lst, num.len);
 	while (token_lst != NULL)
@@ -89,7 +91,7 @@ t_list	*parse(t_list *token_lst)
 		num = count_blocks(token_lst, 0);
 		if (*((unsigned char *)token_lst->content) != '|')
 		{
-			if (add_new_node(token_lst, &ast, num) == NULL)
+			if (add_new_node(token_lst, &ast, num, index++) == NULL)
 			{
 				ft_lstclear(&ast, ast_node_free);
 				return (NULL);

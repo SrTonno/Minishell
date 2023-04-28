@@ -24,6 +24,7 @@
 # include "get_next_line.h"
 # include "ast.h"
 # include "error_msg.h"
+# include "bin.h"
 
 # define TEMP_FILE ".temp"
 

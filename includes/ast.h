@@ -31,6 +31,7 @@ typedef struct s_redir_type
 
 typedef struct s_ast_node
 {
+	int		index;
 	char	**command;
 	t_list	*redir;
 	char	*binary;

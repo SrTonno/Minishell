@@ -33,7 +33,7 @@ typedef struct s_len_ast
 }	t_len_ast;
 
 t_list		*mov_to_next_list(t_list *list, int num);
-t_ast_node	*list_to_char(t_list *list, t_len_ast max);
+t_ast_node	*list_to_char(t_list *list, t_len_ast max, int index);
 
 int			handle_par_error(int error, char *str);
 

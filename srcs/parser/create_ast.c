@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/25 19:58:54 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:37:02 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	store_redir(t_ast_node *ast, t_list *list)
 	return (0);
 }
 
-static t_ast_node	*create_ast_node(t_len_ast max)
+static t_ast_node	*create_ast_node(t_len_ast max, int index)
 {
 	t_ast_node	*new_ast;
 
@@ -71,6 +71,7 @@ static t_ast_node	*create_ast_node(t_len_ast max)
 		sizeof(char *));
 	if (new_ast == NULL)
 		return (NULL);
+	new_ast->index = index;
 	new_ast->redir = NULL;
 	new_ast->binary = NULL;
 	new_ast->input_fd = 0;
@@ -104,7 +105,7 @@ t_ast_node	*fill_ast_node(t_list **token_lst, t_ast_node *new_ast,
 	}
 }
 
-t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max)
+t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max, int index)
 {
 	int			i;
 	int			extra;
@@ -112,7 +113,7 @@ t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max)
 
 	i = 0;
 	extra = 0;
-	new_ast = create_ast_node(max);
+	new_ast = create_ast_node(max, index);
 	if (new_ast == NULL)
 		return (NULL);
 	while ((max.len) > i + extra)

@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/18 18:11:04 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:12:41 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 
 # include "libft.h"
+# include "ft_printf.h"
+# include "ast.h"
 
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39
@@ -35,5 +37,9 @@ int		find_var(char *str);
 int		find_var_end(char *str, int i);
 int		export_util(char **env, char **comand);
 int		find_env_len(char **env, char *str);
-#endif
 
+int     ft_pwd(void);
+int		ft_cd(t_ast_node *ast_node, char **envp);
+int		ft_echo(t_ast_node *ast_node);
+
+#endif
