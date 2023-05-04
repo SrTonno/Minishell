@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/27 18:38:08 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:45:29 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_list	*create_new_node(t_list *token_lst, t_len_ast num, int i)
 	new_node = ft_lstnew(ast_node);
 	if (new_node == NULL)
 	{
-		ast_node_free(ast_node);
+		free_ast_node(ast_node);
 		return (NULL);
 	}
 	return (new_node);
@@ -93,7 +93,7 @@ t_list	*parse(t_list *token_lst)
 		{
 			if (add_new_node(token_lst, &ast, num, index++) == NULL)
 			{
-				ft_lstclear(&ast, ast_node_free);
+				ft_lstclear(&ast, free_ast_node);
 				return (NULL);
 			}
 		}

@@ -109,5 +109,6 @@ int	execute(t_list *ast, char *envp[])
 		status = exec_child(ast, paths, envp);
 		ast = ast->next;
 	}
+	free_split(paths);
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/27 18:37:02 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:21:48 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_list	*create_redir(char *text, int type)
 	if (redir == NULL)
 		return (NULL);
 	redir->text = ft_strdup(text);
+	if (type == HEREDOC)
+		free(text);
 	if (redir->text == NULL)
 	{
 		free(redir);
@@ -44,10 +46,8 @@ static int	store_redir(t_ast_node *ast, t_list *list)
 		if (ft_strlen((char *)list->content) == 1)
 			redir = create_redir(list->next->content, INFILE);
 		else
-		{
 			redir = create_redir(ft_strjoin(list->next->content, "\n"),
 					HEREDOC);
-		}
 	}
 	else
 	{
@@ -88,7 +88,7 @@ t_ast_node	*fill_ast_node(t_list **token_lst, t_ast_node *new_ast,
 	{
 		if (store_redir(new_ast, *token_lst) == -1)
 		{
-			ast_node_free(new_ast);
+			free_ast_node(new_ast);
 			return (NULL);
 		}
 		*extra += 2;
@@ -99,10 +99,11 @@ t_ast_node	*fill_ast_node(t_list **token_lst, t_ast_node *new_ast,
 		new_ast->command[*i] = ft_strdup((*token_lst)->content);
 		if (new_ast->command[(*i)++] == NULL)
 		{
-			ast_node_free(new_ast);
+			free_ast_node(new_ast);
 			return (NULL);
 		}
 	}
+	return (new_ast);
 }
 
 t_ast_node	*list_to_char(t_list *token_lst, t_len_ast max, int index)

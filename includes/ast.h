@@ -40,7 +40,7 @@ typedef struct s_ast_node
 	int		*pipe_fd;
 }	t_ast_node;
 
-void	ast_node_free(void *ptr);
+void	free_ast_node(void *ptr);
 void	redir_free(void *ptr);
 
 #endif

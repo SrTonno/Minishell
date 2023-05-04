@@ -84,6 +84,7 @@ static int	syntax_error(int error, char *str, int *status)
 		}
 		*status = 2;
 	}
+	return (0);
 }
 
 static void	error_msg3(int error, char *str, int *status)

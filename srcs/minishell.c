@@ -58,16 +58,22 @@ void	redir_free(void *ptr)
 	return ;
 }
 
-void	ast_node_free(void *ptr)
+void	free_ast_node(void *ptr)
 {
 	t_ast_node	*ast_node;
 
 	ast_node = (t_ast_node *)ptr;
 	free_split(ast_node->command);
 	free(ast_node->pipe_fd);
+	free(ast_node->binary);
 	ft_lstclear(&ast_node->redir, redir_free);
 	free(ast_node);
 	return ;
+}
+
+void	leaks()
+{
+	system("leaks -q minishell");
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -77,6 +83,7 @@ int	main(int argc, char *argv[], char **env)
 	struct sigaction	sa;
 	int					status;
 
+	atexit(leaks);
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
@@ -90,9 +97,15 @@ int	main(int argc, char *argv[], char **env)
 		input = readline(PROMPT);
 		ctr_d(input, NULL);
 		if (ft_strncmp(input, "exit", 5) == 0)
+		{
+			free_split(env);
 			break ;
+		}
 		if (ft_strncmp(input, "\0", 1) == 0)
+		{
+			free(input);
 			continue ;
+		}
 		add_history(input);
 		status = handle_input(input, env);
 		if (status == -1)
@@ -115,7 +128,6 @@ int	handle_input(char *input, char *env[])
 	}
 	while (find_var(input) >= 0)
 		input = env_expand(env, input);
-	// printf("input = %s\n", input);
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)
@@ -133,5 +145,6 @@ int	handle_input(char *input, char *env[])
 		return (0);
 	// print_ast(ast);
 	status = execute(ast, env);
-	return (0);
+	ft_lstclear(&ast, free_ast_node);
+	return (status);
 }

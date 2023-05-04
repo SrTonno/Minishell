@@ -62,9 +62,15 @@ int	check_binary_path(char *command, char **paths)
 		if (binary == NULL)
 			return (error_msg(MALLOC_ERROR, NULL));
 		if (access(binary, X_OK) == 0)
+		{
+			free(binary);
 			return (0);
+		}
 		if (access(binary, F_OK) == 0 && access(binary, X_OK) == -1)
+		{
+			free(binary);
 			return (error_msg(COMM_NPERM, command));
+		}
 		free(binary);
 	}
 	return (error_msg(COMM_NFOUND, command));
@@ -72,8 +78,6 @@ int	check_binary_path(char *command, char **paths)
 
 int	check_binary(char *command, char **paths)
 {
-	char			*binary;
-
 	if (isBuiltin(command))
 		return (0);
 	if (*command == '\0')
