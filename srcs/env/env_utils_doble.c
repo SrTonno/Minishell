@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_doble.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:07:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/10 12:24:17 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:26:56 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bin.h"
+#include "env.h"
 
 int	len_doble(char **str)
 {

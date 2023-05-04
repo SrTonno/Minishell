@@ -1,20 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_unset.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/09 13:17:45 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:59:47 by tvillare         ###   ########.fr       */
+/*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
+/*   Updated: 2023/05/03 20:29:57 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
-#include "libft.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 static int	len_error_unset(char **env, char **str)
 {
@@ -31,7 +27,7 @@ static int	len_error_unset(char **env, char **str)
 			|| find_char(str[i], '=') >= 0)
 		{
 			if (error == 0)
-				printf("unset: %s: invalid parameter name\n", str[i]);
+				printf("-bash: unset: '%s': not a valid identifier\n", str[i]);
 			error++;
 		}
 		else if (find_env_basic(env, str[i]) >= 0 && to_future(str, i) == -1)
@@ -79,10 +75,9 @@ char	**unset_env(char **env, char **comand)
 	free(comand);
 	return (new_env);
 }
-/*
-	int tmp;
-	tmp = 0;
-	while (comand[tmp] != NULL)
-		free(comand[tmp++]);
-	free(comand);
-*/
+
+int	ft_unset(char **env, char **command)
+{
+	unset_env(env, command);
+	return (0);
+}

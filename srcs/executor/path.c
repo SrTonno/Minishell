@@ -74,6 +74,8 @@ int	check_binary(char *command, char **paths)
 {
 	char			*binary;
 
+	if (isBuiltin(command))
+		return (0);
 	if (*command == '\0')
 		return (error_msg(COMM_NFOUND, command));
 	if (ft_strchr(command, '/'))
@@ -94,7 +96,7 @@ char	*find_binary(char *command, char **paths)
 	int		index;
 	char	*binary;
 
-	if (ft_strchr(command, '/'))
+	if (ft_strchr(command, '/') || isBuiltin(command))
 		return (ft_strdup(command));
 	index = -1;
 	while (paths[++index])

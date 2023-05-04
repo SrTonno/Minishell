@@ -34,7 +34,7 @@ int	ft_echo(t_ast_node *ast_node)
 			ft_printf("\n");
 		}
 	}
-	exit (0);
+	exit(0);
 }
 
 void	print_args(char *argv[])

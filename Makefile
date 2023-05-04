@@ -7,12 +7,14 @@ CC = gcc
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
-
 SRCSDIR = ./srcs/
 SRCSCFILES = minishell.c signal.c utils.c
 
-BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_export.c env_unset.c ft_pwd.c ft_cd.c ft_echo.c
+BINDIR = ${addprefix ${SRCSDIR}, builtins/}
+BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c builtin_utils.c
+
+ENVDIR = ${addprefix ${SRCSDIR}, env/}
+ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
@@ -28,6 +30,7 @@ ERRFILES = error_msg.c syntax_errors.c
 
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \
+		${addprefix ${ENVDIR}, ${ENVCFILES}} \
 		${addprefix ${LEXDIR}, ${LEXCFILES}} \
 		${addprefix ${PARSEDIR}, ${PARSECFILES}} \
 		${addprefix ${EXECDIR}, ${EXECCFILES}} \

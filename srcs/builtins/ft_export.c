@@ -1,20 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_export.c                                       :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 17:38:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:59:31 by tvillare         ###   ########.fr       */
+/*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
+/*   Updated: 2023/04/28 17:59:38 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
-#include "libft.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 static int	len_error_expot(char **str)
 {

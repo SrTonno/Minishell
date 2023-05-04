@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_find.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:36:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:24:20 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:26:58 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bin.h"
+#include "env.h"
 
 int	find_char(char *str, char c)
 {

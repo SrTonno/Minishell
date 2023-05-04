@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:58:23 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:15:20 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bin.h"
-
-void	ft_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i] != NULL)
-		printf("%s\n", env[i++]);
-	printf("--------------------\n");
-}
+#include "env.h"
 
 char	*env_expand(char **env, char *input)
 {

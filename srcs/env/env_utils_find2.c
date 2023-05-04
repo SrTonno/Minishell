@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_find2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:32:08 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/13 18:24:38 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:27:01 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bin.h"
+#include "env.h"
 
 int	find_var(char *str)
 {

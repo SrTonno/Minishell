@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:58:33 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:27:03 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bin.h"
+#include "env.h"
 #include <limits.h>
 
 int	to_future(char **str, int i)

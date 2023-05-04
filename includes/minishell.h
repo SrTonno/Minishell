@@ -25,6 +25,7 @@
 # include "libft.h"
 # include "ast.h"
 # include "error_msg.h"
+# include "env.h"
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
