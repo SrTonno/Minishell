@@ -6,14 +6,14 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 13:26:42 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:34:51 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
 #include "env.h"
 
-static int	len_error_unset(char **env, char **str)
+static int	len_error_unset(char **env, char **str, int *code)
 {
 	int	i;
 	int	count;
@@ -28,7 +28,10 @@ static int	len_error_unset(char **env, char **str)
 			|| find_char(str[i], '=') >= 0)
 		{
 			if (error == 0)
+			{
+				*code = 1;
 				printf("-bash: unset: '%s': not a valid identifier\n", str[i]);
+			}
 			error++;
 		}
 		else if (find_env_basic(env, str[i]) >= 0 && to_future(str, i) == -1)
@@ -58,20 +61,29 @@ int	unset_env(char ***env, char **comand)
 	int		del;
 	int		len;
 	char	**new_env;
+	int		code;
 
-	printf("UNSET\n");
-	del = len_error_unset(env[0], comand);
+	code = 0;
+	del = len_error_unset(env[0], comand, &code);
+	printf("code -> %d\n ", code);
 	if (del == 0)
 		return (0);
 	len = len_doble_base(env[0]);
 	new_env = ft_calloc((len - del) + 1, sizeof(char *));
 	if (new_env == NULL)
+	{
+		printf("HOLA\n");
 		exit (1);
+	}
 	delete_unset(new_env, env[0], comand);
-	free (env);
-	int tmp;
+	free (env[0]);
 	env[0] = new_env;
-	return (0);
+	int tmp;
+	tmp = 0;
+	while (comand[tmp] != NULL)
+		free(comand[tmp++]);
+	free(comand);
+	return (code);
 }
 
 int	ft_unset(char ***env, char **command)

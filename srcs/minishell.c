@@ -83,7 +83,7 @@ int	main(int argc, char *argv[], char **env)
 	struct sigaction	sa;
 	int					status;
 
-	atexit(leaks);
+	//atexit(leaks);
 	if (argc != 1)
 		return (0);
 	new_env = malloc_env(env);
@@ -147,5 +147,10 @@ int	handle_input(char *input, char **env[])
 	// print_ast(ast);
 	status = execute(ast, env[0]);
 	ft_lstclear(&ast, free_ast_node);
+	//unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a", ' '));
+	//export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds pq=qp cositas21=pa", ' '));
+	//status = unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a" , ' '));
+	//ft_env(env[0]);
+	//printf("HOLAAA %d\n", status);
 	return (status);
 }

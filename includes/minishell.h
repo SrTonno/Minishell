@@ -50,7 +50,7 @@ char	**ft_unset(char **env, char **comand);
 char	*env_expand(char ***env, char *input);
 int		find_var(char *str);
 
-char	**export_env(char **env, char **coman);
-char	**unset_env(char **env, char **comand);
+int		export_env(char ***env, char **coman);
+int		unset_env(char ***env, char **comand);
 
 #endif

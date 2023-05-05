@@ -6,14 +6,14 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 13:22:31 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:34:46 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
 #include "env.h"
 
-static int	len_error_expot(char **str)
+static int	len_error_expot(char **str, int *code)
 {
 	int	i;
 	int	count;
@@ -27,25 +27,25 @@ static int	len_error_expot(char **str)
 		if ((ft_isalpha(str[i][0]) == 0 && str[i][0] != '_'))
 		{
 			if (error == 0)
+			{
 				printf("export: not an identifier:%s\n", str[i]);
+				*code = 1;
+			}
 			error++;
 		}
 		else if (find_char(str[i], '=') > 0 && to_future(str, i) == -1)
-		{
-			printf("%d->%s\n", count, str[i]);
 			count++;
-		}
 	}
 	return (count);
 }
 
-static int	len_comando(char **coman, char **env)
+static int	len_comando(char **coman, char **env, int *error)
 {
 	int	len;
 	int	mod;
 
 	mod = find_mod_env(env, coman);
-	len = len_error_expot(coman);
+	len = len_error_expot(coman, error);
 	return (len - mod);
 }
 
@@ -95,14 +95,13 @@ int	export_env(char ***env, char **coman)
 	char	**new_env;
 	int		len_com;
 	int		len_env;
+	int		error;
 
-	printf("EXPORT\n");
-	len_com = len_comando(coman, env[0]);
-	printf("%d\n", len_com);
+	error = 0;
+	len_com = len_comando(coman, env[0], &error);
 	if (len_com <= 1)
-		return (0);
+		return (error);
 	len_env = len_doble_base(env[0]);
-	printf("%d + %d\n", len_com, len_env);
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
 	if (new_env == NULL)
 	{
@@ -115,7 +114,7 @@ int	export_env(char ***env, char **coman)
 		crearte_new_env(new_env, coman, env[0]);
 	free(env[0]);
 	env[0] = new_env;
-	return (0);
+	return (error);
 }
 
 /*
