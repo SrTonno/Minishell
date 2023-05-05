@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/04/28 17:59:38 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:36:15 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
+#include "env.h"
 
 static int	len_error_expot(char **str)
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/03 20:29:57 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:36:21 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
+#include "env.h"
 
 static int	len_error_unset(char **env, char **str)
 {

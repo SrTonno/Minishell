@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/04 18:09:45 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:24:26 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
