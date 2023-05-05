@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 12:36:15 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:22:31 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,18 @@ static void	only_coman(char **dst, char **comd)
 	}
 	dst[j] = NULL;
 }
-char	**export_env(char **env, char **coman)
+int	export_env(char ***env, char **coman)
 {
 	char	**new_env;
 	int		len_com;
 	int		len_env;
 
 	printf("EXPORT\n");
-	len_com = len_comando(coman, env);
+	len_com = len_comando(coman, env[0]);
 	printf("%d\n", len_com);
 	if (len_com <= 1)
-		return (env);
-	len_env = len_doble_base(env);
+		return (0);
+	len_env = len_doble_base(env[0]);
 	printf("%d + %d\n", len_com, len_env);
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
 	if (new_env == NULL)
@@ -112,15 +112,10 @@ char	**export_env(char **env, char **coman)
 	if (len_env == 0)
 		only_coman(new_env, coman);
 	else
-		crearte_new_env(new_env, coman, env);
-	free(env);
-	int tmp;
-	tmp = 0;
-	while (coman[tmp] != NULL)
-		free(coman[tmp++]);
-	free(coman);
-
-	return (new_env);
+		crearte_new_env(new_env, coman, env[0]);
+	free(env[0]);
+	env[0] = new_env;
+	return (0);
 }
 
 /*

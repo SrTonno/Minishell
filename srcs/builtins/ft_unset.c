@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 12:36:21 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:26:42 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,28 @@ static void	delete_unset(char **new_env, char **env, char **comand)
 	}
 }
 
-char	**unset_env(char **env, char **comand)
+int	unset_env(char ***env, char **comand)
 {
 	int		del;
 	int		len;
 	char	**new_env;
 
 	printf("UNSET\n");
-	del = len_error_unset(env, comand);
+	del = len_error_unset(env[0], comand);
 	if (del == 0)
-		return (env);
-	len = len_doble_base(env);
+		return (0);
+	len = len_doble_base(env[0]);
 	new_env = ft_calloc((len - del) + 1, sizeof(char *));
 	if (new_env == NULL)
 		exit (1);
-	delete_unset(new_env, env, comand);
+	delete_unset(new_env, env[0], comand);
 	free (env);
 	int tmp;
-	tmp = 0;
-	while (comand[tmp] != NULL)
-		free(comand[tmp++]);
-	free(comand);
-	return (new_env);
+	env[0] = new_env;
+	return (0);
 }
 
-int	ft_unset(char **env, char **command)
+int	ft_unset(char ***env, char **command)
 {
 	unset_env(env, command);
 	return (0);

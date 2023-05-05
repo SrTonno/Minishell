@@ -79,14 +79,14 @@ void	leaks()
 int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
-	char				**new_env;
+	char				***new_env;
 	struct sigaction	sa;
 	int					status;
 
 	atexit(leaks);
 	if (argc != 1)
 		return (0);
-	env = malloc_env(env);
+	new_env = malloc_env(env);
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
@@ -98,7 +98,8 @@ int	main(int argc, char *argv[], char **env)
 		ctr_d(input, NULL);
 		if (ft_strncmp(input, "exit", 5) == 0)
 		{
-			free_split(env);
+			free(new_env);
+			free_split(new_env[0]);
 			break ;
 		}
 		if (ft_strncmp(input, "\0", 1) == 0)
@@ -107,7 +108,7 @@ int	main(int argc, char *argv[], char **env)
 			continue ;
 		}
 		add_history(input);
-		status = handle_input(input, env);
+		status = handle_input(input, new_env);
 		if (status == -1)
 			return (0);
 	}
@@ -115,7 +116,7 @@ int	main(int argc, char *argv[], char **env)
 	return (0);
 }
 
-int	handle_input(char *input, char *env[])
+int	handle_input(char *input, char **env[])
 {
 	t_list	*token_lst;
 	t_list	*ast;
@@ -144,7 +145,7 @@ int	handle_input(char *input, char *env[])
 	if (ast == NULL)
 		return (0);
 	// print_ast(ast);
-	status = execute(ast, env);
+	status = execute(ast, env[0]);
 	ft_lstclear(&ast, free_ast_node);
 	return (status);
 }

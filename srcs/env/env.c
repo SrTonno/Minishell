@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/02 17:15:20 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:04:08 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*env_expand(char **env, char *input)
+char	*env_expand(char ***env, char *input)
 {
 	int		len;
 	int		top;
@@ -26,12 +26,12 @@ char	*env_expand(char **env, char *input)
 	if (var == NULL)
 		exit (0);
 	ft_strlcpy(var, input + len, (top - len));
-	i = find_env_basic(env, var);
+	i = find_env_basic(env[0], var);
 	if (var[0] == '?')
 		str = replace_env(ft_strlen(input) - 1, input, "?");
 	else if (i >= 0)
-		str = replace_env((ft_strlen(input) + ft_strlen(env[i])) \
-			- ((ft_strlen(var) + 1) * 2), input, env[i]);
+		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
+			- ((ft_strlen(var) + 1) * 2), input, env[0][i]);
 	else
 		str = replace_env((ft_strlen(input) - \
 			(ft_strlen(var) + 1)), input, NULL);
@@ -42,17 +42,19 @@ char	*env_expand(char **env, char *input)
 	return (str);
 }
 
-char	**malloc_env(char **env)
+char	***malloc_env(char **env)
 {
 	int		i;
 	int		len;
-	char	**new_env;
+	char	***new_env;
 
+	new_env = ft_calloc(1, sizeof(char *));
+	//proteger malloc
 	len = len_doble_base(env);
-	new_env = ft_calloc(len + 1, sizeof(char *));
+	new_env[0] = ft_calloc(len + 1, sizeof(char *));
 	i = -1;
 	while (env[++i] != '\0')
-		new_env[i] = ft_strdup(env[i]);
-	env[++i] = NULL;
+		new_env[0][i] = ft_strdup(env[i]);
+	new_env[0][++i] = NULL;
 	return (new_env);
 }
