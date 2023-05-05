@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 16:34:51 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:55:47 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	unset_env(char ***env, char **comand)
 
 	code = 0;
 	del = len_error_unset(env[0], comand, &code);
-	printf("code -> %d\n ", code);
 	if (del == 0)
 		return (0);
 	len = len_doble_base(env[0]);

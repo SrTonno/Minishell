@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/05 13:04:08 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:49:00 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ char	*env_expand(char ***env, char *input)
 	else
 		str = replace_env((ft_strlen(input) - \
 			(ft_strlen(var) + 1)), input, NULL);
-	free (var);
-	free (input);
+	(free (var), free (input));
 	if (str == NULL)
 		return (NULL);
 	return (str);

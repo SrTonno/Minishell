@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/05 12:24:26 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:53:16 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ static int	replace_var(int j, char *dst, char *add)
 	}
 	return (j);
 }
-
+static int condicion_rep(char *org, int i)
+{
+	if (org[i] != '$' && org[i] != ' ' && org[i] != '\0'
+		&& org[i - 1] != '?' && org[i] != '/' && org[i] != '>'
+		&& org[i] != '<'  && org[i] != '|')
+			return (1);
+	return (0);
+}
 char	*replace_env(int len, char *org, char *add)
 {
 	int		i;
@@ -61,9 +68,7 @@ char	*replace_env(int len, char *org, char *add)
 				dst[j++] = '0';
 			else
 				j = replace_var(j, dst, add);
-			while (org[i] != '$' && org[i] != ' ' && org[i] != '\0'
-				&& org[i - 1] != '?' && org[i] != '/' && org[i] != '>'
-				&& org[i] != '<'  && org[i] != '|')
+			while (condicion_rep(org, i))
 				i++;
 		}
 		else
