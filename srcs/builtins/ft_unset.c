@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 16:55:47 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/06 16:11:45 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ int	unset_env(char ***env, char **comand)
 	delete_unset(new_env, env[0], comand);
 	free (env[0]);
 	env[0] = new_env;
-	int tmp;
-	tmp = 0;
-	while (comand[tmp] != NULL)
-		free(comand[tmp++]);
-	free(comand);
 	return (code);
 }
 

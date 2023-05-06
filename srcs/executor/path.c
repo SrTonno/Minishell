@@ -26,13 +26,13 @@ char	*get_path_envp(char *envp[])
 	return (NULL);
 }
 
-char	**get_paths_envp(char *envp[])
+char	**get_paths_envp(char **envp[])
 {
 	char	**path_splitted;
 	int		index;
 	char	*aux;
 
-	path_splitted = ft_split(get_path_envp(envp), ':');
+	path_splitted = ft_split(get_path_envp(envp[0]), ':');
 	if (path_splitted == NULL)
 		return (NULL);
 	index = -1;

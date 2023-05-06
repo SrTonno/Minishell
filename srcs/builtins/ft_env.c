@@ -21,6 +21,6 @@ int	ft_env(char **env)
 	i = -1;
 	while (env[++i])
 		ft_printf("%s\n", env[i]);
-	//exit(0);
-	return (0);
+	exit(0);
+	//return (0);
 }

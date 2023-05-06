@@ -29,7 +29,7 @@
 # define TEMP_FILE ".temp"
 
 char	*get_path_envp(char *envp[]);
-char	**get_paths_envp(char *envp[]);
+char	**get_paths_envp(char **envp[]);
 int		check_binary(char *command, char **paths);
 char	*find_binary(char *filename, char **paths);
 
@@ -42,4 +42,6 @@ void	free_split(char **split);
 
 int		handle_exe_error(int error, char *str);
 
+int		export_env(char ***env, char **coman);
+int		unset_env(char ***env, char **comand);
 #endif

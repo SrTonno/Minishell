@@ -39,7 +39,7 @@ t_list	*tokenize(char *inputLine);
 t_list	*parse(t_list *list);
 void	free_ast(t_list *ast);
 
-int		execute(t_list *ast, char *envp[]);
+int		execute(t_list *ast, char **envp[]);
 
 void	free_split(char **str);
 

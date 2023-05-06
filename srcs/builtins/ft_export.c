@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/05 16:34:46 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/06 16:04:50 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	while (env[i] != NULL)
 		dst[j++] = env[i++];
 	i = -1;
-	printf("%ddcrearte_new_env\n", j);
+	//printf("%ddcrearte_new_env\n", j);
 	while (comd[++i] != NULL)
 	{
 
@@ -67,7 +67,7 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 			&& find_char(comd[i], '=') > 0
 			&& to_future(comd, i) == -1 && find_env(env, comd[i]) == -2)
 		{
-			printf("%s\n", comd[i]);
+			//printf("%s\n", comd[i]);
 			dst[j++] = ft_strdup(comd[i]);
 		}
 	}

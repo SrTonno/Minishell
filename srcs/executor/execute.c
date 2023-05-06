@@ -12,27 +12,31 @@
 
 #include "executor.h"
 
-int	exec_command(t_list *ast, t_ast_node *ast_node, char **envp)
+int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
 {
 	if (ft_strncmp(ast_node->binary, "pwd", 4) == 0)
 		return (ft_pwd());
 	else if (ft_strncmp(ast_node->binary, "echo", 5) == 0)
 		return (ft_echo(ast_node));
 	else if (ft_strncmp(ast_node->binary, "env", 4) == 0)
-		return (ft_env(envp));
+		return (ft_env(envp[0]));
+	else if (ft_strncmp(ast_node->binary, "export", 7) == 0)
+		return (export_env(envp, ast_node->command));
+	else if (ft_strncmp(ast_node->binary, "unset", 6) == 0)
+		return (unset_env(envp, ast_node->command));
 	else if (ft_strncmp(ast_node->binary, "cd", 3) == 0)
 	{
 		if (ast_node->index == 0 && ast->next == NULL)
-			return (ft_cd(ast_node, envp));
+			return (ft_cd(ast_node, envp[0]));
 		return (0);
 	}
 	else
-		execve(ast_node->binary, ast_node->command, envp);
+		execve(ast_node->binary, ast_node->command, envp[0]);
 	// execve error
 	return (0);
 }
 
-int	create_child(t_list *ast, t_ast_node *ast_node, char **envp)
+int	create_child(t_list *ast, t_ast_node *ast_node, char ***envp)
 {
 	pid_t	pid;
 	int		heredoc_fd;
@@ -67,7 +71,7 @@ void	close_fds(t_ast_node *ast_node)
 	return ;
 }
 
-int	exec_child(t_list *ast, char **paths, char **envp)
+int	exec_child(t_list *ast, char **paths, char ***envp)
 {
 	int			status;
 	t_ast_node	*ast_node;
@@ -96,7 +100,7 @@ int	exec_child(t_list *ast, char **paths, char **envp)
 	return (status);
 }
 
-int	execute(t_list *ast, char *envp[])
+int	execute(t_list *ast, char **envp[])
 {
 	char			**paths;
 	int				status;
