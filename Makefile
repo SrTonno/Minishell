@@ -14,7 +14,7 @@ BINDIR = ${addprefix ${SRCSDIR}, builtins/}
 BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c builtin_utils.c
 
 ENVDIR = ${addprefix ${SRCSDIR}, env/}
-ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c
+ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_replace.c
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c

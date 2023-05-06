@@ -6,12 +6,12 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/05 16:49:00 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:47:22 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-
+//solucionar no funciona " '
 char	*env_expand(char ***env, char *input)
 {
 	int		len;
@@ -48,12 +48,19 @@ char	***malloc_env(char **env)
 	char	***new_env;
 
 	new_env = ft_calloc(1, sizeof(char *));
-	//proteger malloc
+	if (new_env == NULL)
+		exit (1);
 	len = len_doble_base(env);
 	new_env[0] = ft_calloc(len + 1, sizeof(char *));
+	if (new_env[0] == NULL)
+		(free(new_env), exit (1));
 	i = -1;
 	while (env[++i] != '\0')
+	{
 		new_env[0][i] = ft_strdup(env[i]);
+		if (new_env[0][i] == NULL)
+			(free_triple(new_env), exit (1));
+	}
 	new_env[0][++i] = NULL;
 	return (new_env);
 }

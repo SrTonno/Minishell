@@ -42,6 +42,8 @@ void	free_ast(t_list *ast);
 int		execute(t_list *ast, char **envp[]);
 
 void	free_split(char **str);
+void	free_triple(char ***chr);
+
 
 char	**ft_export(char **env, char **comand);
 char	***malloc_env(char **env);

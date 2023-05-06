@@ -129,6 +129,7 @@ int	handle_input(char *input, char **env[])
 	}
 	while (find_var(input) >= 0)
 		input = env_expand(env, input);
+	printf("%s\n", input);
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)

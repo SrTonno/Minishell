@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_find2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:32:08 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/28 20:27:01 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/06 20:30:12 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ int	find_var(char *str)
 			else
 				quotes = 0;
 		}
-		if ((len > i && str[i] == '$' && quotes == 0)
+		if ((len > i && str[i] == '$' && quotes == 0 && str[i + 1] != '\0')
 			&& (str[(i + 1)] != ' ' || str[i + 1] == '?'))
 			return (i);
 	}
 	return (-1);
 }
-
+//&& (i != 0 && str[i - 1] != '?')
 int	find_var_end(char *str, int i)
 {
 	while (str[i] != '$' && str[i] != ' '
-		&& str[i] != '\0' && str[i - 1] != '?'
+		 && str[i - 1] != '?' && str[i] != '\0'
 		&& str[i] != '/' && str[i] != '>'
-		&& str[i] != '<'  && str[i] != '|')
+		&& str[i] != '<' && str[i] != '|')
 		i++;
 	i++;
 	return (i);
