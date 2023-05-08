@@ -108,7 +108,7 @@ int	main(int argc, char *argv[], char **env)
 			continue ;
 		}
 		add_history(input);
-		status = handle_input(input, new_env);
+		status = handle_input(input, new_env, status);
 		if (status == -1)
 			return (0);
 	}
@@ -116,11 +116,11 @@ int	main(int argc, char *argv[], char **env)
 	return (0);
 }
 
-int	handle_input(char *input, char **env[])
+int	handle_input(char *input, char **env[], int status)
 {
 	t_list	*token_lst;
 	t_list	*ast;
-	int		status;
+	//int		status;
 
 	if (check_quotes(input) != 0)
 	{
@@ -129,8 +129,7 @@ int	handle_input(char *input, char **env[])
 	}
 	while (find_var(input) >= 0)
 	{
-		input = env_expand(env, input);
-		printf("HOLA\n");
+		input = env_expand(env, input, status);
 		if (input == NULL)
 			return(0);
 	}
@@ -153,10 +152,5 @@ int	handle_input(char *input, char **env[])
 	// print_ast(ast);
 	status = execute(ast, env);
 	ft_lstclear(&ast, free_ast_node);
-	//unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a", ' '));
-	//export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds pq=qp cositas21=pa", ' '));
-	//status = unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a" , ' '));
-	//ft_env(env[0]);
-	//printf("HOLAAA %d\n", status);
 	return (status);
 }

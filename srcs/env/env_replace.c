@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/08 13:32:50 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:13:34 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	replace_var(int j, char *dst, char *add)
 	return (j);
 }
 
-char	*replace_env(int len, char *org, char *add)
+char	*replace_env(int len, char *org, char *add, int status)
 {
 	int		i;
 	int		j;
@@ -63,7 +63,10 @@ char	*replace_env(int len, char *org, char *add)
 		if (i == mark)
 		{
 			if (org[++i] == '?')
-				dst[j++] = '0';
+			{
+				printf("%d", status);
+				dst[j++] = status + '0';
+			}
 			else
 				j = replace_var(j, dst, add);
 			i = move_letter_rem(org, i);

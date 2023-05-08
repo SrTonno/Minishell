@@ -29,7 +29,7 @@
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
-int		handle_input(char *input, char **envp[]);
+int		handle_input(char *input, char **envp[], int status);
 
 void	handler(int signum);
 void	ctr_d(char *input, char **env);
@@ -49,7 +49,7 @@ char	**ft_export(char **env, char **comand);
 char	***malloc_env(char **env);
 void	ft_env(char **env);
 char	**ft_unset(char **env, char **comand);
-char	*env_expand(char ***env, char *input);
+char	*env_expand(char ***env, char *input, int status);
 int		find_var(char *str);
 
 int		export_env(char ***env, char **coman);

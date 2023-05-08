@@ -19,7 +19,7 @@
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39
 
-char	*replace_env(int len, char *org, char *add);
+char	*replace_env(int len, char *org, char *add, int status);
 int		len_doble(char **str);
 int		len_doble_base(char **str);
 int		len_doble_invert(char **str);
