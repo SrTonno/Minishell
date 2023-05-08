@@ -47,10 +47,3 @@ void	free_split(char **split)
 	free(split);
 	return ;
 }
- void	free_triple(char ***str)
- {
-	free_split(str[0]);
-	free(str);
-	return ;
-
- }

@@ -33,9 +33,8 @@ int		find_var(char *str);
 int		find_var_end(char *str, int i);
 int		export_util(char **env, char **comand);
 int		find_env_len(char **env, char *str);
-char	***malloc_env(char **env);
+char	**malloc_env(char **env);
 
-void	free_triple(char ***str);
 void	free_split(char **str);
 
 #endif

@@ -12,6 +12,30 @@
 
 #include "executor.h"
 
+char	**create_paths(char *envp[])
+{
+	int		index;
+	char	**paths;
+
+	index = 0;
+	while (envp[index])
+	{
+		if (ft_strncmp(envp[index], "PATH=", 5) == 0)
+			return (get_paths_envp(envp));
+		index++;
+	}
+	paths = (char **)ft_calloc(1, sizeof(char *));
+	if (paths == NULL)
+		return (NULL);
+	paths[0] = ft_strdup("");
+	if (paths[0] == NULL)
+	{
+		free(paths);
+		return (NULL);
+	}
+	return (paths);
+}
+
 char	*get_path_envp(char *envp[])
 {
 	int		index;
@@ -26,13 +50,13 @@ char	*get_path_envp(char *envp[])
 	return (NULL);
 }
 
-char	**get_paths_envp(char **envp[])
+char	**get_paths_envp(char *envp[])
 {
 	char	**path_splitted;
 	int		index;
 	char	*aux;
 
-	path_splitted = ft_split(get_path_envp(envp[0]), ':');
+	path_splitted = ft_split(get_path_envp(envp), ':');
 	if (path_splitted == NULL)
 		return (NULL);
 	index = -1;

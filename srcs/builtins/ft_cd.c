@@ -12,8 +12,6 @@
 
 #include "bin.h"
 
-static char	*get_path(int length, char *txt_path);
-
 int	ft_cd(t_ast_node *ast_node, char **envp)
 {
 	char	*cwd;
@@ -36,6 +34,9 @@ int	ft_cd(t_ast_node *ast_node, char **envp)
 		return (1);
 	}
 	// actualizar OLDPWD
+	free(cwd);
+	cwd = getcwd(NULL, 0);
 	// actualizar PWD
+	free(cwd);
 	return (0);
 }

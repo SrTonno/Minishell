@@ -100,12 +100,14 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 	return (status);
 }
 
+char	**create_paths(char *envp[]);
+
 int	execute(t_list *ast, char **envp[])
 {
 	char			**paths;
 	int				status;
 
-	paths = get_paths_envp(envp);
+	paths = create_paths(*envp);
 	if (paths == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
 	while (ast != NULL)

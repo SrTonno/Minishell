@@ -79,14 +79,13 @@ void	leaks()
 int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
-	char				***new_env;
 	struct sigaction	sa;
 	int					status;
 
 	//atexit(leaks);
 	if (argc != 1)
 		return (0);
-	new_env = malloc_env(env);
+	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
@@ -98,8 +97,7 @@ int	main(int argc, char *argv[], char **env)
 		ctr_d(input, NULL);
 		if (ft_strncmp(input, "exit", 5) == 0)
 		{
-			free(new_env);
-			free_split(new_env[0]);
+			free_split(env);
 			break ;
 		}
 		if (ft_strncmp(input, "\0", 1) == 0)
@@ -108,7 +106,7 @@ int	main(int argc, char *argv[], char **env)
 			continue ;
 		}
 		add_history(input);
-		status = handle_input(input, new_env, status);
+		status = handle_input(input, &env, status);
 		if (status == -1)
 			return (0);
 	}
@@ -133,7 +131,6 @@ int	handle_input(char *input, char **env[], int status)
 		if (input == NULL)
 			return(0);
 	}
-	printf("%s\n", input);
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/08 14:17:21 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:40:10 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,22 @@ char	*env_expand(char ***env, char *input, int status)
 	return (str);
 }
 
-char	***malloc_env(char **env)
+char	**malloc_env(char **env)
 {
 	int		i;
 	int		len;
-	char	***new_env;
+	char	**new_env;
 
-	new_env = ft_calloc(1, sizeof(char *));
-	if (new_env == NULL)
-		exit (1);
 	len = len_doble_base(env);
-	new_env[0] = ft_calloc(len + 1, sizeof(char *));
-	if (new_env[0] == NULL)
+	new_env = ft_calloc(len + 1, sizeof(char *));
+	if (new_env == NULL)
 		(free(new_env), exit (1));
 	i = -1;
-	while (env[++i] != '\0')
+	while (env[++i])
 	{
-		new_env[0][i] = ft_strdup(env[i]);
-		if (new_env[0][i] == NULL)
-			(free_triple(new_env), exit (1));
+		new_env[i] = ft_strdup(env[i]);
+		if (new_env[i] == NULL)
+			(free_split(new_env), exit (1));
 	}
-	new_env[0][++i] = NULL;
 	return (new_env);
 }
