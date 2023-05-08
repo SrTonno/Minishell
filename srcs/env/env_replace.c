@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/06 20:29:52 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:32:50 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*replace_env(int len, char *org, char *add)
 	char	*dst;
 	int		mark;
 
+	if (len <= 0)
+		return (NULL);
 	dst = ft_calloc(len + 1, sizeof(char));
 	if (dst == NULL)
 		return (NULL);

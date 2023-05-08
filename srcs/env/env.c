@@ -6,12 +6,14 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/06 19:47:22 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:46:27 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-//solucionar no funciona " '
+#include <stdio.h>
+//solucionar no funciona " '  && ft_strlen(var) - 1 > find_char(var, '=')
+
 char	*env_expand(char ***env, char *input)
 {
 	int		len;
@@ -27,12 +29,15 @@ char	*env_expand(char ***env, char *input)
 		exit (0);
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env[0], var);
+	printf("%zu > %d\n", ft_strlen(env[0][i]), find_char(env[0][i], '='));
 	if (var[0] == '?')
 		str = replace_env(ft_strlen(input) - 1, input, "?");
-	else if (i >= 0)
+	else if (i >= 0 && ft_strlen(env[0][i]) - 1 > find_char(env[0][i], '='))
+
 		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
 			- ((ft_strlen(var) + 1) * 2), input, env[0][i]);
 	else
+
 		str = replace_env((ft_strlen(input) - \
 			(ft_strlen(var) + 1)), input, NULL);
 	(free (var), free (input));
