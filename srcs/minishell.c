@@ -118,7 +118,6 @@ int	handle_input(char *input, char **env[], int status)
 {
 	t_list	*token_lst;
 	t_list	*ast;
-	//int		status;
 
 	if (check_quotes(input) != 0)
 	{
@@ -131,6 +130,9 @@ int	handle_input(char *input, char **env[], int status)
 		if (input == NULL)
 			return(0);
 	}
+	input = remove_quotes(input);
+	if (input == NULL)
+		return (error_msg(MALLOC_ERROR, NULL));
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)

@@ -23,14 +23,15 @@ int	ft_cd(t_ast_node *ast_node, char **envp)
 		length++;
 	if (length > 2)
 	{
-		fprintf(stderr, "-bash: cd: too many arguments\n");
+		ft_putstr_fd("-bash: cd: too many arguments\n", STDERR_FILENO);
 		return (1);
 	}
 	cwd = getcwd(NULL, 0);
 	if (chdir(ast_node->command[1]) < 0)
 	{
-		fprintf(stderr, "-bash: cd: %s: No such file or directory\n",
-			ast_node->command[1]);
+		ft_putstr_fd("-bash: cd: ", STDERR_FILENO);
+		ft_putstr_fd(ast_node->command[1], STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		return (1);
 	}
 	// actualizar OLDPWD
