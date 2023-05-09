@@ -12,7 +12,7 @@
 
 #include "bin.h"
 
-int	isBuiltin(char *command)
+int	is_builtin(char *command)
 {
 	if (ft_strncmp(command, "pwd", 4) == 0)
 		return (1);
@@ -31,7 +31,7 @@ int	isBuiltin(char *command)
 	return (0);
 }
 
-int	isNoChildBuiltin(char *command)
+int	is_no_child_builtin(char *command)
 {
 	if (ft_strncmp(command, "cd", 3) == 0)
 		return (1);

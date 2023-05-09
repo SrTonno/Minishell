@@ -6,13 +6,11 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/09 15:24:05 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:23:36 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-#include <stdio.h>
-//solucionar no funciona " '  && ft_strlen(var) - 1 > find_char(var, '=')
 
 char	*env_expand(char ***env, char *input, int status)
 {
@@ -32,11 +30,9 @@ char	*env_expand(char ***env, char *input, int status)
 	if (var[0] == '?')
 		str = replace_env(ft_strlen(input) - 1, input, "?", status);
 	else if (i >= 0 && ft_strlen(env[0][i]) - 1 > find_char(env[0][i], '='))
-
 		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
 			- ((ft_strlen(var) + 1) * 2), input, env[0][i], status);
 	else
-
 		str = replace_env((ft_strlen(input) - \
 			(ft_strlen(var) + 1)), input, NULL, status);
 	(free (var), free (input));

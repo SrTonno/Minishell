@@ -36,44 +36,6 @@ char	**create_paths(char *envp[])
 	return (paths);
 }
 
-char	*get_path_envp(char *envp[])
-{
-	int		index;
-
-	index = 0;
-	while (envp[index])
-	{
-		if (ft_strncmp(envp[index], "PATH=", 5) == 0)
-			return (ft_strchr(envp[index], '=') + 1);
-		index++;
-	}
-	return (NULL);
-}
-
-char	**get_paths_envp(char *envp[])
-{
-	char	**path_splitted;
-	int		index;
-	char	*aux;
-
-	path_splitted = ft_split(get_path_envp(envp), ':');
-	if (path_splitted == NULL)
-		return (NULL);
-	index = -1;
-	while (path_splitted[++index])
-	{
-		aux = ft_strjoin(path_splitted[index], "/");
-		if (aux == NULL)
-		{
-			free_split(path_splitted);
-			return (NULL);
-		}
-		free(path_splitted[index]);
-		path_splitted[index] = aux;
-	}
-	return (path_splitted);
-}
-
 int	check_binary_path(char *command, char **paths)
 {
 	char	*binary;

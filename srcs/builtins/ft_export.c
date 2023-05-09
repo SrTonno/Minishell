@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/06 21:21:31 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:26:06 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,6 @@ static int	len_comando(char **coman, char **env, int *error)
 	return (len - mod);
 }
 
-/*
-static char	*new_var_env(char **str, int i)
-{
-	if (str[i + 1] != NULL && str[i + 1][0] == DOUBLE_QUOTE)
-	{
-		printf("HOLI\n");
-		return (ft_strjoin(str[i], str[i + 1]));
-	}
-	else
-		return (ft_strdup(str[i]));
-}
-*/
-
 void	crearte_new_env(char **dst, char **comd, char **env)
 {
 	int	i;
@@ -79,10 +66,7 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 		if ((ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
 			&& find_char(comd[i], '=') > 0
 			&& to_future(comd, i) == -1 && find_env(env, comd[i]) == -2)
-		{
 			dst[j++] = ft_strdup(comd[i]);
-			//dst[j++] = new_var_env(comd, i);
-		}
 	}
 	dst[j] = NULL;
 }
@@ -92,9 +76,9 @@ static void	only_coman(char **dst, char **comd)
 	int	i;
 	int	j;
 	int	len_env;
+
 	j = 0;
 	i = -1;
-	printf("only_coman\n");
 	while (comd[++i] != NULL)
 	{
 		if ((ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
@@ -103,7 +87,8 @@ static void	only_coman(char **dst, char **comd)
 	}
 	dst[j] = NULL;
 }
-int	export_env(char ***env, char **coman)
+
+int	ft_export(char ***env, char **coman)
 {
 	char	**new_env;
 	int		len_com;
@@ -129,14 +114,3 @@ int	export_env(char ***env, char **coman)
 	env[0] = new_env;
 	return (error);
 }
-
-/*
-int tmp;
-	tmp = 0;
-	while (coman[tmp] != NULL)
-		free(coman[tmp++]);
-	free(coman);
-	return (new_env);
-*/
-
-//TODO: si intetas expandel una bariable sin cantenido peta (paco=)

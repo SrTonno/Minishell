@@ -42,6 +42,4 @@ void	free_split(char **split);
 
 int		handle_exe_error(int error, char *str);
 
-int		export_env(char ***env, char **coman);
-int		unset_env(char ***env, char **comand);
 #endif

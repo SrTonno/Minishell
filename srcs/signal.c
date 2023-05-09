@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/13 17:32:19 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:08:56 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ void	handler(int signum)
 
 void	ctr_d(char *input, char **env)
 {
-	(void)env;
-	if (input == NULL) //ctr+D
+	if (input == NULL)
 	{
 		rl_replace_line("exit", 0);
 		write(1, "exit\n", 6);
-		//rl_redisplay();
-		//free_split(env);
 		exit (0);
 	}
 	return ;

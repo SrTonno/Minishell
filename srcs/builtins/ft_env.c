@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "env.h"
-
-static void	print_env(char **env);
+#include "env.h"
 
 int	ft_env(char **env)
 {
@@ -22,5 +20,4 @@ int	ft_env(char **env)
 	while (env[++i])
 		ft_printf("%s\n", env[i]);
 	exit(0);
-	//return (0);
 }

@@ -82,7 +82,7 @@ int	main(int argc, char *argv[], char **env)
 	struct sigaction	sa;
 	int					status;
 
-	//atexit(leaks);
+	atexit(leaks);
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
@@ -130,9 +130,9 @@ int	handle_input(char *input, char **env[], int status)
 		if (input == NULL)
 			return(0);
 	}
-	input = remove_quotes(input);
-	if (input == NULL)
-		return (error_msg(MALLOC_ERROR, NULL));
+	// input = remove_quotes(input);
+	// if (input == NULL)
+	// 	return (error_msg(MALLOC_ERROR, NULL));
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)

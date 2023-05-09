@@ -44,15 +44,10 @@ int		execute(t_list *ast, char **envp[]);
 
 void	free_split(char **str);
 
-
-char	**ft_export(char **env, char **comand);
 char	**malloc_env(char **env);
 void	ft_env(char **env);
-char	**ft_unset(char **env, char **comand);
 char	*env_expand(char ***env, char *input, int status);
 int		find_var(char *str);
-
-int		export_env(char ***env, char **coman);
-int		unset_env(char ***env, char **comand);
+void	ft_exit(int exitCode);
 
 #endif

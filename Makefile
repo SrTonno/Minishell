@@ -11,7 +11,7 @@ SRCSDIR = ./srcs/
 SRCSCFILES = minishell.c signal.c utils.c
 
 BINDIR = ${addprefix ${SRCSDIR}, builtins/}
-BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c builtin_utils.c
+BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c ft_exit.c builtin_utils.c
 
 ENVDIR = ${addprefix ${SRCSDIR}, env/}
 ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_replace.c
@@ -23,7 +23,7 @@ PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
 PARSECFILES = parser.c create_ast.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES = execute.c path.c heredocs.c redir.c
+EXECCFILES = execute.c path.c heredocs.c redir.c path_utils.c
 
 ERRDIR = ${addprefix ${SRCSDIR}, errors/}
 ERRFILES = error_msg.c syntax_errors.c

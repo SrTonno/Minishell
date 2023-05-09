@@ -41,3 +41,10 @@ int	add_new_token_lst(t_lexer *lexer)
 	ft_lstadd_back(&lexer->token_lst, ft_lstnew((void *)token));
 	return (0);
 }
+
+int	is_quote(char c)
+{
+	if (c == SINGLE_QUOTE || c == DOUBLE_QUOTE)
+		return (1);
+	return (0);
+}

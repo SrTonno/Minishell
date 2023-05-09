@@ -21,18 +21,28 @@ int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
 	else if (ft_strncmp(ast_node->binary, "env", 4) == 0)
 		return (ft_env(envp[0]));
 	else if (ft_strncmp(ast_node->binary, "export", 7) == 0)
-		return (export_env(envp, ast_node->command));
+	{
+		if (ast_node->index == 0 && ast->next == NULL)
+			return (ft_export(envp, ast_node->command));
+		return (0);
+	}
 	else if (ft_strncmp(ast_node->binary, "unset", 6) == 0)
-		return (unset_env(envp, ast_node->command));
+	{
+		if (ast_node->index == 0 && ast->next == NULL)
+			return (ft_unset(envp, ast_node->command));
+		return (0);
+	}
 	else if (ft_strncmp(ast_node->binary, "cd", 3) == 0)
 	{
 		if (ast_node->index == 0 && ast->next == NULL)
-			return (ft_cd(ast_node, envp[0]));
+			return (ft_cd(ast_node, envp));
 		return (0);
 	}
 	else
+	{
 		execve(ast_node->binary, ast_node->command, envp[0]);
-	// execve error
+		exit(0);
+	}
 	return (0);
 }
 
@@ -86,7 +96,7 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			ast_node->binary = find_binary(ast_node->command[0], paths);
 			if (ast_node->binary == NULL)
 				return (error_msg(MALLOC_ERROR, NULL));
-			if (isNoChildBuiltin(ast_node->binary))
+			if (is_no_child_builtin(ast_node->binary))
 				status = exec_command(ast, ast_node, envp);
 			else
 			{

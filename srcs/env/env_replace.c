@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_replace.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/08 14:13:34 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:23:50 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-
-//&& (i != 0 && org[i - 1] != '?')
 static int	condicion_rep(char *org, int i)
 {
 	if (org[i] != '$' && org[i] != ' ' && org[i] != '\0'

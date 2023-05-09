@@ -25,7 +25,8 @@ int	check_quotes(char *input)
 				return (error_msg(SYNTAX_ERROR, NULL));
 			input = end_quote + 1;
 		}
-		input++;
+		else
+			input++;
 	}
 	return (0);
 }

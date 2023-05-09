@@ -39,6 +39,7 @@ int		handle_char(t_lexer *lexer);
 
 int		is_special(unsigned char c);
 int		is_space(unsigned char c);
+int		is_quote(char c);
 int		is_env_var_char(unsigned char c);
 
 #endif

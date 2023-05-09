@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/06 15:33:56 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:40:53 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,16 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "ast.h"
+# include "error_msg.h"
 
 int		ft_pwd(void);
-int		ft_cd(t_ast_node *ast_node, char **envp);
+int		ft_cd(t_ast_node *ast_node, char ***envp);
 int		ft_echo(t_ast_node *ast_node);
 int		ft_env(char **env);
-//int		ft_unset(char ***env, char **command);
+int		ft_unset(char ***env, char **command);
+int		ft_export(char ***env, char **comand);
 
-int		isBuiltin(char *command);
-int		isNoChildBuiltin(char *command);
-
+int		is_builtin(char *command);
+int		is_no_child_builtin(char *command);
 
 #endif

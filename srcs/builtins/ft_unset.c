@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/06 16:11:45 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:05:07 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	delete_unset(char **new_env, char **env, char **comand)
 	}
 }
 
-int	unset_env(char ***env, char **comand)
+int	ft_unset(char ***env, char **comand)
 {
 	int		del;
 	int		len;
@@ -78,10 +78,4 @@ int	unset_env(char ***env, char **comand)
 	free (env[0]);
 	env[0] = new_env;
 	return (code);
-}
-
-int	ft_unset(char ***env, char **command)
-{
-	unset_env(env, command);
-	return (0);
 }
