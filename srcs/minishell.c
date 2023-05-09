@@ -80,9 +80,8 @@ int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
 	struct sigaction	sa;
-	int					status;
 
-	atexit(leaks);
+	// atexit(leaks);
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
@@ -90,6 +89,15 @@ int	main(int argc, char *argv[], char **env)
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
 		printf("Error\n");
+	loop(env);
+	return (0);
+}
+
+void	loop(char **env)
+{
+	int		status;
+	char	*input;
+
 	status = 0;
 	while (1)
 	{
@@ -108,31 +116,34 @@ int	main(int argc, char *argv[], char **env)
 		add_history(input);
 		status = handle_input(input, &env, status);
 		if (status == -1)
-			return (0);
+			break ;
 	}
 	free(input);
+}
+
+int	clean_input(char **input, char ***env, int status)
+{
+	if (check_quotes(*input) != 0)
+	{
+		free(*input);
+		return (2);
+	}
+	while (find_var(*input) >= 0)
+	{
+		*input = env_expand(env, *input, status);
+		if (*input == NULL)
+			return (error_msg(MALLOC_ERROR, NULL));
+	}
+	// *input = remove_quotes(*input);
+	// if (*input == NULL)
+	// 	return (error_msg(MALLOC_ERROR, NULL));
 	return (0);
 }
 
-int	handle_input(char *input, char **env[], int status)
+int	tokenize_and_parse(char *input, t_list **ast)
 {
 	t_list	*token_lst;
-	t_list	*ast;
 
-	if (check_quotes(input) != 0)
-	{
-		free(input);
-		return (2);
-	}
-	while (find_var(input) >= 0)
-	{
-		input = env_expand(env, input, status);
-		if (input == NULL)
-			return(0);
-	}
-	// input = remove_quotes(input);
-	// if (input == NULL)
-	// 	return (error_msg(MALLOC_ERROR, NULL));
 	token_lst = tokenize(input);
 	free(input);
 	if (token_lst == NULL)
@@ -144,11 +155,24 @@ int	handle_input(char *input, char **env[], int status)
 		return (2);
 	}
 	// print_lst(token_lst);
-	ast = parse(token_lst);
+	*ast = parse(token_lst);
 	ft_lstclear(&token_lst, free);
-	if (ast == NULL)
-		return (0);
+	if (*ast == NULL)
+		return (error_msg(MALLOC_ERROR, NULL));
 	// print_ast(ast);
+	return (0);
+}
+
+int	handle_input(char *input, char **env[], int status)
+{
+	t_list	*ast;
+
+	status = clean_input(&input, env, status);
+	if (status == -1 || status == 2)
+		return (status);
+	status = tokenize_and_parse(input, &ast);
+	if (status == -1 || status == 2)
+		return (status);
 	status = execute(ast, env);
 	ft_lstclear(&ast, free_ast_node);
 	return (status);

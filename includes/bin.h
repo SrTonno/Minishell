@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/09 20:40:53 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:52:37 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,9 @@ int		ft_export(char ***env, char **comand);
 
 int		is_builtin(char *command);
 int		is_no_child_builtin(char *command);
+
+int		find_env_basic(char **env, char *str);
+
+void	free_split(char **str);
 
 #endif

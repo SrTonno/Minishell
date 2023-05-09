@@ -34,6 +34,8 @@ int		handle_input(char *input, char **envp[], int status);
 void	handler(int signum);
 void	ctr_d(char *input, char **env);
 
+void	loop(char **env);
+
 t_list	*tokenize(char *inputLine);
 char	*remove_quotes(char *input);
 

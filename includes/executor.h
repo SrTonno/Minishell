@@ -30,6 +30,7 @@
 
 char	*get_path_envp(char *envp[]);
 char	**get_paths_envp(char *envp[]);
+char	**create_paths(char *envp[]);
 int		check_binary(char *command, char **paths);
 char	*find_binary(char *filename, char **paths);
 

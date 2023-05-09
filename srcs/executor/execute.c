@@ -14,39 +14,34 @@
 
 int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
 {
+	if (ast_node->index != 0 || ast->next != NULL)
+		return (0);
+	if (ft_strncmp(ast_node->binary, "export", 7) == 0)
+		return (ft_export(envp, ast_node->command));
+	if (ft_strncmp(ast_node->binary, "unset", 6) == 0)
+		return (ft_unset(envp, ast_node->command));
+	if (ft_strncmp(ast_node->binary, "cd", 3) == 0)
+		return (ft_cd(ast_node, envp));
+	return (0);
+}
+
+int	exec_command_child(t_ast_node *ast_node, char **envp)
+{
 	if (ft_strncmp(ast_node->binary, "pwd", 4) == 0)
 		return (ft_pwd());
 	else if (ft_strncmp(ast_node->binary, "echo", 5) == 0)
 		return (ft_echo(ast_node));
 	else if (ft_strncmp(ast_node->binary, "env", 4) == 0)
-		return (ft_env(envp[0]));
-	else if (ft_strncmp(ast_node->binary, "export", 7) == 0)
-	{
-		if (ast_node->index == 0 && ast->next == NULL)
-			return (ft_export(envp, ast_node->command));
-		return (0);
-	}
-	else if (ft_strncmp(ast_node->binary, "unset", 6) == 0)
-	{
-		if (ast_node->index == 0 && ast->next == NULL)
-			return (ft_unset(envp, ast_node->command));
-		return (0);
-	}
-	else if (ft_strncmp(ast_node->binary, "cd", 3) == 0)
-	{
-		if (ast_node->index == 0 && ast->next == NULL)
-			return (ft_cd(ast_node, envp));
-		return (0);
-	}
+		return (ft_env(envp));
 	else
 	{
-		execve(ast_node->binary, ast_node->command, envp[0]);
+		execve(ast_node->binary, ast_node->command, envp);
 		exit(0);
 	}
 	return (0);
 }
 
-int	create_child(t_list *ast, t_ast_node *ast_node, char ***envp)
+int	create_child(t_ast_node *ast_node, char **envp)
 {
 	pid_t	pid;
 	int		heredoc_fd;
@@ -66,19 +61,9 @@ int	create_child(t_list *ast, t_ast_node *ast_node, char ***envp)
 			dup2(ast_node->output_fd, STDOUT_FILENO);
 			close(ast_node->output_fd);
 		}
-		exec_command(ast, ast_node, envp);
+		exec_command_child(ast_node, envp);
 	}
 	return (0);
-}
-
-void	close_fds(t_ast_node *ast_node)
-{
-	unlink(TEMP_FILE);
-	if (ast_node->input_fd != STDIN_FILENO)
-		close(ast_node->input_fd);
-	if (ast_node->output_fd != STDOUT_FILENO)
-		close(ast_node->output_fd);
-	return ;
 }
 
 int	exec_child(t_list *ast, char **paths, char ***envp)
@@ -100,29 +85,33 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 				status = exec_command(ast, ast_node, envp);
 			else
 			{
-				if (create_child(ast, ast_node, envp) == -1)
+				if (create_child(ast_node, *envp) == -1)
 					return (error_msg(FORK_ERR, NULL));
 				waitpid(-1, &status, 0);
 			}
 		}
 	}
-	close_fds(ast_node);
 	return (status);
 }
 
-char	**create_paths(char *envp[]);
-
 int	execute(t_list *ast, char **envp[])
 {
-	char			**paths;
-	int				status;
+	char		**paths;
+	t_ast_node	*ast_node;
+	int			status;
 
 	paths = create_paths(*envp);
 	if (paths == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
 	while (ast != NULL)
 	{
+		ast_node = (t_ast_node *)ast->content;
 		status = exec_child(ast, paths, envp);
+		unlink(TEMP_FILE);
+		if (ast_node->input_fd != STDIN_FILENO)
+			close(ast_node->input_fd);
+		if (ast_node->output_fd != STDOUT_FILENO)
+			close(ast_node->output_fd);
 		ast = ast->next;
 	}
 	free_split(paths);
