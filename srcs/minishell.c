@@ -134,9 +134,10 @@ int	clean_input(char **input, char ***env, int status)
 		if (*input == NULL)
 			return (error_msg(MALLOC_ERROR, NULL));
 	}
-	// *input = remove_quotes(*input);
-	// if (*input == NULL)
-	// 	return (error_msg(MALLOC_ERROR, NULL));
+	*input = remove_quotes(*input);
+	if (*input == NULL)
+		return (error_msg(MALLOC_ERROR, NULL));
+	ft_printf("%s\n", *input);
 	return (0);
 }
 
@@ -170,10 +171,10 @@ int	handle_input(char *input, char **env[], int status)
 	status = clean_input(&input, env, status);
 	if (status == -1 || status == 2)
 		return (status);
-	status = tokenize_and_parse(input, &ast);
-	if (status == -1 || status == 2)
-		return (status);
-	status = execute(ast, env);
-	ft_lstclear(&ast, free_ast_node);
+	// status = tokenize_and_parse(input, &ast);
+	// if (status == -1 || status == 2)
+	// 	return (status);
+	// status = execute(ast, env);
+	// ft_lstclear(&ast, free_ast_node);
 	return (status);
 }

@@ -17,7 +17,7 @@ ENVDIR = ${addprefix ${SRCSDIR}, env/}
 ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_replace.c
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
-LEXCFILES = lexer.c lexer_utils.c char_handler.c remove_quotes.c
+LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
 PARSECFILES = parser.c create_ast.c
