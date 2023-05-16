@@ -29,7 +29,7 @@ int	add_new_token_lst(t_lexer *lexer)
 	char	*token;
 
 	lexer->token_len = (size_t)(lexer->str + lexer->index - lexer->token_start);
-	if (lexer->token_len < 0)
+	if (lexer->token_len <= 0)
 		return (0);
 	token = (char *)ft_calloc(lexer->token_len + 1, sizeof(char));
 	if (token == NULL)

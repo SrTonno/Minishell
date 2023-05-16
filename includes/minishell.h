@@ -37,7 +37,6 @@ void	ctr_d(char *input, char **env);
 void	loop(char **env);
 
 t_list	*tokenize(char *inputLine);
-char	*remove_quotes(char *input);
 
 t_list	*parse(t_list *list);
 void	free_ast(t_list *ast);
