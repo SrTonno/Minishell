@@ -72,7 +72,8 @@ static int	syntax_error(int error, char *str, int *status)
 {
 	if (error == SYNTAX_ERROR)
 	{
-		if (str == NULL) {
+		if (str == NULL)
+		{
 			ft_putstr_fd("-bash: syntax error near unexpected token",
 				STDERR_FILENO);
 			ft_putstr_fd(" 'newline'\n", STDERR_FILENO);
