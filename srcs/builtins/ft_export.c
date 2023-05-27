@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/09 21:46:54 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:47:16 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ int	ft_export(char ***env, char **coman)
 	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
 	if (new_env == NULL)
 	{
-		//liberar cosas
+		free_split(env[0]);
+		free_split(coman);
 		exit(1);
 	}
 	if (len_env == 0)

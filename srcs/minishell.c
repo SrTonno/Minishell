@@ -87,7 +87,7 @@ int	main(int argc, char *argv[], char **env)
 	env = malloc_env(env);
 	sa.sa_handler = handler;
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(2, &sa, NULL) == -1 || sigaction(3, &sa, NULL) == -1)
+	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("Error\n");
 	loop(env);
 	return (0);

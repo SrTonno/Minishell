@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/09 20:23:36 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:30:59 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
+int	count_num(int num)
+{
+	int	i;
+
+	i = 0;
+	while (num)
+	{
+		i++;
+		num = num / 10;
+	}
+	return (i);
+}
 char	*env_expand(char ***env, char *input, int status)
 {
 	int		len;
@@ -28,7 +40,7 @@ char	*env_expand(char ***env, char *input, int status)
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env[0], var);
 	if (var[0] == '?')
-		str = replace_env(ft_strlen(input) - 1, input, "?", status);
+		str = replace_env((ft_strlen(input) - 1) + count_num(status), input, "?", status);
 	else if (i >= 0 && ft_strlen(env[0][i]) - 1 > find_char(env[0][i], '='))
 		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
 			- ((ft_strlen(var) + 1) * 2), input, env[0][i], status);

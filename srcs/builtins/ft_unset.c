@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/09 20:05:07 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:44:01 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	ft_unset(char ***env, char **comand)
 	new_env = ft_calloc((len - del) + 1, sizeof(char *));
 	if (new_env == NULL)
 	{
-		printf("HOLA\n");
+		free_split(env[0]);
+		free_split(comand);
 		exit (1);
 	}
 	delete_unset(new_env, env[0], comand);
