@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/09 20:08:56 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:47:27 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,18 @@ void	handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	/*if (signum == 3)
+	{
+		//rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}*/
 	return ;
 }
 
 void	ctr_d(char *input, char **env)
 {
+	(void)env;
 	if (input == NULL)
 	{
 		rl_replace_line("exit", 0);

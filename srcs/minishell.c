@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 void	print_lst(t_list *lst)
 {
@@ -76,12 +77,22 @@ void	leaks()
 	system("leaks -q minishell");
 }
 
+void	disable_ctrl_c_print()
+{
+	struct termios term;
+	tcgetattr(0, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &term);
+}
+
+
 int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
 	struct sigaction	sa;
 
 	atexit(leaks);
+	disable_ctrl_c_print();
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
