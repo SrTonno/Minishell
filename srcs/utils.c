@@ -47,3 +47,25 @@ void	free_split(char **split)
 	free(split);
 	return ;
 }
+
+void	print_export(char **env)
+{
+	int	i;
+	int j;
+	int	comp;
+
+	i = -1;
+	while (env[++i] != NULL)
+	{
+		j = -1;
+		comp = 0;
+		printf("declare -x ");
+		while (env[i][++j] != '\0')
+		{
+			printf("%c", env[i][j]);
+			if (env[i][j] == '=' && comp == 0)
+				comp = printf("\"");
+		}
+		printf("\"\n");
+	}
+}

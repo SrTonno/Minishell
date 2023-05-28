@@ -36,5 +36,6 @@ int		find_env_len(char **env, char *str);
 char	**malloc_env(char **env);
 
 void	free_split(char **str);
+void	print_export(char **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/27 17:47:16 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/28 14:53:49 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	while (env[i] != NULL)
 		dst[j++] = env[i++];
 	i = -1;
-	printf("%ddcrearte_new_env\n", j);
+	///printf("%ddcrearte_new_env\n", j);
 	while (comd[++i] != NULL)
 	{
 		printf("%s\n", comd[i]);
@@ -96,6 +96,8 @@ int	ft_export(char ***env, char **coman)
 	int		error;
 
 	error = 0;
+	if (len_doble_base(coman) == 1)
+		print_export(env[0]);
 	len_com = len_comando(coman, env[0], &error);
 	if (len_com <= 1)
 		return (error);

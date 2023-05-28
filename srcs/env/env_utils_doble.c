@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_doble.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:07:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/28 20:26:56 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/05/28 14:44:50 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
