@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/06 19:29:22 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:21:25 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,17 @@ int	export_util(char **env, char **comand)
 	mod = find_mod_env(env, comand);
 	len = len_doble(comand);
 	return ((len) - mod);
+}
+
+int	copy_num(int status, char *dst, int j)
+{
+	char	*num;
+	int		i;
+
+	i = 0;
+	num = ft_itoa(status);
+	while (num[i] != '\0')
+		dst[j++] = num[i++];
+	free(num);
+	return (j);
 }

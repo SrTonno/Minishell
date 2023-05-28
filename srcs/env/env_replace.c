@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/27 19:34:13 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:21:43 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,7 @@ static void	fuck_norminete(int *i, int *j)
 	*i = 0;
 	*j = 0;
 }
-int	copy_num(int status, char *dst, int j)
-{
-	char	*num;
-	int		i;
 
-	i = 0;
-	num = ft_itoa(status);
-	while (num[i] != '\0')
-		dst[j++] = num[i++];
-	free(num);
-	return (j);
-
-}
 char	*replace_env(int len, char *org, char *add, int status)
 {
 	int		i;

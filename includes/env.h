@@ -37,5 +37,7 @@ char	**malloc_env(char **env);
 
 void	free_split(char **str);
 void	print_export(char **env);
+int		copy_num(int status, char *dst, int j);
+char	*check_shlvl(char *str);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/27 19:30:59 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/28 17:21:41 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int	count_num(int num)
+int	len_num(int num)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ char	*env_expand(char ***env, char *input, int status)
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env[0], var);
 	if (var[0] == '?')
-		str = replace_env((ft_strlen(input) - 1) + count_num(status), input, "?", status);
+		str = replace_env((ft_strlen(input) - 1) + len_num(status), input, "?", status);
 	else if (i >= 0 && ft_strlen(env[0][i]) - 1 > find_char(env[0][i], '='))
 		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
 			- ((ft_strlen(var) + 1) * 2), input, env[0][i], status);
@@ -53,6 +53,19 @@ char	*env_expand(char ***env, char *input, int status)
 	return (str);
 }
 
+char	**void_env()
+{
+	char	**new_env;
+
+	new_env = ft_calloc(4 + 1, sizeof(char *));
+	if (new_env == NULL)
+		(free(new_env), exit (1));
+	new_env[0] = ft_strdup("PWD=/");
+	new_env[1] = ft_strdup("SHLVL=1");
+	new_env[2] = ft_strdup("_=/usr/bin/env");
+	return (new_env);
+}
+
 char	**malloc_env(char **env)
 {
 	int		i;
@@ -60,13 +73,18 @@ char	**malloc_env(char **env)
 	char	**new_env;
 
 	len = len_doble_base(env);
+	if (len == 0)
+		return (void_env());
 	new_env = ft_calloc(len + 1, sizeof(char *));
 	if (new_env == NULL)
 		(free(new_env), exit (1));
 	i = -1;
 	while (env[++i])
 	{
-		new_env[i] = ft_strdup(env[i]);
+		if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
+			new_env[i] = check_shlvl(env[i]);
+		else
+			new_env[i] = ft_strdup(env[i]);
 		if (new_env[i] == NULL)
 			(free_split(new_env), exit (1));
 	}
