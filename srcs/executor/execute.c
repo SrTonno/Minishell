@@ -43,14 +43,15 @@ int	exec_command_child(t_ast_node *ast_node, char **envp)
 
 int	create_child(t_ast_node *ast_node, char **envp)
 {
-	pid_t	pid;
 	int		heredoc_fd;
 
-	pid = fork();
-	if (pid < 0)
+	ast_node->pid = fork();
+	if (ast_node->pid < 0)
 		return (-1);
-	else if (pid == 0)
+	else if (ast_node->pid == 0)
 	{
+		if (ast_node->pipe_fd != NULL)
+			close(ast_node->pipe_fd[0]);
 		if (ast_node->input_fd != STDIN_FILENO)
 		{
 			dup2(ast_node->input_fd, STDIN_FILENO);
@@ -87,7 +88,6 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			{
 				if (create_child(ast_node, *envp) == -1)
 					return (error_msg(FORK_ERR, NULL));
-				waitpid(-1, &status, 0);
 			}
 		}
 	}
@@ -96,10 +96,12 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 
 int	execute(t_list *ast, char **envp[])
 {
+	int			len;
 	char		**paths;
 	t_ast_node	*ast_node;
 	int			status;
 
+	len = ft_lstsize(ast);
 	paths = create_paths(*envp);
 	if (paths == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
@@ -114,6 +116,8 @@ int	execute(t_list *ast, char **envp[])
 			close(ast_node->output_fd);
 		ast = ast->next;
 	}
+	while (--len >= 0)
+		waitpid(-1, &status, 0);
 	free_split(paths);
 	return (status);
 }
