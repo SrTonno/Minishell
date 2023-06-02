@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:36:08 by javmarti          #+#    #+#             */
-/*   Updated: 2023/04/14 18:01:03 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:15:45 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char *argv[], char **env)
 	char				*input;
 	struct sigaction	sa;
 
-	atexit(leaks);
+	//atexit(leaks);
 	disable_ctrl_c_print();
 	if (argc != 1)
 		return (0);
