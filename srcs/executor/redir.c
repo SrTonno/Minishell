@@ -12,6 +12,8 @@
 
 #include "executor.h"
 
+int	do_heredocs(t_ast_node *ast_node);
+
 int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 {
 	int	fd;
@@ -51,15 +53,6 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 		if (access(redir_type->text, R_OK) == -1)
 			return (error_msg(PERM_ERR, redir_type->text));
 		fd = open(redir_type->text, O_RDONLY);
-		if (fd == -1)
-			return (-1);
-		if (ast_node->input_fd != STDIN_FILENO)
-			close(ast_node->input_fd);
-		ast_node->input_fd = fd;
-	}
-	else if (redir_type->type == HEREDOC)
-	{
-		fd = create_heredoc(redir_type->text);
 		if (fd == -1)
 			return (-1);
 		if (ast_node->input_fd != STDIN_FILENO)
@@ -127,6 +120,7 @@ int	parse_redir(t_list *ast)
 			return (error_msg(MALLOC_ERROR, NULL));
 	}
 	ast_node = (t_ast_node *)ast->content;
+	status = do_heredocs(ast_node);
 	redir = ast_node->redir;
 	while (redir)
 	{

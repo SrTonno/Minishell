@@ -49,3 +49,27 @@ int	create_heredoc(char *delimiter)
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
 	return (heredoc_fd);
 }
+
+int	do_heredocs(t_ast_node *ast_node)
+{
+	t_list			*redir;
+	t_redir_type	*redir_type;
+	int				fd;
+
+	redir = ast_node->redir;
+	while (redir)
+	{
+		redir_type = redir->content;
+		if (redir_type->type == HEREDOC)
+		{
+			fd = create_heredoc(redir_type->text);
+			if (fd == -1)
+				return (-1);
+			if (ast_node->input_fd != STDIN_FILENO)
+				close(ast_node->input_fd);
+			ast_node->input_fd = fd;
+		}
+		redir = redir->next;
+	}
+	return (0);
+}
