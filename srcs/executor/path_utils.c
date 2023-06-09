@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:19:24 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/09 20:19:59 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:20:12 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,18 @@ char	**get_paths_envp(char *envp[])
 		path_splitted[index] = aux;
 	}
 	return (path_splitted);
+}
+
+int	wait_pids(t_list *ast)
+{
+	int			status;
+	t_ast_node	*ast_node;
+
+	while (ast)
+	{
+		ast_node = ast->content;
+		waitpid(ast_node->pid, &status, 0);
+		ast = ast->next;
+	}
+	return (status);
 }

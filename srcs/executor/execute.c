@@ -12,6 +12,8 @@
 
 #include "executor.h"
 
+int	wait_pids(t_list *ast);
+
 int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
 {
 	if (ast_node->index != 0 || ast->next != NULL)
@@ -96,15 +98,15 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 
 int	execute(t_list *ast, char **envp[])
 {
-	int			len;
+	t_list		*ast_copy;
 	char		**paths;
 	t_ast_node	*ast_node;
 	int			status;
 
-	len = ft_lstsize(ast);
 	paths = create_paths(*envp);
 	if (paths == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
+	ast_copy = ast;
 	while (ast != NULL)
 	{
 		ast_node = (t_ast_node *)ast->content;
@@ -116,8 +118,7 @@ int	execute(t_list *ast, char **envp[])
 			close(ast_node->output_fd);
 		ast = ast->next;
 	}
-	while (--len >= 0)
-		waitpid(-1, &status, 0);
 	free_split(paths);
+	status = wait_pids(ast_copy);
 	return (status);
 }
