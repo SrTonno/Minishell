@@ -6,11 +6,11 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:36:31 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:24:20 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:00:57 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bin.h"
+#include "env.h"
 
 int	find_char(char *str, char c)
 {
@@ -30,7 +30,7 @@ int	find_env_basic(char **env, char *str)
 
 	len = ft_strlen(str);
 	i = -1;
-	while (env[++i] != '\0')
+	while (env[++i] != NULL)
 		if (len == find_char(env[i], '=') && ft_strncmp(env[i], str, len) == 0)
 			return (i);
 	return (-2);
@@ -45,7 +45,7 @@ int	find_env(char **env, char *str)
 	if (len == -1 || len == 0)
 		return (-1);
 	i = -1;
-	while (env[++i] != '\0')
+	while (env[++i] != NULL)
 		if (len == find_char(env[i], '=') && ft_strncmp(env[i], str, len) == 0)
 			return (i);
 	return (-2);
@@ -60,7 +60,7 @@ int	find_env_len(char **env, char *str)
 	if (len == -1 || len == 0)
 		return (-1);
 	i = 0;
-	while (env[++i] != '\0')
+	while (env[++i] != NULL)
 		if (len == (int)ft_strlen(env[i]) && ft_strncmp(env[i], str, len) == 0)
 			return (i);
 	return (-2);
@@ -74,7 +74,7 @@ int	find_mod_env(char **env, char **comand)
 
 	mod = 0;
 	i = 0;
-	while (comand[++i] != '\0')
+	while (comand[++i] != NULL)
 	{
 		find = find_env(env, comand[i]);
 		if (find >= 0)

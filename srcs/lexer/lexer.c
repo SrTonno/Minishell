@@ -12,23 +12,24 @@
 
 #include "lexer.h"
 
-t_list	*tokenize(char *_lexer)
+t_list	*tokenize(char	*inputLine)
 {
 	t_lexer	lexer;
 
-	lexer = init_lexer(_lexer);
+	lexer = init_lexer(inputLine);
 	while (lexer.str[lexer.index] != '\0')
 	{
 		while (is_space(lexer.str[lexer.index]))
 		{
-			if (lexer.str[lexer.index] == '\0')
+			if (lexer.str[lexer.index++] == '\0')
 				return (lexer.token_lst);
-			lexer.index++;
 		}
 		lexer.token_start = lexer.str + lexer.index;
-		printf(">>%s\n", lexer.token_start);
 		while (is_space(lexer.str[lexer.index]) == 0)
-			handle_char(&lexer);
+		{
+			if (handle_char(&lexer) == -1)
+				return (NULL);
+		}
 		if (add_new_token_lst(&lexer) == -1)
 			return (NULL);
 	}

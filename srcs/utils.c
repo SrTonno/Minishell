@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int	is_env_var_char(unsigned char c)
 {
@@ -37,12 +38,35 @@ int	is_space(unsigned char c)
 	return (0);
 }
 
-void	doble_free(char **str)
+void	free_split(char **split)
+{
+	int	index;
+
+	index = -1;
+	while (split[++index])
+		free(split[index]);
+	free(split);
+	return ;
+}
+
+void	print_export(char **env)
 {
 	int	i;
+	int j;
+	int	comp;
 
-	i = 0;
-	while (str[i] != NULL)
-		free(str[i++]);
-	free(str);
+	i = -1;
+	while (env[++i] != NULL)
+	{
+		j = -1;
+		comp = 0;
+		printf("declare -x ");
+		while (env[i][++j] != '\0')
+		{
+			printf("%c", env[i][j]);
+			if (env[i][j] == '=' && comp == 0)
+				comp = printf("\"");
+		}
+		printf("\"\n");
+	}
 }

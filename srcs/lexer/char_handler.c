@@ -12,9 +12,7 @@
 
 #include "lexer.h"
 
-static int	handle_dollar(t_lexer *lexer);
 static int	handle_special(t_lexer *lexer);
-static int	handle_env_var(t_lexer *lexer);
 static int	handle_quotation_marks(t_lexer *lexer);
 
 int	handle_char(t_lexer *lexer)
@@ -22,42 +20,31 @@ int	handle_char(t_lexer *lexer)
 	char	*curr_char;
 
 	curr_char = lexer->str + lexer->index;
-	if (*curr_char == SINGLE_QUOTE || *curr_char == DOUBLE_QUOTE)
+	if (is_quote(*curr_char))
 	{
 		if (handle_quotation_marks(lexer) == -1)
+		{
+			ft_lstclear(&lexer->token_lst, free);
 			return (-1);
+		}
 	}
 	else if (is_special(*curr_char))
 	{
 		if (handle_special(lexer) == -1)
+		{
+			ft_lstclear(&lexer->token_lst, free);
 			return (-1);
-	}
-	else if (*curr_char == '$' && is_env_var_char(*(curr_char + 1)))
-	{
-		if (handle_dollar(lexer) == -1)
-			return (-1);
+		}
 	}
 	else
 		lexer->index++;
 	return (0);
 }
 
-static int	handle_dollar(t_lexer *lexer)
-{
-	if (add_new_token_lst(lexer) == -1)
-		return (-1);
-	lexer->token_start = lexer->str + lexer->index;
-	while (is_env_var_char(lexer->str[++lexer->index]))
-		;
-	if (add_new_token_lst(lexer) == -1)
-		return (-1);
-	lexer->token_start = lexer->str + lexer->index;
-	return (0);
-}
-
 static int	handle_special(t_lexer *lexer)
 {
-	if (add_new_token_lst(lexer) == -1)
+	if (lexer->str + lexer->index - lexer->token_start > 0
+		&& add_new_token_lst(lexer) == -1)
 		return (-1);
 	lexer->token_start = lexer->str + lexer->index;
 	while (is_special(lexer->str[lexer->index]))
@@ -68,54 +55,60 @@ static int	handle_special(t_lexer *lexer)
 	return (0);
 }
 
-static int	handle_env_var(t_lexer *lexer)
+static char	*copy_quoted_text(char *token, t_lexer *lexer)
 {
-	char	*curr_pos;
-	char	*quotes_end;
-	char	*env_var_start;
+	char	quote;
 
-	curr_pos = lexer->str + lexer->index;
-	env_var_start = ft_strchr(curr_pos, '$');
-	quotes_end = ft_strchr(curr_pos + 1, *curr_pos);
-	while (env_var_start != NULL && env_var_start < quotes_end)
+	quote = lexer->str[lexer->index];
+	token = append_text(token, lexer->token_start,
+			lexer->index - (lexer->token_start - lexer->str));
+	lexer->token_start = lexer->str + ++lexer->index;
+	lexer->index = ft_strchr(lexer->token_start, quote) - lexer->str;
+	token = append_text(token, lexer->token_start,
+			lexer->index - (lexer->token_start - lexer->str));
+	lexer->token_start = lexer->str + ++lexer->index;
+	return (token);
+}
+
+static int	add_new_text_node(t_lexer *lexer, char *token)
+{
+	t_list	*new_node;
+
+	new_node = ft_lstnew((void *)token);
+	if (new_node == NULL)
 	{
-		if (is_env_var_char(*(env_var_start + 1)))
-		{
-			lexer->index = (size_t)(env_var_start - lexer->str);
-			handle_dollar(lexer);
-		}
-		env_var_start = ft_strchr(env_var_start + 1, '$');
-	}
-	lexer->index = quotes_end - lexer->str + 1;
-	if (add_new_token_lst(lexer) == -1)
+		free(token);
 		return (-1);
-	lexer->token_start = quotes_end + 1;
+	}
+	ft_lstadd_back(&lexer->token_lst, new_node);
 	return (0);
 }
 
 static int	handle_quotation_marks(t_lexer *lexer)
 {
-	char	*end_quote;
-	char	quote;
+	char	*token;
 
-	quote = lexer->str[lexer->index];
-	end_quote = ft_strchr(lexer->str + lexer->index + 1, quote);
-	if (end_quote == NULL)
-		lexer->index++;
-	else
+	token = (char *)ft_calloc(1, sizeof(char));
+	token = append_text(token, lexer->token_start,
+			lexer->index - (lexer->token_start - lexer->str));
+	lexer->token_start = lexer->str + lexer->index;
+	while (1)
 	{
-		if (add_new_token_lst(lexer) == -1)
-			return (-1);
-		lexer->token_start = lexer->str + lexer->index;
-		if (quote == DOUBLE_QUOTE && any_env_var_str(lexer->str + lexer->index))
-			return (handle_env_var(lexer));
-		else
+		if (lexer->str[lexer->index] == '\0'
+			|| is_special(lexer->str[lexer->index])
+			|| is_space(lexer->str[lexer->index]))
 		{
-			lexer->index = end_quote - lexer->str + 1;
-			if (add_new_token_lst(lexer) == -1)
-				return (-1);
+			token = append_text(token, lexer->token_start,
+					lexer->index - (lexer->token_start - lexer->str));
 			lexer->token_start = lexer->str + lexer->index;
+			break ;
 		}
+		else if (is_quote(lexer->str[lexer->index]))
+			token = copy_quoted_text(token, lexer);
+		else
+			lexer->index++;
 	}
-	return (0);
+	if (token == NULL)
+		return (-1);
+	return (add_new_text_node(lexer, token));
 }

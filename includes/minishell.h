@@ -23,25 +23,32 @@
 # include <signal.h>
 
 # include "libft.h"
+# include "ast.h"
+# include "error_msg.h"
+# include "env.h"
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
+
+int		handle_input(char *input, char **envp[], int status);
 
 void	handler(int signum);
 void	ctr_d(char *input, char **env);
 
-t_list	*tokenize(char *input);
+void	loop(char **env);
 
-void	doble_free(char **str);
+t_list	*tokenize(char *inputLine);
 
-//env
-char	**ft_export(char **env, char **comand);
+t_list	*parse(t_list *list);
+void	free_ast(t_list *ast);
+
+int		execute(t_list *ast, char **envp[]);
+
+void	free_split(char **str);
+
 char	**malloc_env(char **env);
 void	ft_env(char **env);
-char	**ft_unset(char **env, char **comand);
-char	*env_expand(char **env, char *input);
+char	*env_expand(char ***env, char *input, int status);
 int		find_var(char *str);
-
-char	**export_env(char **env, char **coman);
-char	**unset_env(char **env, char **comand);
+void	ft_exit(int exitCode);
 
 #endif

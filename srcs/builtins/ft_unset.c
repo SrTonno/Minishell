@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_unset.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/09 13:17:45 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/14 18:59:47 by tvillare         ###   ########.fr       */
+/*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
+/*   Updated: 2023/05/27 17:44:01 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bin.h"
-#include "libft.h"
+#include "env.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-static int	len_error_unset(char **env, char **str)
+static int	len_error_unset(char **env, char **str, int *code)
 {
 	int	i;
 	int	count;
@@ -31,7 +28,10 @@ static int	len_error_unset(char **env, char **str)
 			|| find_char(str[i], '=') >= 0)
 		{
 			if (error == 0)
-				printf("unset: %s: invalid parameter name\n", str[i]);
+			{
+				*code = 1;
+				printf("-bash: unset: '%s': not a valid identifier\n", str[i]);
+			}
 			error++;
 		}
 		else if (find_env_basic(env, str[i]) >= 0 && to_future(str, i) == -1)
@@ -56,33 +56,27 @@ static void	delete_unset(char **new_env, char **env, char **comand)
 	}
 }
 
-char	**unset_env(char **env, char **comand)
+int	ft_unset(char ***env, char **comand)
 {
 	int		del;
 	int		len;
 	char	**new_env;
+	int		code;
 
-	printf("UNSET\n");
-	del = len_error_unset(env, comand);
+	code = 0;
+	del = len_error_unset(env[0], comand, &code);
 	if (del == 0)
-		return (env);
-	len = len_doble_base(env);
+		return (0);
+	len = len_doble_base(env[0]);
 	new_env = ft_calloc((len - del) + 1, sizeof(char *));
 	if (new_env == NULL)
+	{
+		free_split(env[0]);
+		free_split(comand);
 		exit (1);
-	delete_unset(new_env, env, comand);
-	free (env);
-	int tmp;
-	tmp = 0;
-	while (comand[tmp] != NULL)
-		free(comand[tmp++]);
-	free(comand);
-	return (new_env);
+	}
+	delete_unset(new_env, env[0], comand);
+	free (env[0]);
+	env[0] = new_env;
+	return (code);
 }
-/*
-	int tmp;
-	tmp = 0;
-	while (comand[tmp] != NULL)
-		free(comand[tmp++]);
-	free(comand);
-*/

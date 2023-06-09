@@ -7,27 +7,34 @@ CC = gcc
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
-
 SRCSDIR = ./srcs/
 SRCSCFILES = minishell.c signal.c utils.c
 
-BINDIR = ${addprefix ${SRCSDIR}, bin/}
-BINCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_export.c env_unset.c
+BINDIR = ${addprefix ${SRCSDIR}, builtins/}
+BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c ft_exit.c builtin_utils.c
+
+ENVDIR = ${addprefix ${SRCSDIR}, env/}
+ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_replace.c shlevel.c
 
 LEXDIR = ${addprefix ${SRCSDIR}, lexer/}
 LEXCFILES = lexer.c lexer_utils.c char_handler.c
 
 PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
-PARSECFILES =
+PARSECFILES = parser.c create_ast.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES =
+EXECCFILES = execute.c path.c heredocs.c redir.c path_utils.c
+
+ERRDIR = ${addprefix ${SRCSDIR}, errors/}
+ERRFILES = error_msg.c syntax_errors.c
 
 SRCS =	${addprefix ${SRCSDIR}, ${SRCSCFILES}} \
 		${addprefix ${BINDIR}, ${BINCFILES}} \
+		${addprefix ${ENVDIR}, ${ENVCFILES}} \
 		${addprefix ${LEXDIR}, ${LEXCFILES}} \
 		${addprefix ${PARSEDIR}, ${PARSECFILES}} \
-		${addprefix ${EXECDIR}, ${EXECCFILES}}
+		${addprefix ${EXECDIR}, ${EXECCFILES}} \
+		${addprefix ${ERRDIR}, ${ERRFILES}}
 
 OBJS = ${SRCS:.c=.o}
 

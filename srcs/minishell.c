@@ -6,11 +6,12 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:36:08 by javmarti          #+#    #+#             */
-/*   Updated: 2023/04/14 18:01:03 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:15:45 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 void	print_lst(t_list *lst)
 {
@@ -22,66 +23,169 @@ void	print_lst(t_list *lst)
 	return ;
 }
 
-/*
-Eroor cuando poner en el unset 2 palabras Parecidas ej: "tr" "tractor"
-*/
+static	void print_ast(t_list *ast)
+{
+	int	i;
+	int	index = 1;
+	t_ast_node *ast_node;
+	t_redir_type *redir;
+
+	while(ast != NULL)
+	{
+		ast_node = (t_ast_node *)ast->content;
+		printf("NODO AST Nº%i\n", index++);
+		printf("---------------------------------------------\ncommandos: ");
+		i = -1;
+		while (ast_node->command[++i] != NULL)
+			printf("%s ", ast_node->command[i]);
+		printf("\narchivos y heredocs:\n");
+		while (ast_node->redir != NULL)
+		{
+			redir = (t_redir_type *)ast_node->redir->content;
+			printf("%s -> %i\n", redir->text, redir->type);
+			ast_node->redir = ast_node->redir->next;
+		}
+		ast = ast->next;
+	}
+}
+
+void	redir_free(void *ptr)
+{
+	t_redir_type	*redir;
+
+	redir = (t_redir_type *)ptr;
+	free(redir->text);
+	free(redir);
+	return ;
+}
+
+void	free_ast_node(void *ptr)
+{
+	t_ast_node	*ast_node;
+
+	ast_node = (t_ast_node *)ptr;
+	free_split(ast_node->command);
+	free(ast_node->pipe_fd);
+	free(ast_node->binary);
+	ft_lstclear(&ast_node->redir, redir_free);
+	free(ast_node);
+	return ;
+}
+
+void	leaks()
+{
+	system("leaks -q minishell");
+}
+
+void	disable_ctrl_c_print()
+{
+	struct termios term;
+	tcgetattr(0, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &term);
+}
+
 
 int	main(int argc, char *argv[], char **env)
 {
 	char				*input;
-	char				**new_env;
 	struct sigaction	sa;
-	t_list				*token_lst;
 
-	(void)argc;
-	(void)argv;
-	//env = malloc_env(env);
+	//atexit(leaks);
+	disable_ctrl_c_print();
+	if (argc != 1)
+		return (0);
 	env = malloc_env(env);
 	sa.sa_handler = handler;
-	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	//if (sigaction(SIGINT, &sa, NULL) == -1)
-		//printf("Error\n");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		printf("Error2\n");
+	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
+		printf("Error\n");
+	loop(env);
+	return (0);
+}
+
+void	loop(char **env)
+{
+	int		status;
+	char	*input;
+
+	status = 0;
 	while (1)
 	{
 		input = readline(PROMPT);
 		ctr_d(input, NULL);
-		if (ft_strncmp(input, "\0", 1) == 0)
-			continue ;
-		add_history(input);
-		while (find_var(input) >= 0)
-			input = env_expand(env, input);
-		printf("FIN -> %s\n", input);
 		if (ft_strncmp(input, "exit", 5) == 0)
+		{
+			free_split(env);
 			break ;
-		token_lst = tokenize(input);
-		if (token_lst == NULL)
+		}
+		if (ft_strncmp(input, "\0", 1) == 0)
+		{
+			free(input);
+			continue ;
+		}
+		add_history(input);
+		status = handle_input(input, &env, status);
+		if (status == -1)
 			break ;
-		print_lst(token_lst);
-		ft_lstclear(&token_lst, free);
-		//ft_env(env);
-		//new_env = malloc_env(env);
-		//new_env = export_env(new_env, ft_split("export bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco", ' '));
-		//ft_env(new_env);
-		//new_env = ft_unset(new_env, ft_split("unset MallocNanoZone PWD= bob ZDOTDIR _ GIT_ASKPASS LANG LESS ZSH HOME SHELL ddss TERM_PROGRAM LSCOLORS COMMAND_MODE PATH",  ' '));
-
-		////printf("---------------------------##############################-------------------------------------------------\n");
-		env = export_env(env, ft_split("export a paco=nickname LES=PA LESSS=GOG USER=paco maria=a bob=po tr=poi =a unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco nombre=Tono a=ds pq=qp cositas21=pa", ' '));
-		env = export_env(env, ft_split("export Nuevo=new USER=tono y=pa yuy=ap a=as as=a tr=paco tractor=red aass LESS=MORE SHELL=minishell antonio=tono", ' '));
-		env = export_env(env, ft_split("export bob=po tr=poi =a LESS=aaaaaaaaaaaasasasaasjfgkfg unset=1 sggsetyarytsdf saUos=p i o=h i hah= p=oi u=p as=pop yuy=pap y=4 s sfdffs bob=p tr=FINNNN pepe=josse pepe=paco", ' '));
-		ft_env(env);
-		env = unset_env(env, ft_split("unset Nuevo OLDPWD LESS a tr yuy USER NADA", ' '));
-		env = unset_env(env, ft_split("unset maria bob tr =a unset sggsetyarytsdf saUos i oh i hah p u as yuy y s sfdffs bob tr pepe pepe nombre a", ' '));
-		env = unset_env(env, ft_split("unset PATH ORIGINAL_XDG_CURRENT_DESKTOP pq", ' '));
-		env = unset_env(env, ft_split("unset PATH COMMAND_MODE cositas21", ' '));
-		env = unset_env(env, ft_split("unset antonio", ' '));
-		ft_env(env);
-		//free(input);
-
-		printf("FINN comand\n");
 	}
 	free(input);
+}
+
+int	clean_input(char **input, char ***env, int status)
+{
+	if (check_quotes(*input) != 0)
+	{
+		free(*input);
+		return (2);
+	}
+	while (find_var(*input) >= 0)
+	{
+		*input = env_expand(env, *input, status);
+		printf("%s\n", *input);
+		if (*input == NULL)
+			return(1);
+			//return (error_msg(MALLOC_ERROR, NULL));
+	}
 	return (0);
+}
+
+int	tokenize_and_parse(char *input, t_list **ast)
+{
+	t_list	*token_lst;
+
+	token_lst = tokenize(input);
+	free(input);
+	if (token_lst == NULL)
+		return (error_msg(MALLOC_ERROR, NULL));
+	if (check_syntax_metachars(token_lst) != 0
+		|| check_syntax_after_metachars(token_lst) != 0)
+	{
+		ft_lstclear(&token_lst, free);
+		return (2);
+	}
+	// print_lst(token_lst);
+	*ast = parse(token_lst);
+	ft_lstclear(&token_lst, free);
+	if (*ast == NULL)
+		return (error_msg(MALLOC_ERROR, NULL));
+	// print_ast(ast);
+	return (0);
+}
+
+int	handle_input(char *input, char **env[], int status)
+{
+	t_list	*ast;
+
+	status = clean_input(&input, env, status);
+	if (status == 1)
+		return (0);
+	if (status == -1 || status == 2)
+		return (status);
+	status = tokenize_and_parse(input, &ast);
+	if (status == -1 || status == 2)
+		return (status);
+	status = execute(ast, env);
+	ft_lstclear(&ast, free_ast_node);
+	return (status);
 }

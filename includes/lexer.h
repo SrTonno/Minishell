@@ -31,14 +31,16 @@ typedef struct s_lexer
 	t_list	*token_lst;
 }	t_lexer;
 
-t_lexer	init_lexer(char *_lexer);
+t_lexer	init_lexer(char *inputLine);
 int		add_new_token_lst(t_lexer *lexer);
 int		any_env_var_str(char *str);
 
 int		handle_char(t_lexer *lexer);
+char	*append_text(char *dst, char *src, size_t size);
 
 int		is_special(unsigned char c);
 int		is_space(unsigned char c);
+int		is_quote(char c);
 int		is_env_var_char(unsigned char c);
 
 #endif

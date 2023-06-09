@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/04/03 18:14:37 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:47:27 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ void	handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	/*if (signum == 3)
+	{
+		//rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}*/
+	return ;
 }
 
 void	ctr_d(char *input, char **env)
 {
 	(void)env;
-	if (input == NULL) //ctr+D
+	if (input == NULL)
 	{
 		rl_replace_line("exit", 0);
-		//rl_redisplay();
-		//doble_free(env);
+		write(1, "exit\n", 6);
 		exit (0);
 	}
+	return ;
 }
