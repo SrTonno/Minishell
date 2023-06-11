@@ -142,10 +142,8 @@ int	clean_input(char **input, char ***env, int status)
 	while (find_var(*input) >= 0)
 	{
 		*input = env_expand(env, *input, status);
-		printf("%s\n", *input);
 		if (*input == NULL)
 			return(1);
-			//return (error_msg(MALLOC_ERROR, NULL));
 	}
 	return (0);
 }

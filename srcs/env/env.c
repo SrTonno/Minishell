@@ -6,24 +6,12 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/07 21:06:06 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:40:07 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int	len_num(int num)
-{
-	int	i;
-
-	i = 0;
-	while (num)
-	{
-		i++;
-		num = num / 10;
-	}
-	return (i);
-}
 char	*env_expand(char ***env, char *input, int status)
 {
 	int		len;
@@ -34,13 +22,12 @@ char	*env_expand(char ***env, char *input, int status)
 
 	len = find_var(input) + 1;
 	top = find_var_end(input, len);
-	var = ft_calloc((top - len) + 1, sizeof(char));
-	if (var == NULL)
-		exit (0);
+	var = ex_calloc((top - len) + 1, sizeof(char));
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env[0], var);
 	if (var[0] == '?')
-		str = replace_env((ft_strlen(input) - 1) + len_num(status), input, "?", status);
+		str = replace_env((ft_strlen(input) - 1) + \
+			len_num(status), input, "?", status);
 	else if (input[len] == DOUBLE_QUOTE || input[len] == SINGLE_QUOTE)
 		str = replace_env((ft_strlen(input) - \
 			1), input, NULL, status);
@@ -51,12 +38,10 @@ char	*env_expand(char ***env, char *input, int status)
 		str = replace_env((ft_strlen(input) - \
 			(ft_strlen(var) + 1)), input, NULL, status);
 	(free (var), free (input));
-	if (str == NULL)
-		return (NULL);
 	return (str);
 }
 
-char	**void_env()
+char	**void_env(void)
 {
 	char	**new_env;
 

@@ -40,4 +40,7 @@ void	print_export(char **env);
 int		copy_num(int status, char *dst, int j);
 char	*check_shlvl(char *str);
 
+void	*ex_calloc(size_t count, size_t size);
+
+int		len_num(int num);
 #endif

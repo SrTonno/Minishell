@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/28 15:21:25 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:41:28 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,17 @@ int	copy_num(int status, char *dst, int j)
 		dst[j++] = num[i++];
 	free(num);
 	return (j);
+}
+
+int	len_num(int num)
+{
+	int	i;
+
+	i = 0;
+	while (num)
+	{
+		i++;
+		num = num / 10;
+	}
+	return (i);
 }

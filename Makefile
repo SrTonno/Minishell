@@ -8,7 +8,7 @@ CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
 SRCSDIR = ./srcs/
-SRCSCFILES = minishell.c signal.c utils.c
+SRCSCFILES = minishell.c signal.c utils.c utils2.c
 
 BINDIR = ${addprefix ${SRCSDIR}, builtins/}
 BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c ft_exit.c builtin_utils.c

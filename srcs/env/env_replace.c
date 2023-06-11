@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/07 21:05:58 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:24:57 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static int	replace_var(int j, char *dst, char *add)
 	return (j);
 }
 
-static void	fuck_norminete(int *i, int *j)
+static void	fuck_norminete(int *i, int *j, int *mark, char *org)
 {
+	*mark = find_var(org);
 	*i = 0;
 	*j = 0;
 }
@@ -55,23 +56,18 @@ char	*replace_env(int len, char *org, char *add, int status)
 	char	*dst;
 	int		mark;
 
-	fuck_norminete(&i, &j);
-	if (len > 0)
-		dst = ft_calloc(len + 1, sizeof(char));
-	if (dst == NULL || len <= 0)
+	fuck_norminete(&i, &j, &mark, org);
+	if (len <= 0)
 		return (NULL);
-	mark = find_var(org);
+	dst = ex_calloc(len + 1, sizeof(char));
 	while (len >= j)
 	{
 		if (i == mark)
 		{
-			if (org[i + 1] == DOUBLE_QUOTE || org[i + 1] == SINGLE_QUOTE)
-			{
-				i++;
-				continue;
-			}
 			if (org[++i] == '?')
 				j = copy_num(status, dst, j);
+			else if (org[i] == DOUBLE_QUOTE || org[i] == SINGLE_QUOTE)
+				continue ;
 			else
 				j = replace_var(j, dst, add);
 			i = move_letter_rem(org, i);
