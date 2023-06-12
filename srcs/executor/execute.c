@@ -24,6 +24,11 @@ int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
 		return (ft_unset(envp, ast_node->command));
 	if (ft_strncmp(ast_node->binary, "cd", 3) == 0)
 		return (ft_cd(ast_node, envp));
+	if (ft_strncmp(ast_node->binary, "exit", 5) == 0)
+	{
+		unlink(TEMP_FILE);
+		exit(0);
+	}
 	return (0);
 }
 

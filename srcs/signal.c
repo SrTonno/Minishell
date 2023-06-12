@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/28 18:47:27 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:30:45 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ctr_d(char *input, char **env)
 	if (input == NULL)
 	{
 		rl_replace_line("exit", 0);
-		write(1, "exit\n", 6);
+		write(1, "exit\n", 5);
 		exit (0);
 	}
 	return ;
