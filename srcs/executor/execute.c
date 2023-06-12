@@ -43,13 +43,15 @@ int	exec_command_child(t_ast_node *ast_node, char **envp)
 
 int	create_child(t_ast_node *ast_node, char **envp)
 {
-	int		heredoc_fd;
+	//int		heredoc_fd;
 
 	ast_node->pid = fork();
+	handler_fork(!ast_node->pid);
 	if (ast_node->pid < 0)
 		return (-1);
 	else if (ast_node->pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		if (ast_node->pipe_fd != NULL)
 			close(ast_node->pipe_fd[0]);
 		if (ast_node->input_fd != STDIN_FILENO)
@@ -118,6 +120,7 @@ int	execute(t_list *ast, char **envp[])
 	}
 	while (--len >= 0)
 		waitpid(-1, &status, 0);
+	handler_status_print(status);
 	free_split(paths);
 	return (status);
 }

@@ -25,6 +25,7 @@
 # include "ast.h"
 # include "error_msg.h"
 # include "bin.h"
+# include "contantes.h"
 
 # define TEMP_FILE ".temp"
 
@@ -43,4 +44,7 @@ void	free_split(char **split);
 
 int		handle_exe_error(int error, char *str);
 
+
+void	handler_fork(int signum);
+void	handler_status_print(int signum);
 #endif

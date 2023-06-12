@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/11 13:43:41 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/11 16:16:34 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	only_coman(char **dst, char **comd)
 {
 	int	i;
 	int	j;
-	int	len_env;
 
 	j = 0;
 	i = -1;

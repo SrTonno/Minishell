@@ -3,7 +3,7 @@ include colors.mk
 NAME = minishell
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
@@ -57,14 +57,17 @@ test: ${NAME}
 
 ${NAME}: ${OBJS}
 	@make -s -C ${LIB_DIR}
+	@printf "${God}${Green}Created 'libft.a'.${NoColor}\n"
 	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 	@printf "${God} ${BIBlue}Mini${NoColor}🐚 de ${BIPurple}LaLora${NoColor}${God}\n"
 
 ${LFT_NAME}:
 	@make -s -C ${LIB_DIR}
 
+
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
+	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}\n"
 
 re: fclean all
 

@@ -17,6 +17,7 @@
 # include <stdlib.h>
 
 # include "libft.h"
+# include "contantes.h"
 
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39

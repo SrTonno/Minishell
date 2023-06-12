@@ -26,12 +26,14 @@
 # include "ast.h"
 # include "error_msg.h"
 # include "env.h"
+# include "contantes.h"
+
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
 int		handle_input(char *input, char **envp[], int status);
 
-void	handler(int signum);
+void	handler(void);
 void	ctr_d(char *input, char **env);
 
 void	loop(char **env);

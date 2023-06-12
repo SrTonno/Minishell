@@ -23,7 +23,7 @@ void	print_lst(t_list *lst)
 	return ;
 }
 
-static	void print_ast(t_list *ast)
+/*static	void print_ast(t_list *ast)
 {
 	int	i;
 	int	index = 1;
@@ -47,7 +47,7 @@ static	void print_ast(t_list *ast)
 		}
 		ast = ast->next;
 	}
-}
+}*/
 
 void	redir_free(void *ptr)
 {
@@ -88,18 +88,18 @@ void	disable_ctrl_c_print()
 
 int	main(int argc, char *argv[], char **env)
 {
-	char				*input;
-	struct sigaction	sa;
+	//char				*input;
+	//struct sigaction	sa;
 
+	(void)argv;
 	//atexit(leaks);
 	disable_ctrl_c_print();
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
-	sa.sa_handler = handler;
-	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
-		printf("Error\n");
+	//sa.sa_handler = handler;
+	//sa.sa_flags = SA_RESTART;
+	handler();
 	loop(env);
 	return (0);
 }
