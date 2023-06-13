@@ -76,7 +76,7 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 
 	status = parse_redir(ast);
 	ast_node = (t_ast_node *)ast->content;
-	if (status == 0)
+	if (status == 0 && g_status != 130)
 	{
 		status = check_binary(ast_node->command[0], paths);
 		if (status == 0)
@@ -93,6 +93,8 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			}
 		}
 	}
+	if (status == -2)
+		status = 0;
 	return (status);
 }
 
