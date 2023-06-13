@@ -101,7 +101,7 @@ int	execute(t_list *ast, char **envp[])
 	int			len;
 	char		**paths;
 	t_ast_node	*ast_node;
-	int			status;
+	//int			status;
 
 	len = ft_lstsize(ast);
 	paths = create_paths(*envp);
@@ -110,7 +110,7 @@ int	execute(t_list *ast, char **envp[])
 	while (ast != NULL)
 	{
 		ast_node = (t_ast_node *)ast->content;
-		status = exec_child(ast, paths, envp);
+		g_status = exec_child(ast, paths, envp);
 		unlink(TEMP_FILE);
 		if (ast_node->input_fd != STDIN_FILENO)
 			close(ast_node->input_fd);
@@ -119,8 +119,9 @@ int	execute(t_list *ast, char **envp[])
 		ast = ast->next;
 	}
 	while (--len >= 0)
-		waitpid(-1, &status, 0);
-	handler_status_print(status);
+		waitpid(-1, &g_status, 0);
+	handler_status_print();
+	//status = g_status;
 	free_split(paths);
-	return (status);
+	return (g_status);
 }

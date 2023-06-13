@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/11 13:24:57 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:25:21 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	fuck_norminete(int *i, int *j, int *mark, char *org)
 	*j = 0;
 }
 
-char	*replace_env(int len, char *org, char *add, int status)
+char	*replace_env(int len, char *org, char *add)
 {
 	int		i;
 	int		j;
@@ -65,7 +65,7 @@ char	*replace_env(int len, char *org, char *add, int status)
 		if (i == mark)
 		{
 			if (org[++i] == '?')
-				j = copy_num(status, dst, j);
+				j = copy_num(g_status, dst, j);
 			else if (org[i] == DOUBLE_QUOTE || org[i] == SINGLE_QUOTE)
 				continue ;
 			else

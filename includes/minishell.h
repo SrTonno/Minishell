@@ -31,7 +31,7 @@
 
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
-int		handle_input(char *input, char **envp[], int status);
+void	handle_input(char *input, char **envp[]);
 
 void	handler(void);
 void	ctr_d(char *input, char **env);
@@ -49,7 +49,7 @@ void	free_split(char **str);
 
 char	**malloc_env(char **env);
 void	ft_env(char **env);
-char	*env_expand(char ***env, char *input, int status);
+char	*env_expand(char ***env, char *input);
 int		find_var(char *str);
 void	ft_exit(int exitCode);
 

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/12 19:04:44 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:46:03 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ctr_c(int signum)
 {
 	(void)signum;
-	g_sing = 130;
+	g_status = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0),
@@ -48,16 +48,16 @@ void	ctr_d(char *input, char **env)
 	return ;
 }
 
-void	handler_status_print(int signum)
+void	handler_status_print()
 {
-	if (signum == SIGINT)
+	if (g_status == SIGINT)
 	{
-		g_sing = 130;
+		g_status = 130;
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
-	else if (signum == SIGQUIT)
+	else if (g_status == SIGQUIT)
 	{
-		g_sing = 131;
+		g_status = 131;
 		ft_putstr_fd("QUIT: 3\n", STDOUT_FILENO);
 	}
 }

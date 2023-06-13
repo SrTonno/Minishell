@@ -46,5 +46,5 @@ int		handle_exe_error(int error, char *str);
 
 
 void	handler_fork(int signum);
-void	handler_status_print(int signum);
+void	handler_status_print();
 #endif

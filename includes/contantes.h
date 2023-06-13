@@ -6,11 +6,11 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:23:42 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/12 18:23:45 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:19:10 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTES_H
 # define CONSTANTES_H
-int	g_sing;
+int	g_status;
 #endif
