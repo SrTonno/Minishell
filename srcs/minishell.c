@@ -22,8 +22,8 @@ void	print_lst(t_list *lst)
 	}
 	return ;
 }
-
-/*static	void print_ast(t_list *ast)
+/*
+static	void print_ast(t_list *ast)
 {
 	int	i;
 	int	index = 1;
@@ -148,6 +148,7 @@ int	clean_input(char **input, char ***env)
 	}
 	return (0);
 }
+
 
 int	tokenize_and_parse(char *input, t_list **ast)
 {

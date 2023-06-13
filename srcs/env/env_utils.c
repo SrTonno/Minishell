@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/11 16:19:19 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:29:59 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,6 @@ int	export_util(char **env, char **comand)
 	return ((len) - mod);
 }
 
-int	copy_num(int status, char *dst, int j)
-{
-	char	*num;
-	int		i;
-
-	i = 0;
-	num = ft_itoa(status);
-	while (num[i] != '\0')
-		dst[j++] = num[i++];
-	free(num);
-	return (j);
-}
 
 int	len_num(int num)
 {
@@ -62,4 +50,17 @@ int	len_num(int num)
 		num = num / 10;
 	}
 	return (i);
+}
+
+int	copy_num(int status, char *dst, int j)
+{
+	char	*num;
+	int		i;
+
+	i = 0;
+	num = ft_itoa(status);
+	while (num[i] != '\0')
+		dst[j++] = num[i++];
+	free(num);
+	return (j);
 }

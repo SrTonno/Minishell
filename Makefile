@@ -13,6 +13,9 @@ SRCSCFILES = minishell.c signal.c utils.c utils2.c
 BINDIR = ${addprefix ${SRCSDIR}, builtins/}
 BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c ft_exit.c builtin_utils.c
 
+BINDIR = ${addprefix ${SRCSDIR}, builtins/}
+BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c ft_exit.c builtin_utils.c
+
 ENVDIR = ${addprefix ${SRCSDIR}, env/}
 ENVCFILES = env.c env_utils.c env_utils_doble.c env_utils_find.c env_utils_find2.c env_replace.c shlevel.c
 
