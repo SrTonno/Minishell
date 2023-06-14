@@ -18,14 +18,14 @@ char	*do_heredoc(char *delimitator)
 	char	*line;
 	char	*aux;
 
-	printf("%s\n", delimitator);
+	//printf("%s\n", delimitator);
 	text = (char *)ft_calloc(1, sizeof(char));
-	ft_printf("> ");
+	write(1,"> ", 1);
 	line = get_next_line(STDIN_FILENO);
 	//printf("%s\n", line);
 	if (line == NULL)
 		return(free(text), NULL);
-	while (ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0 && g_status != 130 && line != NULL)
+	while (line != NULL && ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0 && g_status != 130)
 	{
 		write(1,"> ", 1);
 		aux = text;
@@ -37,6 +37,8 @@ char	*do_heredoc(char *delimitator)
 		}
 		line = get_next_line(STDIN_FILENO);
 	}
+	if (line == NULL)
+		return (free(text), NULL);
 	free(line);
 	return (text);
 }

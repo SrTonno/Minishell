@@ -92,7 +92,7 @@ int	main(int argc, char *argv[], char **env)
 	//struct sigaction	sa;
 
 	(void)argv;
-	//atexit(leaks);
+	///atexit(leaks);
 	disable_ctrl_c_print();
 	if (argc != 1)
 		return (0);
