@@ -35,10 +35,8 @@ char	*do_heredoc(char *delimitator)
 			free(aux);
 			free(line);
 		}
-		//write(1, "->", 2);
 		line = get_next_line(STDIN_FILENO);
 	}
-
 	free(line);
 	return (text);
 }
@@ -48,12 +46,10 @@ int	create_heredoc(char *delimiter)
 	int		heredoc_fd;
 	char	*text;
 
-	//printf("rrrrrrrrr\n");
 	heredoc_fd = open(TEMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	if (heredoc_fd < 0)
 		return (heredoc_fd);
 	text = do_heredoc(delimiter);
-	//printf("aaaaaaaa\n");
 	if (text == NULL)
 		return (-2);
 	ft_putstr_fd(text, heredoc_fd);

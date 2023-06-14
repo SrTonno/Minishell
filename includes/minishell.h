@@ -34,7 +34,7 @@
 void	handle_input(char *input, char **envp[]);
 
 void	handler(void);
-void	ctr_d(char *input, char **env);
+int		ctr_d(char *input);
 
 void	loop(char **env);
 

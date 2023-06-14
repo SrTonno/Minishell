@@ -113,8 +113,12 @@ void	loop(char **env)
 	{
 		handler();
 		input = readline(PROMPT);
-		ctr_d(input, NULL);
-		if (ft_strncmp(input, "exit", 5) == 0)
+		/*if (ctr_d(input) == 1)
+		{
+			free_split(env);
+			break ;
+		}*/
+		if (ctr_d(input) == 1 || ft_strncmp(input, "exit", 5) == 0)
 		{
 			free_split(env);
 			break ;
@@ -129,8 +133,8 @@ void	loop(char **env)
 		if (g_status == -1)
 			break ;
 	}
-	//free_split(env);
 	free(input);
+	system("leaks -q minishell");
 }
 
 int	clean_input(char **input, char ***env)

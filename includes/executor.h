@@ -19,6 +19,15 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
+
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -47,4 +56,6 @@ int		handle_exe_error(int error, char *str);
 
 void	handler_fork(int signum);
 void	handler_status_print();
+
+char	*mini_gnl(int fd);
 #endif

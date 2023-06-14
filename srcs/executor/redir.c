@@ -61,7 +61,7 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 	{
 		fd = create_heredoc(redir_type->text);
 		//printf("%d\n", fd);
-		if (fd != -1)
+		if (fd <= -1)
 			return (fd);
 		if (ast_node->input_fd != STDIN_FILENO)
 			close(ast_node->input_fd);
