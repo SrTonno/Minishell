@@ -18,7 +18,7 @@ char	*do_heredoc(char *delimitator)
 	char	*line;
 	char	*aux;
 
-	//printf("%s\n", delimitator);
+	printf("%s\n", delimitator);
 	text = (char *)ft_calloc(1, sizeof(char));
 	ft_printf("> ");
 	line = get_next_line(STDIN_FILENO);
