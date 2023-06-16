@@ -88,17 +88,13 @@ void	disable_ctrl_c_print()
 
 int	main(int argc, char *argv[], char **env)
 {
-	//char				*input;
-	//struct sigaction	sa;
-
 	(void)argv;
 	///atexit(leaks);
 	disable_ctrl_c_print();
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
-	//sa.sa_handler = handler;
-	//sa.sa_flags = SA_RESTART;
+
 	loop(env);
 	return (0);
 }
@@ -113,11 +109,6 @@ void	loop(char **env)
 	{
 		handler();
 		input = readline(PROMPT);
-		/*if (ctr_d(input) == 1)
-		{
-			free_split(env);
-			break ;
-		}*/
 		if (ctr_d(input) == 1 || ft_strncmp(input, "exit", 5) == 0)
 		{
 			free_split(env);
@@ -134,7 +125,7 @@ void	loop(char **env)
 			break ;
 	}
 	free(input);
-	system("leaks -q minishell");
+	//system("leaks -q minishell");
 }
 
 int	clean_input(char **input, char ***env)

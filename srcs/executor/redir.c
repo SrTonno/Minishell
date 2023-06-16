@@ -60,14 +60,12 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 	else if (redir_type->type == HEREDOC)
 	{
 		fd = create_heredoc(redir_type->text);
-		//printf("%d\n", fd);
 		if (fd <= -1)
 			return (fd);
 		if (ast_node->input_fd != STDIN_FILENO)
 			close(ast_node->input_fd);
 		ast_node->input_fd = fd;
 	}
-
 	return (do_redir_out(redir_type, ast_node));
 }
 
@@ -135,12 +133,9 @@ int	parse_redir(t_list *ast)
 		if (redir->content != NULL)
 			status = do_redir((t_redir_type *)redir->content,
 					ast_node);
-		//if (status == -2)
-			///status = 0;
 		if ((status != 0 && status != -2) || g_status == 130)
 			break ;
 		redir = redir->next;
-		//write(1, "-----------------------------", 20);
 	}
 	return (status);
 }

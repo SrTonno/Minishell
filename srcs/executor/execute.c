@@ -43,8 +43,6 @@ int	exec_command_child(t_ast_node *ast_node, char **envp)
 
 int	create_child(t_ast_node *ast_node, char **envp)
 {
-	//int		heredoc_fd;
-
 	ast_node->pid = fork();
 	handler_fork(!ast_node->pid);
 	if (ast_node->pid < 0)
@@ -103,7 +101,6 @@ int	execute(t_list *ast, char **envp[])
 	int			len;
 	char		**paths;
 	t_ast_node	*ast_node;
-	//int			status;
 
 	len = ft_lstsize(ast);
 	paths = create_paths(*envp);

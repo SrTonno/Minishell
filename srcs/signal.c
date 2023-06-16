@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/14 19:36:04 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:04:17 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,22 @@ int	ctr_d(char *input)
 	if (input == NULL)
 	{
 		rl_replace_line("exit", 0);
-		write(1, "exit\n", 6);
-		exit (0);
-		//return (1);
+		write(1, MSG_CTR_D, 6);
+		return (1);
 	}
 	return (0);
 }
 
-void	handler_status_print()
+void	handler_status_print(void)
 {
 	if (g_status == SIGINT)
 	{
 		g_status = 130;
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd(MSG_SIGINT, STDOUT_FILENO);
 	}
 	else if (g_status == SIGQUIT)
 	{
 		g_status = 131;
-		ft_putstr_fd("QUIT: 3\n", STDOUT_FILENO);
+		ft_putstr_fd(MSG_SIGQUIT, STDOUT_FILENO);
 	}
 }

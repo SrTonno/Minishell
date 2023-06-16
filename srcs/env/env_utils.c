@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/13 13:29:59 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:37:38 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	export_util(char **env, char **comand)
 	len = len_doble(comand);
 	return ((len) - mod);
 }
-
 
 int	len_num(int num)
 {

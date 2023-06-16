@@ -18,8 +18,8 @@ int	cd_error_msg(int exitCode, char *msg);
 int	ft_cd(t_ast_node *ast_node, char ***envp)
 {
 	char	*cwd;
-	//char	*path;
 	int		length;
+	//char	*path;
 
 	length = 0;
 	while (ast_node->command[length])

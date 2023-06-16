@@ -18,29 +18,24 @@ char	*do_heredoc(char *delimitator)
 	char	*line;
 	char	*aux;
 
-	//printf("%s\n", delimitator);
 	text = (char *)ft_calloc(1, sizeof(char));
-	write(1,"> ", 1);
+	write(1, "> ", 1);
 	line = get_next_line(STDIN_FILENO);
-	//printf("%s\n", line);
 	if (line == NULL)
-		return(free(text), NULL);
-	while (line != NULL && ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0 && g_status != 130)
+		return (free(text), NULL);
+	while (line != NULL && g_status != 130 \
+		&& ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0)
 	{
-		write(1,"> ", 1);
+		write(1, "> ", 1);
 		aux = text;
-		if (line != NULL)
-		{
-			text = ft_strjoin(text, line);
-			free(aux);
-			free(line);
-		}
+		text = ft_strjoin(text, line);
+		free(aux);
+		free(line);
 		line = get_next_line(STDIN_FILENO);
 	}
 	if (line == NULL)
 		return (free(text), NULL);
-	free(line);
-	return (text);
+	return (free(line), text);
 }
 
 int	create_heredoc(char *delimiter)

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:32:08 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/14 17:31:34 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:42:53 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	type_quotes(int *doble, int *simple, char chr)
 {
 	if (chr == SINGLE_QUOTE)
 	{
-		//printf("simple -> %d, doble %d", *simple, *doble);
 		if (*simple == 0 && *doble == 0)
 			*simple = 1;
 		else if (*simple == 1)
 			*simple = 0;
-
 	}
 	else if (chr == DOUBLE_QUOTE)
 	{
@@ -42,7 +40,7 @@ int	is_heredoc(int heredoc, char *str, int i, int len)
 	return (heredoc);
 }
 
-int	find_var(char *str) //falla heredoc varaiable + crtr+d
+int	find_var(char *str)
 {
 	int	i;
 	int	len;
