@@ -135,12 +135,13 @@ int	clean_input(char **input, char ***env)
 		free(*input);
 		return (2);
 	}
-	while (find_var(*input) >= 0)
+	while (find_var(*input, 1) >= 0)
 	{
-		*input = env_expand(env, *input);
+		*input = env_expand(env, *input, 1);
 		if (*input == NULL)
 			return(1);
 	}
+	printf("%s\n", *input);
 	return (0);
 }
 

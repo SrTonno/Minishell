@@ -28,7 +28,6 @@
 # include "env.h"
 # include "contantes.h"
 
-
 # define PROMPT "\033[0;33mminish>> \033[0m"
 
 void	handle_input(char *input, char **envp[]);
@@ -43,15 +42,14 @@ t_list	*tokenize(char *inputLine);
 t_list	*parse(t_list *list);
 void	free_ast(t_list *ast);
 
-
 int		execute(t_list *ast, char **envp[]);
 
 void	free_split(char **str);
 
 char	**malloc_env(char **env);
 void	ft_env(char **env);
-char	*env_expand(char ***env, char *input);
-int		find_var(char *str);
+char	*env_expand(char ***env, char *input, int mode);
+int		find_var(char *str, int mode);
 void	ft_exit(int exitCode);
 
 #endif

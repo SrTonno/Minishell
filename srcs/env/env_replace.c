@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/16 18:36:29 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:07:07 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,27 @@ static int	replace_var(int j, char *dst, char *add)
 	return (j);
 }
 
-static void	fuck_norminete(int *i, int *j, int *mark, char *org)
+static char	*fuck_norminete(int *i, int *j, int len)
 {
-	*mark = find_var(org);
+	char	*dst;
+
 	*i = 0;
 	*j = 0;
+	dst = ex_calloc(len + 1, sizeof(char));
+	return (dst);
 }
 
-char	*replace_env(int len, char *org, char *add)
+char	*replace_env(int len, char *org, char *add, int mode)
 {
 	int		i;
 	int		j;
 	char	*dst;
 	int		mark;
 
-	fuck_norminete(&i, &j, &mark, org);
 	if (len <= 0)
 		return (NULL);
-	dst = ex_calloc(len + 1, sizeof(char));
+	dst = fuck_norminete(&i, &j, len);
+	mark = find_var(org, mode);
 	while (len >= j)
 	{
 		if (i == mark)

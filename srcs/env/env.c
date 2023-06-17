@@ -6,13 +6,17 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/16 18:36:39 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:59:24 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*env_expand(char ***env, char *input)
+/*
+mode == 1 No expand heredoc
+mode == 0 Expand all
+*/
+char	*env_expand(char ***env, char *input, int mode)
 {
 	int		len;
 	int		top;
@@ -20,23 +24,23 @@ char	*env_expand(char ***env, char *input)
 	char	*str;
 	int		i;
 
-	len = find_var(input) + 1;
+	len = find_var(input, mode) + 1;
 	top = find_var_end(input, len);
 	var = ex_calloc((top - len) + 1, sizeof(char));
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env[0], var);
 	if (var[0] == '?')
 		str = replace_env((ft_strlen(input) - 1) + \
-			len_num(g_status), input, "?");
+			len_num(g_status), input, "?", mode);
 	else if (input[len] == DOUBLE_QUOTE || input[len] == SINGLE_QUOTE)
 		str = replace_env((ft_strlen(input) - \
-			1), input, NULL);
+			1), input, NULL, mode);
 	else if (i >= 0 && ft_strlen(env[0][i]) - 1 > find_char(env[0][i], '='))
 		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
-			- ((ft_strlen(var) + 1) * 2), input, env[0][i]);
+			- ((ft_strlen(var) + 1) * 2), input, env[0][i], mode);
 	else
 		str = replace_env((ft_strlen(input) - \
-			(ft_strlen(var) + 1)), input, NULL);
+			(ft_strlen(var) + 1)), input, NULL, mode);
 	(free (var), free (input));
 	return (str);
 }

@@ -19,7 +19,6 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
-
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -53,9 +52,8 @@ void	free_split(char **split);
 
 int		handle_exe_error(int error, char *str);
 
-
 void	handler_fork(int signum);
-void	handler_status_print();
+void	handler_status_print(void);
 
 char	*mini_gnl(int fd);
 #endif

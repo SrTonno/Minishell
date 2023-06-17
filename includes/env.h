@@ -20,7 +20,7 @@
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39
 
-char	*replace_env(int len, char *org, char *add);
+char	*replace_env(int len, char *org, char *add, int mode);
 int		len_doble(char **str);
 int		len_doble_base(char **str);
 int		len_doble_invert(char **str);
@@ -30,7 +30,7 @@ size_t	find_char(char *str, char c);
 int		find_env_basic(char **env, char *str);
 int		find_mod_env(char **env, char **comand);
 int		find_env(char **env, char *str);
-int		find_var(char *str);
+int		find_var(char *str, int mode);
 int		find_var_end(char *str, int i);
 int		export_util(char **env, char **comand);
 int		find_env_len(char **env, char *str);

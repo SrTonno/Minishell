@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:32:08 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/16 18:42:53 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:11:22 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_heredoc(int heredoc, char *str, int i, int len)
 	return (heredoc);
 }
 
-int	find_var(char *str)
+int	find_var(char *str, int mode)
 {
 	int	i;
 	int	len;
@@ -60,7 +60,8 @@ int	find_var(char *str)
 				&& str[i + 1] != '$' && heredoc == 0)
 			&& (str[(i + 1)] != ' ' || str[i + 1] == '?'))
 			return (i);
-		heredoc = is_heredoc(heredoc, str, i, len);
+		if (mode == 1 && doble == 0 && simple == 0)
+			heredoc = is_heredoc(heredoc, str, i, len);
 	}
 	return (-1);
 }
