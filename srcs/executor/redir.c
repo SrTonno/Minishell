@@ -45,6 +45,7 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 {
 	int	fd;
+	int	status;
 
 	if (redir_type->type == INFILE)
 	{
@@ -59,7 +60,10 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 			close(ast_node->input_fd);
 		ast_node->input_fd = fd;
 	}
-	return (do_redir_out(redir_type, ast_node));
+	status = do_redir_out(redir_type, ast_node);
+	if (status == -1)
+		error_msg(NO_FILE_ERROR, redir_type->text);
+	return (status);
 }
 
 int	is_pipe_necessary(t_list *ast)

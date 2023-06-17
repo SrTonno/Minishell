@@ -104,8 +104,7 @@ static void	error_msg3(int error, char *str, int *status)
 	{
 		ft_putstr_fd("-bash: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory", STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
+		ft_putstr_fd(": Could not open file\n", STDERR_FILENO);
 		*status = 1;
 	}
 	else if (error == MALLOC_ERROR)
