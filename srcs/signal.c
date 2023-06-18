@@ -6,38 +6,57 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/17 19:20:10 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:55:32 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handler(int signum)
+static void	ctr_c(int signum)
 {
-	if (signum == 2)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	/*if (signum == 3)
-	{
-		//rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}*/
-	return ;
+	(void)signum;
+	g_status = 130;
+	write(1, "\n", 1);
+	rl_replace_line("", 0),
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void	ctr_d(char *input, char **env)
+void	handler(void)
 {
-	(void)env;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &ctr_c);
+}
+
+void	handler_fork(int signum)
+{
+	if (signum == 1)
+		signal(SIGINT, SIG_DFL);
+	else
+		signal(SIGINT, SIG_IGN);
+}
+
+int	ctr_d(char *input)
+{
 	if (input == NULL)
 	{
 		rl_replace_line("exit", 0);
-		write(1, "exit\n", 5);
-		exit (0);
+		write(1, MSG_CTR_D, 6);
+		return (1);
 	}
-	return ;
+	return (0);
+}
+
+void	handler_status_print(void)
+{
+	if (g_status == SIGINT)
+	{
+		g_status = 130;
+		ft_putstr_fd(MSG_SIGINT, STDOUT_FILENO);
+	}
+	else if (g_status == SIGQUIT)
+	{
+		g_status = 131;
+		ft_putstr_fd(MSG_SIGQUIT, STDOUT_FILENO);
+	}
 }

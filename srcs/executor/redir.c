@@ -25,7 +25,7 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 	{
 		fd = open(redir_type->text, O_CREAT | O_TRUNC | O_WRONLY);
 		if (fd == -1)
-			return (-1);
+			return (error_msg(NO_FILE_ERROR, redir_type->text));
 		if (ast_node->output_fd != STDOUT_FILENO)
 			close(ast_node->output_fd);
 		ast_node->output_fd = fd;
@@ -34,7 +34,7 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 	{
 		fd = open(redir_type->text, O_CREAT | O_APPEND | O_WRONLY);
 		if (fd == -1)
-			return (-1);
+			return (error_msg(NO_FILE_ERROR, redir_type->text));
 		if (ast_node->output_fd != STDOUT_FILENO)
 			close(ast_node->output_fd);
 		ast_node->output_fd = fd;
@@ -45,7 +45,6 @@ int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 {
 	int	fd;
-	int	status;
 
 	if (redir_type->type == INFILE)
 	{
@@ -55,15 +54,12 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 			return (error_msg(PERM_ERR, redir_type->text));
 		fd = open(redir_type->text, O_RDONLY);
 		if (fd == -1)
-			return (-1);
+			return (error_msg(NO_FILE_ERROR, redir_type->text));
 		if (ast_node->input_fd != STDIN_FILENO)
 			close(ast_node->input_fd);
 		ast_node->input_fd = fd;
 	}
-	status = do_redir_out(redir_type, ast_node);
-	if (status == -1)
-		error_msg(NO_FILE_ERROR, redir_type->text);
-	return (status);
+	return (do_redir_out(redir_type, ast_node));
 }
 
 int	is_pipe_necessary(t_list *ast)
@@ -131,7 +127,7 @@ int	parse_redir(t_list *ast)
 		if (redir->content != NULL)
 			status = do_redir((t_redir_type *)redir->content,
 					ast_node);
-		if (status != 0)
+		if ((status != 0 && status != -2) || g_status == 130)
 			break ;
 		redir = redir->next;
 	}

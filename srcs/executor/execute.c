@@ -50,13 +50,13 @@ int	exec_command_child(t_ast_node *ast_node, char **envp)
 
 int	create_child(t_ast_node *ast_node, char **envp)
 {
-	int		heredoc_fd;
-
 	ast_node->pid = fork();
+	handler_fork(!ast_node->pid);
 	if (ast_node->pid < 0)
 		return (-1);
 	else if (ast_node->pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		if (ast_node->pipe_fd != NULL)
 			close(ast_node->pipe_fd[0]);
 		if (ast_node->input_fd != STDIN_FILENO)
@@ -81,7 +81,7 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 
 	status = parse_redir(ast);
 	ast_node = (t_ast_node *)ast->content;
-	if (status == 0)
+	if (status == 0 && g_status != 130)
 	{
 		status = check_binary(ast_node->command[0], paths);
 		if (status == 0)
@@ -98,6 +98,8 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			}
 		}
 	}
+	if (status == -2)
+		status = 0;
 	return (status);
 }
 
@@ -106,7 +108,6 @@ int	execute(t_list *ast, char **envp[])
 	t_list		*ast_copy;
 	char		**paths;
 	t_ast_node	*ast_node;
-	int			status;
 
 	paths = create_paths(*envp);
 	if (paths == NULL)
@@ -115,7 +116,7 @@ int	execute(t_list *ast, char **envp[])
 	while (ast != NULL)
 	{
 		ast_node = (t_ast_node *)ast->content;
-		status = exec_child(ast, paths, envp);
+		g_status = exec_child(ast, paths, envp);
 		unlink(TEMP_FILE);
 		if (ast_node->input_fd != STDIN_FILENO)
 			close(ast_node->input_fd);
@@ -123,7 +124,9 @@ int	execute(t_list *ast, char **envp[])
 			close(ast_node->output_fd);
 		ast = ast->next;
 	}
+	wait_pids(ast_copy);
+	handler_status_print();
+	//status = g_status;
 	free_split(paths);
-	status = wait_pids(ast_copy);
-	return (status);
+	return (g_status);
 }

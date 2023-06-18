@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:50:23 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/28 15:21:25 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:37:38 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	to_future(char **str, int i)
 {
 	int		base;
-	int		len;
+	size_t	len;
 
 	base = i;
 	len = find_char(str[base], '=');
@@ -36,6 +36,19 @@ int	export_util(char **env, char **comand)
 	mod = find_mod_env(env, comand);
 	len = len_doble(comand);
 	return ((len) - mod);
+}
+
+int	len_num(int num)
+{
+	int	i;
+
+	i = 0;
+	while (num)
+	{
+		i++;
+		num = num / 10;
+	}
+	return (i);
 }
 
 int	copy_num(int status, char *dst, int j)

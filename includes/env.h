@@ -15,21 +15,22 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include "contantes.h"
 
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39
 
-char	*replace_env(int len, char *org, char *add, int status);
+char	*replace_env(int len, char *org, char *add, int mode);
 int		len_doble(char **str);
 int		len_doble_base(char **str);
 int		len_doble_invert(char **str);
 int		len_doble_uniq_one(char **str, char **env, int mode);
 int		to_future(char **str, int i);
-int		find_char(char *str, char c);
+size_t	find_char(char *str, char c);
 int		find_env_basic(char **env, char *str);
 int		find_mod_env(char **env, char **comand);
 int		find_env(char **env, char *str);
-int		find_var(char *str);
+int		find_var(char *str, int mode);
 int		find_var_end(char *str, int i);
 int		export_util(char **env, char **comand);
 int		find_env_len(char **env, char *str);
@@ -40,4 +41,7 @@ void	print_export(char **env);
 int		copy_num(int status, char *dst, int j);
 char	*check_shlvl(char *str);
 
+void	*ex_calloc(size_t count, size_t size);
+
+int		len_num(int num);
 #endif

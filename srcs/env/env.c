@@ -6,25 +6,17 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/02 20:10:56 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:59:24 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int	len_num(int num)
-{
-	int	i;
-
-	i = 0;
-	while (num)
-	{
-		i++;
-		num = num / 10;
-	}
-	return (i);
-}
-char	*env_expand(char ***env, char *input, int status)
+/*
+mode == 1 No expand heredoc
+mode == 0 Expand all
+*/
+char	*env_expand(char ***env, char *input, int mode)
 {
 	int		len;
 	int		top;
@@ -32,34 +24,28 @@ char	*env_expand(char ***env, char *input, int status)
 	char	*str;
 	int		i;
 
-	len = find_var(input) + 1;
+	len = find_var(input, mode) + 1;
 	top = find_var_end(input, len);
-	var = ft_calloc((top - len) + 1, sizeof(char));
-	if (var == NULL)
-		exit (0);
+	var = ex_calloc((top - len) + 1, sizeof(char));
 	ft_strlcpy(var, input + len, (top - len));
 	i = find_env_basic(env[0], var);
 	if (var[0] == '?')
-		str = replace_env((ft_strlen(input) - 1) + len_num(status), input, "?", status);
-	/*else if (input[len] == DOUBLE_QUOTE || input[len] == SINGLE_QUOTE)
-	{
+		str = replace_env((ft_strlen(input) - 1) + \
+			len_num(g_status), input, "?", mode);
+	else if (input[len] == DOUBLE_QUOTE || input[len] == SINGLE_QUOTE)
 		str = replace_env((ft_strlen(input) - \
-			(ft_strlen(var) + 1)), input, NULL, status);
-		printf("Hola\n");
-	}*/
+			1), input, NULL, mode);
 	else if (i >= 0 && ft_strlen(env[0][i]) - 1 > find_char(env[0][i], '='))
 		str = replace_env((ft_strlen(input) + ft_strlen(env[0][i])) \
-			- ((ft_strlen(var) + 1) * 2), input, env[0][i], status);
+			- ((ft_strlen(var) + 1) * 2), input, env[0][i], mode);
 	else
 		str = replace_env((ft_strlen(input) - \
-			(ft_strlen(var) + 1)), input, NULL, status);
+			(ft_strlen(var) + 1)), input, NULL, mode);
 	(free (var), free (input));
-	if (str == NULL)
-		return (NULL);
 	return (str);
 }
 
-char	**void_env()
+char	**void_env(void)
 {
 	char	**new_env;
 

@@ -18,8 +18,8 @@ int	cd_error_msg(int exitCode, char *msg);
 int	ft_cd(t_ast_node *ast_node, char ***envp)
 {
 	char	*cwd;
-	char	*path;
 	int		length;
+	//char	*path;
 
 	length = 0;
 	while (ast_node->command[length])
@@ -66,6 +66,7 @@ int	update_env(char ***env, char *env_var, char *value)
 
 int	cd_error_msg(int exitCode, char *msg)
 {
+	(void)exitCode;
 	if (msg == NULL)
 		ft_putstr_fd("-bash: cd: too many arguments\n", STDERR_FILENO);
 	else

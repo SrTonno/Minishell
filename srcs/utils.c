@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int	is_env_var_char(unsigned char c)
 {
@@ -51,7 +52,7 @@ void	free_split(char **split)
 void	print_export(char **env)
 {
 	int	i;
-	int j;
+	int	j;
 	int	comp;
 
 	i = -1;

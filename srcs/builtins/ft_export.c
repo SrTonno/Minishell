@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/28 14:53:49 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:25:13 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	while (env[i] != NULL)
 		dst[j++] = env[i++];
 	i = -1;
-	///printf("%ddcrearte_new_env\n", j);
 	while (comd[++i] != NULL)
 	{
 		printf("%s\n", comd[i]);
@@ -75,7 +74,6 @@ static void	only_coman(char **dst, char **comd)
 {
 	int	i;
 	int	j;
-	int	len_env;
 
 	j = 0;
 	i = -1;
@@ -102,13 +100,7 @@ int	ft_export(char ***env, char **coman)
 	if (len_com <= 1)
 		return (error);
 	len_env = len_doble_base(env[0]);
-	new_env = ft_calloc((len_com + len_env + 1), sizeof(char *));
-	if (new_env == NULL)
-	{
-		free_split(env[0]);
-		free_split(coman);
-		exit(1);
-	}
+	new_env = ex_calloc((len_com + len_env + 1), sizeof(char *));
 	if (len_env == 0)
 		only_coman(new_env, coman);
 	else

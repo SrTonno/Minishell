@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/05/27 17:44:01 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:02:42 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	len_error_unset(char **env, char **str, int *code)
 	while (str[++i] != NULL)
 	{
 		if ((ft_isalpha(str[i][0]) == 0 && str[i][0] != '_')
-			|| find_char(str[i], '=') >= 0)
+			|| (int)find_char(str[i], '=') >= 0)
 		{
 			if (error == 0)
 			{

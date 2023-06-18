@@ -19,12 +19,21 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "ast.h"
 # include "error_msg.h"
 # include "bin.h"
+# include "contantes.h"
 
 # define TEMP_FILE ".temp"
 
@@ -43,4 +52,8 @@ void	free_split(char **split);
 
 int		handle_exe_error(int error, char *str);
 
+void	handler_fork(int signum);
+void	handler_status_print(void);
+
+char	*mini_gnl(int fd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 19:27:34 by tvillare          #+#    #+#             */
-/*   Updated: 2023/05/28 15:21:43 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:07:07 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	condicion_rep(char *org, int i)
 {
 	if (org[i] != '$' && org[i] != ' ' && org[i] != '\0'
 		&& org[i - 1] != '?' && org[i] != '/' && org[i] != '>'
-		&& org[i] != '<' && org[i] != '|')
+		&& org[i] != '<' && org[i] != '|'
+		&& org[i] != DOUBLE_QUOTE && org[i] != SINGLE_QUOTE)
 		return (1);
 	return (0);
 }
@@ -41,31 +42,35 @@ static int	replace_var(int j, char *dst, char *add)
 	return (j);
 }
 
-static void	fuck_norminete(int *i, int *j)
+static char	*fuck_norminete(int *i, int *j, int len)
 {
+	char	*dst;
+
 	*i = 0;
 	*j = 0;
+	dst = ex_calloc(len + 1, sizeof(char));
+	return (dst);
 }
 
-char	*replace_env(int len, char *org, char *add, int status)
+char	*replace_env(int len, char *org, char *add, int mode)
 {
 	int		i;
 	int		j;
 	char	*dst;
 	int		mark;
 
-	fuck_norminete(&i, &j);
-	if (len > 0)
-		dst = ft_calloc(len + 1, sizeof(char));
-	if (dst == NULL || len <= 0)
+	if (len <= 0)
 		return (NULL);
-	mark = find_var(org);
+	dst = fuck_norminete(&i, &j, len);
+	mark = find_var(org, mode);
 	while (len >= j)
 	{
 		if (i == mark)
 		{
 			if (org[++i] == '?')
-				j = copy_num(status, dst, j);
+				j = copy_num(g_status, dst, j);
+			else if (org[i] == DOUBLE_QUOTE || org[i] == SINGLE_QUOTE)
+				continue ;
 			else
 				j = replace_var(j, dst, add);
 			i = move_letter_rem(org, i);
