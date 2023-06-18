@@ -15,8 +15,10 @@
 t_list	*tokenize(char	*inputLine)
 {
 	t_lexer	lexer;
+	int		heredoc_flag;
 
 	lexer = init_lexer(inputLine);
+	heredoc_flag = 0;
 	while (lexer.str[lexer.index] != '\0')
 	{
 		while (is_space(lexer.str[lexer.index]))
@@ -27,7 +29,7 @@ t_list	*tokenize(char	*inputLine)
 		lexer.token_start = lexer.str + lexer.index;
 		while (is_space(lexer.str[lexer.index]) == 0)
 		{
-			if (handle_char(&lexer) == -1)
+			if (handle_char(&lexer, &heredoc_flag) == -1)
 				return (NULL);
 		}
 		if (add_new_token_lst(&lexer) == -1)

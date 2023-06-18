@@ -12,7 +12,7 @@
 
 #include "executor.h"
 
-int	do_heredocs(t_ast_node *ast_node);
+int	do_heredocs(t_ast_node *ast_node, char ***env);
 
 int	do_redir_out(t_redir_type *redir_type, t_ast_node *ast_node)
 {
@@ -105,7 +105,7 @@ int	create_pipe(t_list *ast)
 	return (0);
 }
 
-int	parse_redir(t_list *ast)
+int	parse_redir(t_list *ast, char ***env)
 {
 	t_list			*redir;
 	t_ast_node		*ast_node;
@@ -120,7 +120,7 @@ int	parse_redir(t_list *ast)
 			return (error_msg(MALLOC_ERROR, NULL));
 	}
 	ast_node = (t_ast_node *)ast->content;
-	status = do_heredocs(ast_node);
+	status = do_heredocs(ast_node, env);
 	redir = ast_node->redir;
 	while (redir)
 	{

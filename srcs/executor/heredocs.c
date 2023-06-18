@@ -12,17 +12,25 @@
 
 #include "executor.h"
 
-char	*do_heredoc(char *delimitator)
+int	clean_input(char **input, char ***env);
+
+char	*do_heredoc(char *delimitator, char ***env)
 {
 	char	*text;
 	char	*line;
 	char	*aux;
+	int		expand_flag;
 
 	text = (char *)ft_calloc(1, sizeof(char));
 	write(1, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
 	if (line == NULL)
 		return (free(text), NULL);
+	expand_flag = 1;
+	if (*delimitator == '"') {
+		expand_flag = 0;
+		delimitator++;
+	}
 	while (line != NULL && g_status != 130 \
 		&& ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0)
 	{
@@ -35,10 +43,12 @@ char	*do_heredoc(char *delimitator)
 	}
 	if (line == NULL)
 		return (free(text), NULL);
+	if (expand_flag == 1)
+		clean_input(&text, env);
 	return (free(line), text);
 }
 
-int	create_heredoc(char *delimiter)
+int	create_heredoc(char *delimiter, char ***env)
 {
 	int		heredoc_fd;
 	char	*text;
@@ -46,7 +56,7 @@ int	create_heredoc(char *delimiter)
 	heredoc_fd = open(TEMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	if (heredoc_fd < 0)
 		return (heredoc_fd);
-	text = do_heredoc(delimiter);
+	text = do_heredoc(delimiter, env);
 	if (text == NULL)
 		return (-2);
 	ft_putstr_fd(text, heredoc_fd);
@@ -58,7 +68,7 @@ int	create_heredoc(char *delimiter)
 	return (heredoc_fd);
 }
 
-int	do_heredocs(t_ast_node *ast_node)
+int	do_heredocs(t_ast_node *ast_node, char ***env)
 {
 	t_list			*redir;
 	t_redir_type	*redir_type;
@@ -70,7 +80,7 @@ int	do_heredocs(t_ast_node *ast_node)
 		redir_type = redir->content;
 		if (redir_type->type == HEREDOC)
 		{
-			fd = create_heredoc(redir_type->text);
+			fd = create_heredoc(redir_type->text, env);
 			if (fd == -1)
 				return (-1);
 			if (ast_node->input_fd != STDIN_FILENO)

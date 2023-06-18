@@ -12,17 +12,17 @@
 
 #include "lexer.h"
 
-static int	handle_special(t_lexer *lexer);
-static int	handle_quotation_marks(t_lexer *lexer);
+static int	handle_special(t_lexer *lexer, int *heredoc_flag);
+static int	handle_quotation_marks(t_lexer *lexer, int *heredoc_flag);
 
-int	handle_char(t_lexer *lexer)
+int	handle_char(t_lexer *lexer, int *heredoc_flag)
 {
 	char	*curr_char;
 
 	curr_char = lexer->str + lexer->index;
 	if (is_quote(*curr_char))
 	{
-		if (handle_quotation_marks(lexer) == -1)
+		if (handle_quotation_marks(lexer, heredoc_flag) == -1)
 		{
 			ft_lstclear(&lexer->token_lst, free);
 			return (-1);
@@ -30,7 +30,7 @@ int	handle_char(t_lexer *lexer)
 	}
 	else if (is_special(*curr_char))
 	{
-		if (handle_special(lexer) == -1)
+		if (handle_special(lexer, heredoc_flag) == -1)
 		{
 			ft_lstclear(&lexer->token_lst, free);
 			return (-1);
@@ -41,12 +41,14 @@ int	handle_char(t_lexer *lexer)
 	return (0);
 }
 
-static int	handle_special(t_lexer *lexer)
+static int	handle_special(t_lexer *lexer, int *heredoc_flag)
 {
 	if (lexer->str + lexer->index - lexer->token_start > 0
 		&& add_new_token_lst(lexer) == -1)
 		return (-1);
 	lexer->token_start = lexer->str + lexer->index;
+	if (ft_strncmp(lexer->str + lexer->index, "<<", 2) == 0)
+		*heredoc_flag = 1;
 	while (is_special(lexer->str[lexer->index]))
 		lexer->index++;
 	if (add_new_token_lst(lexer) == -1)
@@ -84,11 +86,15 @@ static int	add_new_text_node(t_lexer *lexer, char *token)
 	return (0);
 }
 
-static int	handle_quotation_marks(t_lexer *lexer)
+static int	handle_quotation_marks(t_lexer *lexer, int *heredoc_flag)
 {
 	char	*token;
 
-	token = (char *)ft_calloc(1, sizeof(char));
+	token = (char *)ft_calloc(2, sizeof(char));
+	if (token != NULL && *heredoc_flag == 1) {
+		token[0] = '"';
+		*heredoc_flag = 0;
+	}
 	token = append_text(token, lexer->token_start,
 			lexer->index - (lexer->token_start - lexer->str));
 	lexer->token_start = lexer->str + lexer->index;

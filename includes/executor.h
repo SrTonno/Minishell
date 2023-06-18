@@ -43,10 +43,10 @@ char	**create_paths(char *envp[]);
 int		check_binary(char *command, char **paths);
 char	*find_binary(char *filename, char **paths);
 
-int		parse_redir(t_list *ast_node);
+int		parse_redir(t_list *ast_node, char ***env);
 
-int		create_heredoc(char *delimiter);
-char	*do_heredoc(char *delimitator);
+int		create_heredoc(char *delimiter, char ***env);
+char	*do_heredoc(char *delimitator, char ***env);
 
 void	free_split(char **split);
 

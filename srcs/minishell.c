@@ -141,7 +141,6 @@ int	clean_input(char **input, char ***env)
 		if (*input == NULL)
 			return(1);
 	}
-	printf("%s\n", *input);
 	return (0);
 }
 
@@ -160,7 +159,7 @@ int	tokenize_and_parse(char *input, t_list **ast)
 		ft_lstclear(&token_lst, free);
 		return (2);
 	}
-	// print_lst(token_lst);
+	print_lst(token_lst);
 	*ast = parse(token_lst);
 	ft_lstclear(&token_lst, free);
 	if (*ast == NULL)
