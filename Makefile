@@ -51,7 +51,7 @@ LDLIBS += -L${LIB_DIR} -lft ${READLINE}
 
 RM = rm -rf
 ################################################################################
-.PHONY: all re fclean clean
+.PHONY: all re fclean clean test setup
 ################################################################################
 all: ${NAME}
 
@@ -70,7 +70,7 @@ ${LFT_NAME}:
 
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
-	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}\n"
+	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ \n"
 
 re: fclean all
 
@@ -90,5 +90,5 @@ setup:
 	#echo 'export PATH=$$HOME/goinfre/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc
 	@brew update
 	@brew install readline
-	@printf "${God}${BICyan}Install brew and library in MAC.${God} "
+	@printf "${God}${BICyan}Install brew and library in MAC.${God}${NoColor}"
 ################################################################################

@@ -13,12 +13,26 @@
 #include "executor.h"
 
 int	clean_input(char **input, char ***env);
+int		find_var(char *str, int mode);
+char	*env_expand(char ***env, char *input, int mode);
 
+char	*expand_heredoc(char *input, char ***env, int flag)
+{
+	while (find_var(input, 1) >= 0 && flag == 1)
+	{
+		input = env_expand(env, input, 0);
+
+		if (input == NULL)
+			return(NULL);
+	}
+	return (input);
+}
 char	*do_heredoc(char *delimitator, char ***env)
 {
 	char	*text;
 	char	*line;
-	char	*aux;
+	//char	*aux;
+	char	*tmp;
 	int		expand_flag;
 
 	text = (char *)ft_calloc(1, sizeof(char));
@@ -31,20 +45,19 @@ char	*do_heredoc(char *delimitator, char ***env)
 		expand_flag = 0;
 		delimitator++;
 	}
+	tmp = ft_strdup(line);
 	while (line != NULL && g_status != 130 \
 		&& ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0)
 	{
 		write(1, "> ", 2);
-		aux = text;
-		text = ft_strjoin(text, line);
-		free(aux);
+		tmp = expand_heredoc(ft_strdup(line), env, expand_flag);
+		text = ft_strjoin(text, tmp);
 		free(line);
+		free(tmp);
 		line = get_next_line(STDIN_FILENO);
 	}
 	if (line == NULL)
 		return (free(text), NULL);
-	if (expand_flag == 1)
-		clean_input(&text, env);
 	return (free(line), text);
 }
 
