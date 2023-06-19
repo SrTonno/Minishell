@@ -94,7 +94,6 @@ int	main(int argc, char *argv[], char **env)
 	if (argc != 1)
 		return (0);
 	env = malloc_env(env);
-
 	loop(env);
 	return (0);
 }
@@ -119,8 +118,9 @@ void	loop(char **env)
 			free(input);
 			continue ;
 		}
-		add_history(input);
+
 		handle_input(input, &env);
+		add_history(aux);
 		if (g_status == -1)
 			break ;
 	}
@@ -159,7 +159,7 @@ int	tokenize_and_parse(char *input, t_list **ast)
 		ft_lstclear(&token_lst, free);
 		return (2);
 	}
-	print_lst(token_lst);
+	//print_lst(token_lst);
 	*ast = parse(token_lst);
 	ft_lstclear(&token_lst, free);
 	if (*ast == NULL)

@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/13 13:25:13 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:50:28 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	i = -1;
 	while (comd[++i] != NULL)
 	{
-		printf("%s\n", comd[i]);
 		if ((ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
 			&& find_char(comd[i], '=') > 0
 			&& to_future(comd, i) == -1 && find_env(env, comd[i]) == -2)
