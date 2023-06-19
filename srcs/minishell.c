@@ -11,85 +11,14 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <termios.h>
 
-void	print_lst(t_list *lst)
-{
-	while (lst != NULL)
-	{
-		printf("%s\n", (char *) lst->content);
-		lst = lst->next;
-	}
-	return ;
-}
-/*
-static	void print_ast(t_list *ast)
-{
-	int	i;
-	int	index = 1;
-	t_ast_node *ast_node;
-	t_redir_type *redir;
-
-	while(ast != NULL)
-	{
-		ast_node = (t_ast_node *)ast->content;
-		printf("NODO AST Nº%i\n", index++);
-		printf("---------------------------------------------\ncommandos: ");
-		i = -1;
-		while (ast_node->command[++i] != NULL)
-			printf("%s ", ast_node->command[i]);
-		printf("\narchivos y heredocs:\n");
-		while (ast_node->redir != NULL)
-		{
-			redir = (t_redir_type *)ast_node->redir->content;
-			printf("%s -> %i\n", redir->text, redir->type);
-			ast_node->redir = ast_node->redir->next;
-		}
-		ast = ast->next;
-	}
-}*/
-
-void	redir_free(void *ptr)
-{
-	t_redir_type	*redir;
-
-	redir = (t_redir_type *)ptr;
-	free(redir->text);
-	free(redir);
-	return ;
-}
-
-void	free_ast_node(void *ptr)
-{
-	t_ast_node	*ast_node;
-
-	ast_node = (t_ast_node *)ptr;
-	free_split(ast_node->command);
-	free(ast_node->pipe_fd);
-	free(ast_node->binary);
-	ft_lstclear(&ast_node->redir, redir_free);
-	free(ast_node);
-	return ;
-}
-
-void	leaks()
-{
-	system("leaks -q minishell");
-}
-
-void	disable_ctrl_c_print()
-{
-	struct termios term;
-	tcgetattr(0, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &term);
-}
-
+void	redir_free(void *ptr);
+void	free_ast_node(void *ptr);
+void	disable_ctrl_c_print(void);
 
 int	main(int argc, char *argv[], char **env)
 {
 	(void)argv;
-	///atexit(leaks);
 	disable_ctrl_c_print();
 	if (argc != 1)
 		return (0);
@@ -100,7 +29,6 @@ int	main(int argc, char *argv[], char **env)
 
 void	loop(char **env)
 {
-	//int		g_status;
 	char	*input;
 
 	g_status = 0;
@@ -124,7 +52,7 @@ void	loop(char **env)
 			break ;
 	}
 	free(input);
-	system("leaks -q minishell");
+	// system("leaks -q minishell");
 }
 
 int	clean_input(char **input, char ***env)
@@ -138,11 +66,10 @@ int	clean_input(char **input, char ***env)
 	{
 		*input = env_expand(env, *input, 1);
 		if (*input == NULL)
-			return(1);
+			return (1);
 	}
 	return (0);
 }
-
 
 int	tokenize_and_parse(char *input, t_list **ast)
 {
@@ -158,12 +85,10 @@ int	tokenize_and_parse(char *input, t_list **ast)
 		ft_lstclear(&token_lst, free);
 		return (2);
 	}
-	//print_lst(token_lst);
 	*ast = parse(token_lst);
 	ft_lstclear(&token_lst, free);
 	if (*ast == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
-	// print_ast(ast);
 	return (0);
 }
 

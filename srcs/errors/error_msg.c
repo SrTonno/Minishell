@@ -110,7 +110,7 @@ static void	error_msg3(int error, char *str, int *status)
 	else if (error == MALLOC_ERROR)
 	{
 		ft_putstr_fd("fatal error\n", STDERR_FILENO);
-		*status = -1;
+		exit(-1);
 	}
 	syntax_error(error, str, status);
 }

@@ -12,7 +12,7 @@
 
 #include "executor.h"
 
-int	clean_input(char **input, char ***env);
+int		clean_input(char **input, char ***env);
 int		find_var(char *str, int mode);
 char	*env_expand(char ***env, char *input, int mode);
 
@@ -21,18 +21,40 @@ char	*expand_heredoc(char *input, char ***env, int flag)
 	while (find_var(input, 1) >= 0 && flag == 1)
 	{
 		input = env_expand(env, input, 0);
-
 		if (input == NULL)
-			return(NULL);
+			return (NULL);
 	}
 	return (input);
 }
+
+int	loop_heredoc(char **text, char **line, char ***env, int expand_flag)
+{
+	char	*tmp;
+	char	*aux;
+
+	write(1, "> ", 2);
+	tmp = expand_heredoc(ft_strdup(*line), env, expand_flag);
+	aux = *text;
+	*text = ft_strjoin(*text, tmp);
+	free(aux);
+	free(tmp);
+	if (*text[ft_strlen(*text) - 1] != '\n')
+	{
+		tmp = *text;
+		*text = ft_strjoin(*text, "\n");
+		free(tmp);
+		if (*text == NULL)
+			error_msg(MALLOC_ERROR, NULL);
+	}
+	free(*line);
+	*line = get_next_line(STDIN_FILENO);
+	return (0);
+}
+
 char	*do_heredoc(char *delimitator, char ***env)
 {
 	char	*text;
 	char	*line;
-	//char	*aux;
-	char	*tmp;
 	int		expand_flag;
 
 	text = (char *)ft_calloc(1, sizeof(char));
@@ -41,21 +63,14 @@ char	*do_heredoc(char *delimitator, char ***env)
 	if (line == NULL)
 		return (free(text), NULL);
 	expand_flag = 1;
-	if (*delimitator == '"') {
+	if (*delimitator == '"')
+	{
 		expand_flag = 0;
 		delimitator++;
 	}
-	tmp = ft_strdup(line);
 	while (line != NULL && g_status != 130 \
 		&& ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0)
-	{
-		write(1, "> ", 2);
-		tmp = expand_heredoc(ft_strdup(line), env, expand_flag);
-		text = ft_strjoin(text, tmp);
-		free(line);
-		free(tmp);
-		line = get_next_line(STDIN_FILENO);
-	}
+		loop_heredoc(&text, &line, env, expand_flag);
 	if (line == NULL)
 		return (free(text), NULL);
 	return (free(line), text);
@@ -75,8 +90,6 @@ int	create_heredoc(char *delimiter, char ***env)
 	ft_putstr_fd(text, heredoc_fd);
 	free(text);
 	close(heredoc_fd);
-	//if (g_status != 130)
-		//return (-1);
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
 	return (heredoc_fd);
 }

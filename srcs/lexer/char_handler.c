@@ -14,6 +14,7 @@
 
 static int	handle_special(t_lexer *lexer, int *heredoc_flag);
 static int	handle_quotation_marks(t_lexer *lexer, int *heredoc_flag);
+char		*create_token(t_lexer *lexer, int *heredoc_flag);
 
 int	handle_char(t_lexer *lexer, int *heredoc_flag)
 {
@@ -90,14 +91,7 @@ static int	handle_quotation_marks(t_lexer *lexer, int *heredoc_flag)
 {
 	char	*token;
 
-	token = (char *)ft_calloc(2, sizeof(char));
-	if (token != NULL && *heredoc_flag == 1) {
-		token[0] = '"';
-		*heredoc_flag = 0;
-	}
-	token = append_text(token, lexer->token_start,
-			lexer->index - (lexer->token_start - lexer->str));
-	lexer->token_start = lexer->str + lexer->index;
+	token = create_token(lexer, heredoc_flag);
 	while (1)
 	{
 		if (lexer->str[lexer->index] == '\0'

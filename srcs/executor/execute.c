@@ -126,7 +126,6 @@ int	execute(t_list *ast, char **envp[])
 	}
 	wait_pids(ast_copy);
 	handler_status_print();
-	//status = g_status;
 	free_split(paths);
 	return (g_status);
 }

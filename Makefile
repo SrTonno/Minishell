@@ -3,7 +3,7 @@ include colors.mk
 NAME = minishell
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
 
@@ -26,7 +26,7 @@ PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
 PARSECFILES = parser.c create_ast.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES = execute.c path.c heredocs.c redir.c path_utils.c mini_gnl.c
+EXECCFILES = execute.c path.c heredocs.c redir.c path_utils.c
 
 ERRDIR = ${addprefix ${SRCSDIR}, errors/}
 ERRFILES = error_msg.c syntax_errors.c
@@ -70,7 +70,7 @@ ${LFT_NAME}:
 
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
-	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ \n"
+	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}\n"
 
 re: fclean all
 

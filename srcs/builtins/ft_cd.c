@@ -19,7 +19,6 @@ int	ft_cd(t_ast_node *ast_node, char ***envp)
 {
 	char	*cwd;
 	int		length;
-	//char	*path;
 
 	length = 0;
 	while (ast_node->command[length])

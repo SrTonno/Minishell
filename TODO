@@ -1,5 +1,0 @@
-TODO:
--> Imprementar expansion de variables en heredoc cuando no tenga "" (SI: cat << HOLA  NO:cat << "HOLA")
--> Solucionar redireccion a directorios > o >> (Error intenta liberar memoria no alocada)
--> Solucionar CTRL+C en heredoc
--> norminette

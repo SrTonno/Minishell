@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/17 18:48:54 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:30:30 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_list	*parse(t_list *token_lst)
 	t_list		*ast;
 	t_len_ast	num;
 	int			index;
-	//t_list		*new_node;
 
 	ast = NULL;
 	index = 0;
