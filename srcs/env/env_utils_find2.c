@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_find2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:32:08 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/19 20:11:42 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:27:14 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ int	is_heredoc(int heredoc, char *str, int i, int len)
 	return (heredoc);
 }
 
+void	set_var(int *heredoc, int *i, int *simple, int *doble)
+{
+	*heredoc = 0;
+	*i = -1;
+	*simple = 0;
+	*doble = 0;
+}
+
 int	find_var(char *str, int mode)
 {
 	int	i;
@@ -48,20 +56,20 @@ int	find_var(char *str, int mode)
 	int	doble;
 	int	heredoc;
 
-	heredoc = 0;
-	i = -1;
-	simple = 0;
-	doble = 0;
+	set_var(&heredoc, &i, &simple, &doble);
 	len = ft_strlen(str);
 	while (str[++i] != '\0')
 	{
-		type_quotes(&doble, &simple, str[i]);
+		if (mode == 1)
+			type_quotes(&doble, &simple, str[i]);
 		if ((len > i && str[i] == '$' && simple == 0
 				&& str[i + 1] != '\0' && str[i + 1] != '\n'
 				&& str[i + 1] != '$' && heredoc == 0)
 			&& (str[(i + 1)] != ' ' || str[i + 1] == '?')
 			&& (doble == 0 || (doble == 1 && (str[(i + 1)] != SINGLE_QUOTE
-						&& str[(i + 1)] != DOUBLE_QUOTE))))
+						&& str[(i + 1)] != DOUBLE_QUOTE)))
+			&& (mode == 1 || (mode == 0 && str[i + 1] != DOUBLE_QUOTE
+					&& str[(i + 1)] != DOUBLE_QUOTE)))
 			return (i);
 		if (mode == 1)
 			heredoc = is_heredoc(heredoc, str, i, len);

@@ -18,7 +18,7 @@ char	*env_expand(char ***env, char *input, int mode);
 
 char	*expand_heredoc(char *input, char ***env, int flag)
 {
-	while (find_var(input, 1) >= 0 && flag == 1)
+	while (find_var(input, 0) >= 0 && flag == 1)
 	{
 		input = env_expand(env, input, 0);
 		if (input == NULL)
@@ -34,18 +34,18 @@ int	loop_heredoc(char **text, char **line, char ***env, int expand_flag)
 
 	write(1, "> ", 2);
 	tmp = expand_heredoc(ft_strdup(*line), env, expand_flag);
+	if (tmp[ft_strlen(tmp) - 1] != '\n')
+	{
+		aux = tmp;
+		tmp = ft_strjoin(aux, "\n");
+		free(aux);
+		if (tmp == NULL)
+			error_msg(MALLOC_ERROR, NULL);
+	}
 	aux = *text;
 	*text = ft_strjoin(*text, tmp);
 	free(aux);
 	free(tmp);
-	if (*text[ft_strlen(*text) - 1] != '\n')
-	{
-		tmp = *text;
-		*text = ft_strjoin(*text, "\n");
-		free(tmp);
-		if (*text == NULL)
-			error_msg(MALLOC_ERROR, NULL);
-	}
 	free(*line);
 	*line = get_next_line(STDIN_FILENO);
 	return (0);
