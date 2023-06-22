@@ -70,7 +70,7 @@ ${LFT_NAME}:
 
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
-	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}\n"
+	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}\r"
 
 re: fclean all
 
