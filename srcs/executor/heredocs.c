@@ -60,11 +60,6 @@ char	*do_heredoc(char *delimitator, char ***env, int *mode)
 	text = (char *)ft_calloc(1, sizeof(char));
 	write(1, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
-	if (line == NULL)
-	{
-		*mode = 1;
-		return (free(text), NULL);
-	}
 	expand_flag = 1;
 	if (*delimitator == '"')
 	{
@@ -80,24 +75,19 @@ char	*do_heredoc(char *delimitator, char ***env, int *mode)
 		return (text);
 	}
 	return (free(line), text);
-
 }
 
 int	create_heredoc(char *delimiter, char ***env, int *mode)
 {
 	int		heredoc_fd;
 	char	*text;
-	//int		mode;
 
-	//mode = 0;
 	heredoc_fd = open(TEMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	if (heredoc_fd < 0)
 		return (heredoc_fd);
 	text = do_heredoc(delimiter, env, mode);
-	//if (text == NULL)
-		//return (-2);
-	//printf("%d-%d\n", mode, heredoc_fd);
-	ft_putstr_fd(text, heredoc_fd);
+	if (*mode == 0)
+		ft_putstr_fd(text, heredoc_fd);
 	free(text);
 	close(heredoc_fd);
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
@@ -121,8 +111,7 @@ int	do_heredocs(t_ast_node *ast_node, char ***env)
 			fd = create_heredoc(redir_type->text, env, &mode);
 			if (fd == -1)
 				return (-1);
-			printf("%d\n", ast_node->input_fd);
-			if (ast_node->input_fd != STDIN_FILENO )
+			if (ast_node->input_fd != STDIN_FILENO)
 				close(ast_node->input_fd);
 			ast_node->input_fd = fd;
 			ast_node->mode = mode;

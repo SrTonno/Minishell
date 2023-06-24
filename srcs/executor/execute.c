@@ -98,8 +98,6 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			}
 		}
 	}
-	//if (status == -2)
-		//status = 0;
 	return (status);
 }
 
@@ -124,7 +122,7 @@ int	execute(t_list *ast, char **envp[])
 			close(ast_node->output_fd);
 		ast = ast->next;
 	}
-	wait_pids(ast_copy);
+	g_status = wait_pids(ast_copy);
 	handler_status_print();
 	free_split(paths);
 	return (g_status);
