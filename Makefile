@@ -60,7 +60,7 @@ test: ${NAME}
 
 ${NAME}: ${OBJS}
 	@make -s -C ${LIB_DIR}
-	@printf "${God}${Green}Created 'libft.a'.${NoColor}\n"
+	@printf "\n${God}${Green}Created 'libft.a'.${NoColor}\n"
 	@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 	@printf "${God} ${BIBlue}Mini${NoColor}🐚 de ${BIPurple}LaLora${NoColor}${God}\n"
 
@@ -70,7 +70,7 @@ ${LFT_NAME}:
 
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}
-	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}\r"
+	@printf "${BIGreen}[Compiled]${BIBlue} $^ ${NoColor}to ${BIPurple}$@ ${NoColor}                    \r"
 
 re: fclean all
 

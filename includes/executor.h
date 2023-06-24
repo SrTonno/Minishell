@@ -45,8 +45,8 @@ char	*find_binary(char *filename, char **paths);
 
 int		parse_redir(t_list *ast_node, char ***env);
 
-int		create_heredoc(char *delimiter, char ***env);
-char	*do_heredoc(char *delimitator, char ***env);
+int		create_heredoc(char *delimiter, char ***env, int *mode);
+char	*do_heredoc(char *delimitator, char ***env, int *mode);
 
 void	free_split(char **split);
 

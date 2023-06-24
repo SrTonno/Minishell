@@ -99,6 +99,7 @@ int	create_pipe(t_list *ast)
 		return (error_msg(PIPE_ERROR, NULL));
 	ast_node = (t_ast_node *)ast->content;
 	ast_node->pipe_fd = pipe_fd;
+	if (ast_node->mode == 0)
 	ast_node->output_fd = pipe_fd[WRITE_END];
 	ast_node = (t_ast_node *)ast->next->content;
 	ast_node->input_fd = pipe_fd[READ_END];
