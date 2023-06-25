@@ -52,4 +52,5 @@ char	*env_expand(char ***env, char *input, int mode);
 int		find_var(char *str, int mode);
 void	ft_exit(int exitCode);
 
+int		only_space(char *s1);
 #endif

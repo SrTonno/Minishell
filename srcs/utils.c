@@ -70,3 +70,16 @@ void	print_export(char **env)
 		printf("\"\n");
 	}
 }
+
+int only_space(char *s1)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s1[i] != '\n')
+	{
+		if (s1[i++] != ' ')
+			return (1);
+	}
+	return (0);
+}

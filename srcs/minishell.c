@@ -36,13 +36,16 @@ void	loop(char **env)
 	{
 		handler();
 		input = readline(PROMPT);
+
 		add_history(input);
+
 		if (ctr_d(input) == 1 || ft_strncmp(input, "exit", 5) == 0)
 		{
 			free_split(env);
 			break ;
 		}
-		if (ft_strncmp(input, "\0", 1) == 0)
+
+		if (only_space(input) == 0 ||ft_strncmp(input, "\0", 1) == 0)
 		{
 			free(input);
 			continue ;
@@ -97,13 +100,16 @@ void	handle_input(char *input, char **env[])
 	t_list	*ast;
 
 	g_status = clean_input(&input, env);
+
 	if (g_status == 1)
 		g_status = 0;
 	if (g_status == -1 || g_status == 2)
 		return ;
+
 	g_status = tokenize_and_parse(input, &ast);
 	if (g_status == -1 || g_status == 2)
 		return ;
+
 	g_status = execute(ast, env);
 	ft_lstclear(&ast, free_ast_node);
 	return ;
