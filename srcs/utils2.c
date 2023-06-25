@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:36:37 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/19 20:23:50 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:45:16 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,17 @@ void	disable_ctrl_c_print(void)
 	tcgetattr(0, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, &term);
+}
+
+int	only_space(char *s1)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s1[i] != '\n')
+	{
+		if (s1[i++] != ' ')
+			return (1);
+	}
+	return (0);
 }
