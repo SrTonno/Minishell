@@ -55,5 +55,5 @@ int		handle_exe_error(int error, char *str);
 void	handler_fork(int signum);
 void	handler_status_print(void);
 
-char	*mini_gnl(int fd);
+void	delete_file(t_ast_node *ast_node);
 #endif

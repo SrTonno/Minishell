@@ -16,6 +16,23 @@ int		clean_input(char **input, char ***env);
 int		find_var(char *str, int mode);
 char	*env_expand(char ***env, char *input, int mode);
 
+/*int check_str(char *s1, char *s2)
+{
+	size_t	index;
+
+	index = 0;
+
+	while (s1[index] || s2[index])
+	{
+		if (s1[index] == '\0' && s2[index] == '\n')
+			return (0);
+		if ((unsigned char)s1[index] != (unsigned char)s2[index])
+			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
+		index++;
+	}
+	return (0);
+}*/
+
 char	*expand_heredoc(char *input, char ***env, int flag)
 {
 	while (find_var(input, 0) >= 0 && flag == 1)
@@ -66,8 +83,8 @@ char	*do_heredoc(char *delimitator, char ***env, int *mode)
 		expand_flag = 0;
 		delimitator++;
 	}
-	while (line != NULL && g_status != 130 \
-		&& ft_strncmp(line, delimitator, ft_strlen(delimitator) + 1) != 0)
+	while (line != NULL && ft_strncmp(line, delimitator, \
+		ft_strlen(delimitator) + 1) != 0)
 		loop_heredoc(&text, &line, env, expand_flag);
 	if (line == NULL)
 	{
@@ -86,8 +103,7 @@ int	create_heredoc(char *delimiter, char ***env, int *mode)
 	if (heredoc_fd < 0)
 		return (heredoc_fd);
 	text = do_heredoc(delimiter, env, mode);
-	if (*mode == 0)
-		ft_putstr_fd(text, heredoc_fd);
+	ft_putstr_fd(text, heredoc_fd);
 	free(text);
 	close(heredoc_fd);
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
