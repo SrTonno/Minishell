@@ -106,6 +106,7 @@ int	execute(t_list *ast, char **envp[])
 	t_list		*ast_copy;
 	char		**paths;
 	t_ast_node	*ast_node;
+	int			status;
 
 	paths = create_paths(*envp);
 	if (paths == NULL)
@@ -122,8 +123,8 @@ int	execute(t_list *ast, char **envp[])
 			close(ast_node->output_fd);
 		ast = ast->next;
 	}
-	g_status = wait_pids(ast_copy);
-	handler_status_print();
+	status = wait_pids(ast_copy);
+	handler_status_print(status);
 	free_split(paths);
 	return (g_status);
 }
