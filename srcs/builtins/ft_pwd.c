@@ -21,12 +21,10 @@ int	ft_pwd(void)
 	{
 		ft_putstr_fd("ERROR: pwd: couldn't read working directory\n",
 			STDERR_FILENO);
+		free(wd);
 		exit(-1);
 	}
-	else
-	{
-		ft_printf("%s\n", wd);
-		free(wd);
-	}
+	ft_printf("%s\n", wd);
+	free(wd);
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/13 13:21:06 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/26 11:11:24 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ft_echo(t_ast_node *ast_node);
 int		ft_env(char **env);
 int		ft_unset(char ***env, char **command);
 int		ft_export(char ***env, char **comand);
+int		ft_exit(char **command);
 
 int		is_builtin(char *command);
 int		is_no_child_builtin(char *command);

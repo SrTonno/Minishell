@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   contantes.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:44:01 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/17 15:45:49 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:00:30 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

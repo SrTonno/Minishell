@@ -6,13 +6,23 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:36:37 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/19 20:23:50 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:04:49 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 #include <termios.h>
+
+int	is_spaced_str(char *input)
+{
+	while (*input && ft_strchr(" \n\v\r\t", *input))
+		input++;
+	if (*input == '\0')
+		return (1);
+	else
+		return (0);
+}
 
 void	*ex_calloc(size_t count, size_t size)
 {
