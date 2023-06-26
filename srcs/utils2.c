@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:36:37 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/26 12:04:49 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:05:46 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ void	disable_ctrl_c_print(void)
 	tcgetattr(0, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, &term);
+}
+
+int	only_space(char *s1)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s1[i] != '\n')
+	{
+		if (s1[i++] != ' ')
+			return (1);
+	}
+	return (0);
 }

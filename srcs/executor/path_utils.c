@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:19:24 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/24 18:05:39 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:51:25 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,14 @@ int	wait_pids(t_list *ast)
 		ast = ast->next;
 	}
 	return (status);
+}
+
+void	delete_file(t_ast_node *ast_node) //funciona pero rebiar ubicacion
+{
+	if (ast_node->output_fd == 1 && ast_node->mode == 1)
+	{
+		unlink(TEMP_FILE);
+		ast_node->input_fd = open(TEMP_FILE, \
+			O_CREAT | O_RDONLY | O_TRUNC, S_IRWXU);
+	}
 }

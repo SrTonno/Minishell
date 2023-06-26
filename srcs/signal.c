@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/24 18:51:23 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:05:41 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 static void	ctr_c(int signum)
 {
 	(void)signum;
-	g_status = 130;
+	g_status = 1;
 	write(1, "\n", 1);
-	rl_line_buffer[0] = '\0';
-	rl_point = 0;
-	rl_end = 0;
+	//rl_line_buffer[0] = '\0';
 	rl_replace_line("", 0),
 	rl_on_new_line();
 	rl_redisplay();
