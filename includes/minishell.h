@@ -45,6 +45,7 @@ void	free_ast(t_list *ast);
 int		execute(t_list *ast, char **envp[]);
 
 void	free_split(char **str);
+int		is_spaced_str(char *input);
 
 char	**malloc_env(char **env);
 void	ft_env(char **env);

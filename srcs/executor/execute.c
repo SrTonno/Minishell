@@ -25,10 +25,7 @@ int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
 	if (ft_strncmp(ast_node->binary, "cd", 3) == 0)
 		return (ft_cd(ast_node, envp));
 	if (ft_strncmp(ast_node->binary, "exit", 5) == 0)
-	{
-		unlink(TEMP_FILE);
-		exit(0);
-	}
+		return (ft_exit(ast_node->command));
 	return (0);
 }
 
@@ -43,7 +40,7 @@ int	exec_command_child(t_ast_node *ast_node, char **envp)
 	else
 	{
 		execve(ast_node->binary, ast_node->command, envp);
-		exit(0);
+		exit(1);
 	}
 	return (0);
 }

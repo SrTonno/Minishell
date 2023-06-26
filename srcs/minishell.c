@@ -37,12 +37,12 @@ void	loop(char **env)
 		handler();
 		input = readline(PROMPT);
 		add_history(input);
-		if (ctr_d(input) == 1 || ft_strncmp(input, "exit", 5) == 0)
+		if (ctr_d(input) == 1)
 		{
 			free_split(env);
 			break ;
 		}
-		if (only_space(input) == 0 || ft_strncmp(input, "\0", 1) == 0)
+		if (is_spaced_str(input))
 		{
 			free(input);
 			continue ;

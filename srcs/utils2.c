@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:36:37 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/25 19:45:16 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:05:46 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 #include <termios.h>
+
+int	is_spaced_str(char *input)
+{
+	while (*input && ft_strchr(" \n\v\r\t", *input))
+		input++;
+	if (*input == '\0')
+		return (1);
+	else
+		return (0);
+}
 
 void	*ex_calloc(size_t count, size_t size)
 {
