@@ -53,7 +53,7 @@ void	free_split(char **split);
 int		handle_exe_error(int error, char *str);
 
 void	handler_fork(int signum);
-void	handler_status_print(void);
+void	handler_status_print(int status);
 
 void	delete_file(t_ast_node *ast_node);
 #endif

@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/27 12:36:02 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:37:02 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,18 @@ int	ctr_d(char *input)
 	return (0);
 }
 
-void	handler_status_print(void)
+void	handler_status_print(int status)
 {
-	if (g_status == SIGINT)
+	if (status == SIGINT)
 	{
 		g_status = 130;
 		ft_putstr_fd(MSG_SIGINT, STDOUT_FILENO);
 	}
-	else if (g_status == SIGQUIT)
+	else if (status == SIGQUIT)
 	{
 		g_status = 131;
 		ft_putstr_fd(MSG_SIGQUIT, STDOUT_FILENO);
 	}
+	else if (g_status == 0)
+		g_status = status;
 }
