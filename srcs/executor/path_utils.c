@@ -6,11 +6,30 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:19:24 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/27 12:35:39 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:30:57 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+void	is_heredoc_last(t_ast_node *ast_node, t_list *redir)
+{
+	t_redir_type	*redir_type;
+	int				flag;
+
+	flag = 0;
+	while (redir)
+	{
+		redir_type = redir->content;
+		if (redir_type->type == HEREDOC)
+			flag = 1;
+		else if (redir_type->type == INFILE)
+			flag = 0;
+		redir = redir->next;
+	}
+	if (flag)
+		ast_node->input_fd = ast_node->heredoc_fd;
+}
 
 char	*get_path_envp(char *envp[])
 {
@@ -62,14 +81,4 @@ int	wait_pids(t_list *ast)
 		ast = ast->next;
 	}
 	return (status);
-}
-
-void	delete_file(t_ast_node *ast_node)
-{
-	if (ast_node->output_fd == 1 && ast_node->mode == 1)
-	{
-		unlink(TEMP_FILE);
-		ast_node->input_fd = open(TEMP_FILE, \
-			O_CREAT | O_RDONLY | O_TRUNC, S_IRWXU);
-	}
 }

@@ -52,7 +52,6 @@ void	loop(char **env)
 			break ;
 	}
 	free(input);
-	//system("leaks -q minishell");
 }
 
 int	clean_input(char **input, char ***env)

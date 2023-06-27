@@ -55,5 +55,5 @@ int		handle_exe_error(int error, char *str);
 void	handler_fork(int signum);
 void	handler_status_print(int status);
 
-void	delete_file(t_ast_node *ast_node);
+void	is_heredoc_last(t_ast_node *ast_node, t_list *redir);
 #endif

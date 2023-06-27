@@ -42,6 +42,7 @@ typedef struct s_ast_node
 	int		*pipe_fd;
 	pid_t	pid;
 	int		mode;
+	int		heredoc_fd;
 }	t_ast_node;
 
 void	free_ast_node(void *ptr);

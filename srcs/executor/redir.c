@@ -64,18 +64,8 @@ int	do_redir(t_redir_type *redir_type, t_ast_node *ast_node)
 
 int	is_pipe_necessary(t_list *ast)
 {
-	t_list	*redir;
-
 	if (ast->next == NULL)
 		return (0);
-	redir = ((t_ast_node *)ast->content)->redir;
-	while (redir)
-	{
-		if (((t_redir_type *)redir->content)->type == INFILE
-			|| ((t_redir_type *)redir->content)->type == HEREDOC)
-			return (0);
-		redir = redir->next;
-	}
 	return (1);
 }
 
@@ -123,6 +113,6 @@ int	parse_redir(t_list *ast, char ***env)
 			break ;
 		redir = redir->next;
 	}
-	//delete_file(ast_node);
+	is_heredoc_last(ast_node, ast_node->redir);
 	return (status);
 }

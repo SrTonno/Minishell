@@ -16,23 +16,6 @@ int		clean_input(char **input, char ***env);
 int		find_var(char *str, int mode);
 char	*env_expand(char ***env, char *input, int mode);
 
-/*int check_str(char *s1, char *s2)
-{
-	size_t	index;
-
-	index = 0;
-
-	while (s1[index] || s2[index])
-	{
-		if (s1[index] == '\0' && s2[index] == '\n')
-			return (0);
-		if ((unsigned char)s1[index] != (unsigned char)s2[index])
-			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
-		index++;
-	}
-	return (0);
-}*/
-
 char	*expand_heredoc(char *input, char ***env, int flag)
 {
 	while (find_var(input, 0) >= 0 && flag == 1)
@@ -114,7 +97,6 @@ int	do_heredocs(t_ast_node *ast_node, char ***env)
 {
 	t_list			*redir;
 	t_redir_type	*redir_type;
-	int				fd;
 	int				mode;
 
 	mode = 0;
@@ -124,12 +106,11 @@ int	do_heredocs(t_ast_node *ast_node, char ***env)
 		redir_type = redir->content;
 		if (redir_type->type == HEREDOC)
 		{
-			fd = create_heredoc(redir_type->text, env, &mode);
-			if (fd == -1)
+			if (ast_node->heredoc_fd != STDIN_FILENO)
+				close(ast_node->heredoc_fd);
+			ast_node->heredoc_fd = create_heredoc(redir_type->text, env, &mode);
+			if (ast_node->heredoc_fd == -1)
 				return (-1);
-			if (ast_node->input_fd != STDIN_FILENO)
-				close(ast_node->input_fd);
-			ast_node->input_fd = fd;
 			ast_node->mode = mode;
 		}
 		redir = redir->next;

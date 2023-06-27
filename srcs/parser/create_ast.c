@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/27 10:11:32 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:15:08 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static t_ast_node	*create_ast_node(t_len_ast max, int index)
 	new_ast->input_fd = 0;
 	new_ast->output_fd = 1;
 	new_ast->pipe_fd = NULL;
+	new_ast->heredoc_fd = -1;
 	return (new_ast);
 }
 
