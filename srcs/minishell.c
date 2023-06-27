@@ -66,6 +66,7 @@ int	clean_input(char **input, char ***env)
 		*input = env_expand(env, *input, 1);
 		if (*input == NULL)
 			return (1);
+
 	}
 	return (0);
 }
@@ -97,7 +98,10 @@ void	handle_input(char *input, char **env[])
 
 	g_status = clean_input(&input, env);
 	if (g_status == 1)
+	{
 		g_status = 0;
+		return ;
+	}
 	if (g_status == -1 || g_status == 2)
 		return ;
 	g_status = tokenize_and_parse(input, &ast);
