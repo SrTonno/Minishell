@@ -6,9 +6,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I /goinfre/$$USER/.brew/opt/readline/include
 #-L $(brew --prefix readline)/lib -I $(bash brew --prefix readline)/include#
+FSANITIZE = -fsanitize=address -g
 
 SRCSDIR = ./srcs/
-SRCSCFILES = minishell.c signal.c utils.c utils2.c
+SRCSCFILES = minishell.c signal.c utils.c utils2.c utils_free.c
 
 BINDIR = ${addprefix ${SRCSDIR}, builtins/}
 BINCFILES = ft_export.c ft_unset.c ft_pwd.c ft_cd.c ft_echo.c ft_env.c ft_exit.c builtin_utils.c
@@ -58,6 +59,9 @@ all: ${NAME}
 test: ${NAME}
 	./${NAME}
 
+retest: re
+	./${NAME}
+
 ${NAME}: ${OBJS}
 	@make -s -C ${LIB_DIR}
 	@printf "\n${God}${Green}Created 'libft.a'.${NoColor}\n"
@@ -66,7 +70,6 @@ ${NAME}: ${OBJS}
 
 ${LFT_NAME}:
 	@make -s -C ${LIB_DIR}
-
 
 %.o: %.c
 	@${CC} -c ${CFLAGS} $^ -o $@ ${INC}

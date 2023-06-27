@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:59:37 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/27 13:29:20 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:55:23 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,6 @@ void	crearte_new_env(char **dst, char **comd, char **env)
 	}
 	dst[j] = NULL;
 }
-/*
-static void	only_coman(char **dst, char **comd)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (comd[++i] != NULL)
-	{
-		if ((ft_isalpha(comd[i][0]) == 1 || comd[i][0] == '_')
-			&& to_future(comd, i) == -1 && find_char(comd[i], '=') > 0)
-			dst[j++] = ft_strdup(comd[i]);
-	}
-	dst[j] = NULL;
-}*/
 
 int	ft_export(char ***env, char **coman)
 {
@@ -100,10 +84,7 @@ int	ft_export(char ***env, char **coman)
 		return (error);
 	len_env = len_doble_base(env[0]);
 	new_env = ex_calloc((len_com + len_env + 1), sizeof(char *));
-	//if (len_env == 0)
-		//only_coman(new_env, coman);
-	//else
-		crearte_new_env(new_env, coman, env[0]);
+	crearte_new_env(new_env, coman, env[0]);
 	free(env[0]);
 	env[0] = new_env;
 	return (error);

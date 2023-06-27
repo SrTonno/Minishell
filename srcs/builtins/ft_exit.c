@@ -37,7 +37,7 @@ int	ft_exit(char **command)
 		exit_code = ft_atoi(command[1]);
 	}
 	unlink(TEMP_FILE);
-	system("leaks -q minishell");
+	//system("leaks -q minishell");
 	exit (exit_code);
 	return (0);
 }

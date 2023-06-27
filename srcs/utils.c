@@ -38,17 +38,6 @@ int	is_space(unsigned char c)
 	return (0);
 }
 
-void	free_split(char **split)
-{
-	int	index;
-
-	index = -1;
-	while (split[++index])
-		free(split[index]);
-	free(split);
-	return ;
-}
-
 void	print_export(char **env)
 {
 	int	i;

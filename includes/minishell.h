@@ -28,7 +28,8 @@
 # include "env.h"
 # include "contantes.h"
 
-# define PROMPT "mminish>> "
+# define PROMPT "minish>> "
+
 void	handle_input(char *input, char **envp[]);
 
 void	handler(void);
