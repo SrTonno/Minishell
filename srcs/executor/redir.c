@@ -71,14 +71,6 @@ int	is_pipe_necessary(t_list *ast)
 	redir = ((t_ast_node *)ast->content)->redir;
 	while (redir)
 	{
-		if (((t_redir_type *)redir->content)->type == OVERWRITE
-			|| ((t_redir_type *)redir->content)->type == APPEND)
-			return (0);
-		redir = redir->next;
-	}
-	redir = ((t_ast_node *)ast->next->content)->redir;
-	while (redir)
-	{
 		if (((t_redir_type *)redir->content)->type == INFILE
 			|| ((t_redir_type *)redir->content)->type == HEREDOC)
 			return (0);

@@ -82,11 +82,11 @@ int	tokenize_and_parse(char *input, t_list **ast)
 	if (check_syntax_metachars(token_lst) != 0
 		|| check_syntax_after_metachars(token_lst) != 0)
 	{
-		ft_lstclear(&token_lst, free);
+		ft_lstclear(&token_lst, free_token);
 		return (2);
 	}
 	*ast = parse(token_lst);
-	ft_lstclear(&token_lst, free);
+	ft_lstclear(&token_lst, free_token);
 	if (*ast == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
 	return (0);

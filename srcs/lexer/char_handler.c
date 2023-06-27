@@ -25,7 +25,7 @@ int	handle_char(t_lexer *lexer, int *heredoc_flag)
 	{
 		if (handle_quotation_marks(lexer, heredoc_flag) == -1)
 		{
-			ft_lstclear(&lexer->token_lst, free);
+			ft_lstclear(&lexer->token_lst, free_token);
 			return (-1);
 		}
 	}
@@ -33,7 +33,7 @@ int	handle_char(t_lexer *lexer, int *heredoc_flag)
 	{
 		if (handle_special(lexer, heredoc_flag) == -1)
 		{
-			ft_lstclear(&lexer->token_lst, free);
+			ft_lstclear(&lexer->token_lst, free_token);
 			return (-1);
 		}
 	}
@@ -45,14 +45,14 @@ int	handle_char(t_lexer *lexer, int *heredoc_flag)
 static int	handle_special(t_lexer *lexer, int *heredoc_flag)
 {
 	if (lexer->str + lexer->index - lexer->token_start > 0
-		&& add_new_token_lst(lexer) == -1)
+		&& add_new_token_lst(lexer, STRING) == -1)
 		return (-1);
 	lexer->token_start = lexer->str + lexer->index;
 	if (ft_strncmp(lexer->str + lexer->index, "<<", 2) == 0)
 		*heredoc_flag = 1;
 	while (is_special(lexer->str[lexer->index]))
 		lexer->index++;
-	if (add_new_token_lst(lexer) == -1)
+	if (add_new_token_lst(lexer, METACHAR) == -1)
 		return (-1);
 	lexer->token_start = lexer->str + lexer->index;
 	return (0);
@@ -73,14 +73,24 @@ static char	*copy_quoted_text(char *token, t_lexer *lexer)
 	return (token);
 }
 
-static int	add_new_text_node(t_lexer *lexer, char *token)
+static int	add_new_text_node(t_lexer *lexer, char *str)
 {
+	t_token	*token;
 	t_list	*new_node;
 
+	token = (t_token *)ft_calloc(1, sizeof(t_token));
+	if (token == NULL)
+	{
+		free(str);
+		return (-1);
+	}
+	token->token = str;
+	token->token_type = STRING;
 	new_node = ft_lstnew((void *)token);
 	if (new_node == NULL)
 	{
 		free(token);
+		free(str);
 		return (-1);
 	}
 	ft_lstadd_back(&lexer->token_lst, new_node);

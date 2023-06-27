@@ -18,6 +18,7 @@
 
 # include "libft.h"
 # include "contantes.h"
+# include "token.h"
 
 # define DOUBLE_QUOTE 34
 # define SINGLE_QUOTE 39
@@ -33,7 +34,7 @@ typedef struct s_lexer
 }	t_lexer;
 
 t_lexer	init_lexer(char *inputLine);
-int		add_new_token_lst(t_lexer *lexer);
+int		add_new_token_lst(t_lexer *lexer, int type);
 int		any_env_var_str(char *str);
 
 int		handle_char(t_lexer *lexer, int *heredoc_flag);

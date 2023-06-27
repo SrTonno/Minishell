@@ -32,8 +32,18 @@ t_list	*tokenize(char	*inputLine)
 			if (handle_char(&lexer, &heredoc_flag) == -1)
 				return (NULL);
 		}
-		if (add_new_token_lst(&lexer) == -1)
+		if (add_new_token_lst(&lexer, STRING) == -1)
 			return (NULL);
 	}
 	return (lexer.token_lst);
+}
+
+void	free_token(void *token_node)
+{
+	t_token	*token;
+
+	token = (t_token *)token_node;
+	free(token->token);
+	free(token);
+	return ;
 }

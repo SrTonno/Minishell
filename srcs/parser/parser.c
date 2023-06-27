@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:04:39 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/19 18:30:30 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 10:58:06 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,29 @@ t_list	*mov_to_next_list(t_list *list, int num)
 	i = 0;
 	while (num > i++)
 		list = list->next;
+	if (list != NULL && ((t_token *)list->content)->token_type == METACHAR
+		&& *((t_token *)list->content)->token == '|')
+		list = list->next;
 	return (list);
 }
 
 static t_len_ast	count_blocks(t_list *list, int mode)
 {
 	t_len_ast	command;
+	t_token		*token;
 
 	command.len = 1;
 	command.meta = 0;
 	while (list->next != NULL)
 	{
-		if (*((unsigned char *)list->content) == '|')
+		token = list->content;
+		if (*token->token == '|')
 		{
 			if (command.len != 1)
 				command.len--;
 			return (command);
 		}
-		if (*((unsigned char *)list->content) == '<'
-			|| (*((unsigned char *)list->content) == '>') || mode == 1)
+		if (token->token_type == METACHAR || mode == 1)
 			command.meta++;
 		command.len++;
 		list = list->next;

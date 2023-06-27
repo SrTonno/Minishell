@@ -24,18 +24,25 @@ t_lexer	init_lexer(char *inputLine)
 	return (lexer);
 }
 
-int	add_new_token_lst(t_lexer *lexer)
+int	add_new_token_lst(t_lexer *lexer, int type)
 {
-	char	*token;
+	t_token	*token;
 	t_list	*new_node;
 
 	lexer->token_len = (size_t)(lexer->str + lexer->index - lexer->token_start);
 	if (lexer->token_len <= 0)
 		return (0);
-	token = (char *)ft_calloc(lexer->token_len + 1, sizeof(char));
+	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (token == NULL)
 		return (-1);
-	ft_strlcpy(token, lexer->token_start, lexer->token_len + 1);
+	token->token = (char *)ft_calloc(lexer->token_len + 1, sizeof(char));
+	if (token->token == NULL)
+	{
+		free(token);
+		return (-1);
+	}
+	ft_strlcpy(token->token, lexer->token_start, lexer->token_len + 1);
+	token->token_type = type;
 	new_node = ft_lstnew((void *)token);
 	if (new_node == NULL)
 		return (-1);

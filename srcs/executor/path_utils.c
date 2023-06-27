@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:19:24 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/25 18:51:25 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:35:39 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	wait_pids(t_list *ast)
 	return (status);
 }
 
-void	delete_file(t_ast_node *ast_node) //funciona pero rebiar ubicacion
+void	delete_file(t_ast_node *ast_node)
 {
 	if (ast_node->output_fd == 1 && ast_node->mode == 1)
 	{

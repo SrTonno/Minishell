@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:24:15 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/17 19:39:43 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 10:11:32 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,25 @@ t_list	*create_redir(char *text, int type)
 static int	store_redir(t_ast_node *ast, t_list *list)
 {
 	t_list	*redir;
+	t_token	*token;
+	t_token	*next_token;
 
-	if (*((unsigned char *)list->content) == '<')
+	token = list->content;
+	next_token = list->next->content;
+	if (*((unsigned char *)token->token) == '<')
 	{
-		if (ft_strlen((char *)list->content) == 1)
-			redir = create_redir(list->next->content, INFILE);
+		if (ft_strlen(token->token) == 1)
+			redir = create_redir(next_token->token, INFILE);
 		else
-			redir = create_redir(ft_strjoin(list->next->content, "\n"),
+			redir = create_redir(ft_strjoin(next_token->token, "\n"),
 					HEREDOC);
 	}
 	else
 	{
-		if (ft_strlen((char *)list->content) == 1)
-			redir = create_redir(list->next->content, OVERWRITE);
+		if (ft_strlen(token->token) == 1)
+			redir = create_redir(next_token->token, OVERWRITE);
 		else
-			redir = create_redir(list->next->content, APPEND);
+			redir = create_redir(next_token->token, APPEND);
 	}
 	if (redir == NULL)
 		return (-1);
@@ -83,11 +87,14 @@ static t_ast_node	*create_ast_node(t_len_ast max, int index)
 t_ast_node	*fill_ast_node(t_list **token_lst, t_ast_node *new_ast,
 	int *i, int *extra)
 {
-	if (*((unsigned char *)(*token_lst)->content) == '>'
-		|| *((unsigned char *)(*token_lst)->content) == '<')
+	t_token	*token;
+
+	token = (*token_lst)->content;
+	if (token->token_type == METACHAR)
 	{
 		if (store_redir(new_ast, *token_lst) == -1)
 		{
+			ft_lstclear(token_lst, free_token);
 			free_ast_node(new_ast);
 			return (NULL);
 		}
@@ -96,9 +103,10 @@ t_ast_node	*fill_ast_node(t_list **token_lst, t_ast_node *new_ast,
 	}
 	else
 	{
-		new_ast->command[*i] = ft_strdup((*token_lst)->content);
+		new_ast->command[*i] = ft_strdup(token->token);
 		if (new_ast->command[(*i)++] == NULL)
 		{
+			ft_lstclear(token_lst, free_token);
 			free_ast_node(new_ast);
 			return (NULL);
 		}
