@@ -27,7 +27,10 @@ int	ft_cd(t_ast_node *ast_node, char ***envp)
 		return (cd_error_msg(1, NULL));
 	cwd = getcwd(NULL, 0);
 	if (chdir(ast_node->command[1]) < 0)
+	{
+		free (cwd);
 		return (cd_error_msg(1, ast_node->command[1]));
+	}
 	if (find_env_basic(*envp, "OLDPWD") != -2 && cwd != NULL)
 		update_env(envp, "OLDPWD", cwd);
 	free(cwd);
