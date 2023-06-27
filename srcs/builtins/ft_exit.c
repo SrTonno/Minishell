@@ -26,7 +26,7 @@ int	ft_exit(char **command)
 	if (command_len > 2)
 	{
 		ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
-		return (1);
+		exit (1);
 	}
 	else if (command_len == 1)
 		exit_code = 0;

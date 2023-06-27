@@ -46,7 +46,7 @@ int	is_no_child_builtin(char *command)
 
 int	is_valid_no_child_builtin(t_list *ast, char *command)
 {
-	t_ast_node *ast_node;
+	t_ast_node	*ast_node;
 
 	ast_node = (t_ast_node *)ast->content;
 	if (ast_node->index != 0 || ast->next != NULL)
