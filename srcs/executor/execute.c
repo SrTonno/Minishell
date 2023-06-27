@@ -95,6 +95,8 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			}
 		}
 	}
+	if (status == -2)
+		return (0);
 	return (status);
 }
 

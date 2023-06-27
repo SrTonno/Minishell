@@ -123,6 +123,6 @@ int	parse_redir(t_list *ast, char ***env)
 			break ;
 		redir = redir->next;
 	}
-	delete_file(ast_node);
+	//delete_file(ast_node);
 	return (status);
 }

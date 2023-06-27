@@ -64,6 +64,8 @@ int	check_binary_path(char *command, char **paths)
 
 int	check_binary(char *command, char **paths)
 {
+	if (command == NULL)
+		return (-2);
 	if (is_builtin(command))
 		return (0);
 	if (*command == '\0')
