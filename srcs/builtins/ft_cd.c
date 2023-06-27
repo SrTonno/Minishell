@@ -32,7 +32,7 @@ int	ft_cd(t_ast_node *ast_node, char ***envp)
 		update_env(envp, "OLDPWD", cwd);
 	free(cwd);
 	cwd = getcwd(NULL, 0);
-	if (find_env_basic(*envp, "PWD") != -2)
+	if (find_env_basic(*envp, "PWD") != -2 && cwd != NULL)
 		update_env(envp, "PWD", cwd);
 	free(cwd);
 	return (0);
