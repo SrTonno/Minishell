@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:14:11 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/19 15:29:04 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/27 13:39:01 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,19 @@ char	*env_expand(char ***env, char *input, int mode)
 char	**void_env(void)
 {
 	char	**new_env;
+	char	*a;
 
 	new_env = ft_calloc(4 + 1, sizeof(char *));
 	if (new_env == NULL)
-		(free(new_env), exit (1));
-	new_env[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
+		exit (1);
+	a = getcwd(NULL, 0);
+	if (a != NULL)
+	{
+		new_env[0] = ft_strjoin("PWD=", a);
+		free (a);
+	}
+	else
+		new_env[0] = ft_strdup("PWD=/");
 	new_env[1] = ft_strdup("SHLVL=1");
 	new_env[2] = ft_strdup("_=/usr/bin/env");
 	return (new_env);

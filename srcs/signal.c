@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:08:06 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/27 12:37:02 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 13:19:14 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void	handler_status_print(int status)
 		ft_putstr_fd(MSG_SIGQUIT, STDOUT_FILENO);
 	}
 	else if (g_status == 0)
-		g_status = status;
+		g_status =  WEXITSTATUS(status);
 }

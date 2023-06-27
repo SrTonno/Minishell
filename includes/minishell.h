@@ -28,8 +28,8 @@
 # include "env.h"
 # include "contantes.h"
 
-# define PROMPT "\033[0;33mminish>> \033[0m"
-
+//# define PROMPT "\033[0;33mminish>> \033[0m"
+# define PROMPT "mminish>>[0m"
 void	handle_input(char *input, char **envp[]);
 
 void	handler(void);
