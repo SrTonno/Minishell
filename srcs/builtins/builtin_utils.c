@@ -43,3 +43,13 @@ int	is_no_child_builtin(char *command)
 		return (1);
 	return (0);
 }
+
+int	is_valid_no_child_builtin(t_list *ast, char *command)
+{
+	t_ast_node *ast_node;
+
+	ast_node = (t_ast_node *)ast->content;
+	if (ast_node->index != 0 || ast->next != NULL)
+		return (0);
+	return (is_no_child_builtin(command));
+}

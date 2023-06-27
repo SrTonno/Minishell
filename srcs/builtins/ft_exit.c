@@ -33,7 +33,7 @@ int	ft_exit(char **command)
 	else
 	{
 		if (is_numeric_str(command[1]) == 0)
-			return (2);
+			exit (2);
 		exit_code = ft_atoi(command[1]);
 	}
 	unlink(TEMP_FILE);

@@ -14,10 +14,8 @@
 
 int	wait_pids(t_list *ast);
 
-int	exec_command(t_list *ast, t_ast_node *ast_node, char ***envp)
+int	exec_command(t_ast_node *ast_node, char ***envp)
 {
-	if (ast_node->index != 0 || ast->next != NULL)
-		return (0);
 	if (ft_strncmp(ast_node->binary, "export", 7) == 0)
 		return (ft_export(envp, ast_node->command));
 	if (ft_strncmp(ast_node->binary, "unset", 6) == 0)
@@ -66,6 +64,8 @@ int	create_child(t_ast_node *ast_node, char **envp)
 			dup2(ast_node->output_fd, STDOUT_FILENO);
 			close(ast_node->output_fd);
 		}
+		if (is_no_child_builtin(ast_node->binary))
+			exec_command(ast_node, &envp);
 		exec_command_child(ast_node, envp);
 	}
 	return (0);
@@ -86,8 +86,8 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 			ast_node->binary = find_binary(ast_node->command[0], paths);
 			if (ast_node->binary == NULL)
 				return (error_msg(MALLOC_ERROR, NULL));
-			if (is_no_child_builtin(ast_node->binary))
-				status = exec_command(ast, ast_node, envp);
+			if (is_valid_no_child_builtin(ast, ast_node->binary))
+				status = exec_command(ast_node, envp);
 			else
 			{
 				if (create_child(ast_node, *envp) == -1)

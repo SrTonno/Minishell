@@ -6,7 +6,7 @@
 /*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:54 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/26 11:11:24 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/27 13:40:07 by javmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		ft_exit(char **command);
 
 int		is_builtin(char *command);
 int		is_no_child_builtin(char *command);
+int		is_valid_no_child_builtin(t_list *ast, char *command);
 
 int		find_env_basic(char **env, char *str);
 
