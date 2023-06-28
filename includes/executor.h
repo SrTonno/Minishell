@@ -56,4 +56,8 @@ void	handler_fork(int signum);
 void	handler_status_print(int status);
 
 void	is_heredoc_last(t_ast_node *ast_node, t_list *redir);
+
+char	*expand_heredoc(char *input, char ***env, int flag);
+
+int		code_status(t_list *ast, char **paths, char ***envp);
 #endif

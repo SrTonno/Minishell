@@ -16,17 +16,6 @@ int		clean_input(char **input, char ***env);
 int		find_var(char *str, int mode);
 char	*env_expand(char ***env, char *input, int mode);
 
-char	*expand_heredoc(char *input, char ***env, int flag)
-{
-	while (find_var(input, 0) >= 0 && flag == 1)
-	{
-		input = env_expand(env, input, 0);
-		if (input == NULL)
-			return (NULL);
-	}
-	return (input);
-}
-
 int	loop_heredoc(char **text, char **line, char ***env, int expand_flag)
 {
 	char	*tmp;
@@ -97,6 +86,7 @@ int	child_heredoc(char *delimiter, char ***env, int *mode, int fd)
 	waitpid(pid, &g_status, 0);
 	return (0);
 }
+
 int	create_heredoc(char *delimiter, char ***env, int *mode)
 {
 	int		heredoc_fd;
