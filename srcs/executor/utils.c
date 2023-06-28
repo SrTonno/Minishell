@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 15:35:50 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/28 15:43:10 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:19:59 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,29 @@ int	code_status(t_list *ast, char **paths, char ***envp)
 {
 	int	status;
 
-	if (g_status == 2)
-		return (2);
 	status = exec_child(ast, paths, envp);
+	if (g_status == 2)
+	{
+		write(1, "\n", 1);
+		return (-3);
+	}
 	if (status == -2)
 		return (0);
 	return (status);
+}
+
+int	check_str(char *s1, char *s2)
+{
+	size_t	index;
+
+	index = 0;
+	while (s1[index] || s2[index])
+	{
+		if (s1[index] == '\0' && s2[index] == '\n')
+			return (0);
+		if ((unsigned char)s1[index] != (unsigned char)s2[index])
+			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
+		index++;
+	}
+	return (0);
 }

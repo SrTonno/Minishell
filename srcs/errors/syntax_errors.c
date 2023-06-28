@@ -38,7 +38,7 @@ int	check_syntax_metachars(t_list *token_lst)
 	while (token_lst)
 	{
 		c = token_lst->content;
-		if (is_special(*c))
+		if (is_special(*c) == 1)
 		{
 			if (*c == '|' && ft_strlen(c) != 1)
 				return (error_msg(SYNTAX_ERROR, c + 1));

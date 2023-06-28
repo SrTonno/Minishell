@@ -61,5 +61,6 @@ char	*expand_heredoc(char *input, char ***env, int flag);
 
 int		code_status(t_list *ast, char **paths, char ***envp);
 int		exec_child(t_list *ast, char **paths, char ***envp);
+int		check_str(char *s1, char *s2);
 
 #endif

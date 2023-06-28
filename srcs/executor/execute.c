@@ -77,9 +77,7 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 	t_ast_node	*ast_node;
 
 	status = parse_redir(ast, envp);
-	printf("HOLIs %d\n", g_status);
 	ast_node = (t_ast_node *)ast->content;
-	printf("HOLIx %d\n", g_status);
 	if (status == 0 && g_status != 130 && g_status != 2)
 	{
 		status = check_binary(ast_node->command[0], paths);
@@ -105,7 +103,6 @@ int	execute(t_list *ast, char **envp[])
 	t_list		*ast_copy;
 	char		**paths;
 	t_ast_node	*ast_node;
-	int			status;
 
 	paths = create_paths(*envp);
 	if (paths == NULL)
@@ -122,8 +119,9 @@ int	execute(t_list *ast, char **envp[])
 			close(ast_node->output_fd);
 		ast = ast->next;
 	}
-	status = wait_pids(ast_copy);
-	handler_status_print(status);
+	if (g_status == -3)
+		return (1);
+	wait_pids(ast_copy);
 	free_split(paths);
 	return (g_status);
 }

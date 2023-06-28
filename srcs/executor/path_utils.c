@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javmarti <javmarti@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:19:24 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/27 18:30:57 by javmarti         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:16:07 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int	wait_pids(t_list *ast)
 		waitpid(ast_node->pid, &status, 0);
 		ast = ast->next;
 	}
+	handler_status_print(status);
 	return (status);
 }

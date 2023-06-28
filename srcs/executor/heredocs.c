@@ -21,7 +21,6 @@ int	loop_heredoc(char **text, char **line, char ***env, int expand_flag)
 	char	*tmp;
 	char	*aux;
 
-	write(1, "> ", 2);
 	tmp = expand_heredoc(ft_strdup(*line), env, expand_flag);
 	if (tmp[ft_strlen(tmp) - 1] != '\n')
 	{
@@ -36,7 +35,7 @@ int	loop_heredoc(char **text, char **line, char ***env, int expand_flag)
 	free(aux);
 	free(tmp);
 	free(*line);
-	*line = get_next_line(STDIN_FILENO);
+	*line = readline(">");
 	return (0);
 }
 
@@ -47,16 +46,14 @@ char	*do_heredoc(char *delimitator, char ***env, int *mode)
 	int		expand_flag;
 
 	text = (char *)ft_calloc(1, sizeof(char));
-	write(1, "> ", 2);
-	line = get_next_line(STDIN_FILENO);
+	line = readline(">");
 	expand_flag = 1;
 	if (*delimitator == '"')
 	{
 		expand_flag = 0;
 		delimitator++;
 	}
-	while (line != NULL && ft_strncmp(line, delimitator, \
-		ft_strlen(delimitator) + 1) != 0)
+	while (line != NULL && check_str(line, delimitator) != 0)
 		loop_heredoc(&text, &line, env, expand_flag);
 	if (line == NULL)
 	{
@@ -80,7 +77,6 @@ int	child_heredoc(char *delimiter, char ***env, int *mode, int fd)
 		text = do_heredoc(delimiter, env, mode);
 		ft_putstr_fd(text, fd);
 		free(text);
-		close(fd);
 		exit (0);
 	}
 	waitpid(pid, &g_status, 0);
@@ -95,6 +91,7 @@ int	create_heredoc(char *delimiter, char ***env, int *mode)
 	if (heredoc_fd < 0)
 		return (heredoc_fd);
 	child_heredoc(delimiter, env, mode, heredoc_fd);
+	close(heredoc_fd);
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
 	return (heredoc_fd);
 }
