@@ -27,7 +27,7 @@ PARSEDIR = ${addprefix ${SRCSDIR}, parser/}
 PARSECFILES = parser.c create_ast.c
 
 EXECDIR = ${addprefix ${SRCSDIR}, executor/}
-EXECCFILES = execute.c path.c heredocs.c redir.c path_utils.c
+EXECCFILES = execute.c path.c heredocs.c redir.c path_utils.c utils.c
 
 ERRDIR = ${addprefix ${SRCSDIR}, errors/}
 ERRFILES = error_msg.c syntax_errors.c

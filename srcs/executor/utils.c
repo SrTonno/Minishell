@@ -6,11 +6,14 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 15:35:50 by tvillare          #+#    #+#             */
-/*   Updated: 2023/06/28 15:36:55 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:43:10 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include "env.h"
+
+char	*env_expand(char ***env, char *input, int mode);
 
 char	*expand_heredoc(char *input, char ***env, int flag)
 {
