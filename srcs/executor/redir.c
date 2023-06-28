@@ -101,7 +101,7 @@ int	parse_redir(t_list *ast, char ***env)
 		if (create_pipe(ast) != 0)
 			return (error_msg(MALLOC_ERROR, NULL));
 	ast_node = (t_ast_node *)ast->content;
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	status = do_heredocs(ast_node, env);
 	redir = ast_node->redir;
 	while (redir)

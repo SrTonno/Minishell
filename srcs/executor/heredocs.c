@@ -77,18 +77,34 @@ char	*do_heredoc(char *delimitator, char ***env, int *mode)
 	return (free(line), text);
 }
 
+int	child_heredoc(char *delimiter, char ***env, int *mode, int fd)
+{
+	pid_t	pid;
+	char	*text;
+
+	pid = fork();
+	handler_fork(!pid);
+	if (pid < 0)
+		return (-1);
+	else if (pid == 0)
+	{
+		text = do_heredoc(delimiter, env, mode);
+		ft_putstr_fd(text, fd);
+		free(text);
+		close(fd);
+		exit (0);
+	}
+	waitpid(pid, &g_status, 0);
+	return (0);
+}
 int	create_heredoc(char *delimiter, char ***env, int *mode)
 {
 	int		heredoc_fd;
-	char	*text;
 
 	heredoc_fd = open(TEMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	if (heredoc_fd < 0)
 		return (heredoc_fd);
-	text = do_heredoc(delimiter, env, mode);
-	ft_putstr_fd(text, heredoc_fd);
-	free(text);
-	close(heredoc_fd);
+	child_heredoc(delimiter, env, mode, heredoc_fd);
 	heredoc_fd = open(TEMP_FILE, O_RDONLY);
 	return (heredoc_fd);
 }
@@ -104,7 +120,7 @@ int	do_heredocs(t_ast_node *ast_node, char ***env)
 	while (redir)
 	{
 		redir_type = redir->content;
-		if (redir_type->type == HEREDOC)
+		if (redir_type->type == HEREDOC && g_status != 2)
 		{
 			if (ast_node->heredoc_fd != STDIN_FILENO)
 				close(ast_node->heredoc_fd);

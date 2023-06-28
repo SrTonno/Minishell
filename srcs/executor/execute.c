@@ -77,6 +77,8 @@ int	exec_child(t_list *ast, char **paths, char ***envp)
 	t_ast_node	*ast_node;
 
 	status = parse_redir(ast, envp);
+	if (g_status == 2)
+		return (2);
 	ast_node = (t_ast_node *)ast->content;
 	if (status == 0 && g_status != 130)
 	{
