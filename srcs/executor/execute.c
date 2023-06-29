@@ -108,7 +108,7 @@ int	execute(t_list *ast, char **envp[])
 	if (paths == NULL)
 		return (error_msg(MALLOC_ERROR, NULL));
 	ast_copy = ast;
-	while (ast != NULL)
+	while (ast != NULL && g_status != -3)
 	{
 		ast_node = (t_ast_node *)ast->content;
 		g_status = code_status(ast, paths, envp);
