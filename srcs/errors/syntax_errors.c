@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "error_msg.h"
+#include "token.h"
 
 int	check_quotes(char *input)
 {
@@ -37,7 +38,7 @@ int	check_syntax_metachars(t_list *token_lst)
 
 	while (token_lst)
 	{
-		c = token_lst->content;
+		c = ((t_token *)token_lst->content)->token;
 		if (is_special(*c) == 1)
 		{
 			if (*c == '|' && ft_strlen(c) != 1)
@@ -59,7 +60,7 @@ int	check_syntax_after_metachars(t_list *token_lst)
 
 	while (token_lst)
 	{
-		c = token_lst->content;
+		c = ((t_token *)token_lst->content)->token;
 		if (*c == '|')
 		{
 			if (token_lst->next == NULL)
