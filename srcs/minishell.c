@@ -69,6 +69,11 @@ int	clean_input(char **input, char ***env)
 		if (*input == NULL)
 			return (1);
 	}
+	if (is_spaced_str(*input))
+	{
+		free (*input);
+		return (1);
+	}
 	return (0);
 }
 
@@ -98,7 +103,7 @@ void	handle_input(char *input, char **env[])
 	t_list	*ast;
 
 	g_status = clean_input(&input, env);
-	if (g_status == 1 || is_spaced_str(input))
+	if (g_status == 1)
 	{
 		g_status = 0;
 		return ;
