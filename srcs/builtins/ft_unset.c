@@ -6,7 +6,7 @@
 /*   By: tvillare <tvillare@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:55:51 by javmarti          #+#    #+#             */
-/*   Updated: 2023/06/16 19:02:42 by tvillare         ###   ########.fr       */
+/*   Updated: 2023/07/02 17:09:22 by tvillare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	len_error_unset(char **env, char **str, int *code)
 			if (error == 0)
 			{
 				*code = 1;
-				printf("-bash: unset: '%s': not a valid identifier\n", str[i]);
+				printf("-minishell: unset: '%s': not a valid identifier\n", \
+					str[i]);
 			}
 			error++;
 		}

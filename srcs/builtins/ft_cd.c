@@ -70,10 +70,11 @@ int	cd_error_msg(int exitCode, char *msg)
 {
 	(void)exitCode;
 	if (msg == NULL)
-		ft_putstr_fd("-bash: cd: none or too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("-minisshell: cd: none or too many arguments\n", \
+			STDERR_FILENO);
 	else
 	{
-		ft_putstr_fd("-bash: cd: ", STDERR_FILENO);
+		ft_putstr_fd("-minishell: cd: ", STDERR_FILENO);
 		ft_putstr_fd(msg, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	}

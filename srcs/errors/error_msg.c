@@ -37,7 +37,7 @@ int	error_msg(int error, char *str)
 	}
 	else if (error == COMM_NPERM)
 	{
-		ft_putstr_fd("bash: ", STDERR_FILENO);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		status = 126;
@@ -51,7 +51,7 @@ static void	error_msg2(int error, char *str, int *status)
 {
 	if (error == NO_FILE_DIR)
 	{
-		ft_putstr_fd("bash: ", STDERR_FILENO);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		*status = 126;
@@ -74,13 +74,13 @@ static int	syntax_error(int error, char *str, int *status)
 	{
 		if (str == NULL)
 		{
-			ft_putstr_fd("-bash: syntax error near unexpected token",
+			ft_putstr_fd("-minshell: syntax error near unexpected token",
 				STDERR_FILENO);
 			ft_putstr_fd(" 'newline'\n", STDERR_FILENO);
 		}
 		else
 		{
-			ft_putstr_fd("-bash: syntax error near unexpected token `", \
+			ft_putstr_fd("-minishell: syntax error near unexpected token `", \
 				STDERR_FILENO);
 			ft_putstr_fd(str, STDERR_FILENO);
 			ft_putstr_fd("'\n", STDERR_FILENO);
@@ -94,7 +94,7 @@ static void	error_msg3(int error, char *str, int *status)
 {
 	if (error == PERM_ERR)
 	{
-		ft_putstr_fd("-bash: ", STDERR_FILENO);
+		ft_putstr_fd("-minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Permision denied", STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
@@ -102,7 +102,7 @@ static void	error_msg3(int error, char *str, int *status)
 	}
 	else if (error == NO_FILE_ERROR)
 	{
-		ft_putstr_fd("-bash: ", STDERR_FILENO);
+		ft_putstr_fd("-minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Could not open file\n", STDERR_FILENO);
 		*status = 1;

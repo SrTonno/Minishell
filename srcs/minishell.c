@@ -32,6 +32,8 @@ void	loop(char **env)
 	char	*input;
 
 	g_status = 0;
+	printf(ASCII_ART_LINE1 ASCII_ART_LINE2 ASCII_ART_LINE3 ASCII_ART_LINE4 \
+		ASCII_ART_LINE5 ASCII_ART_NAME);
 	while (1)
 	{
 		handler();

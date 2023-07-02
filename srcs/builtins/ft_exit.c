@@ -25,7 +25,7 @@ int	ft_exit(char **command)
 		command_len++;
 	if (command_len > 2)
 	{
-		ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		exit (1);
 	}
 	else if (command_len == 1)
@@ -49,7 +49,7 @@ int	is_numeric_str(char *str)
 	{
 		if (ft_isdigit(*str) == 0)
 		{
-			ft_putstr_fd("bash: exit: numeric argument required\n",
+			ft_putstr_fd("minishell: exit: numeric argument required\n",
 				STDERR_FILENO);
 			return (0);
 		}
