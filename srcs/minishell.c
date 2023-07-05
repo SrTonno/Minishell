@@ -16,6 +16,8 @@ void	redir_free(void *ptr);
 void	free_ast_node(void *ptr);
 void	disable_ctrl_c_print(void);
 
+int	g_status;
+
 int	main(int argc, char *argv[], char **env)
 {
 	(void)argv;
